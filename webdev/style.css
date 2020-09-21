@@ -208,3 +208,38 @@
     .socials_link:hover {
         opacity: 100%;
     }
+    
+    .rappresent {
+        height: 842px;
+        width: 1600px;
+    }
+    
+    .our_community {
+        background-color: #F5F6F7;
+        height: 504px;
+        width: 1600px;
+    }
+    
+    .implement {
+        height: 842px;
+        width: 1600px;
+    }
+    
+    .sign_up {
+        background-image: url(assets/sign.png);
+        height: 542px;
+        width: 1600px;
+    }
+    
+    .download {
+        background-color: #F5F6F7;
+        height: 464px;
+        width: 1600px;
+    }
+    
+    .footer {
+        background-color: #000000;
+        color: #FFFFFF;
+        height: 185px;
+        width: 1600px;
+    }
