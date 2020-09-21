@@ -191,6 +191,7 @@
  
  .rappresent_h3 {
      text-transform: uppercase;
+     color: #373737;
      line-height: 28px;
      font-family: 'Roboto', Verdana, sans-serif;
      font-weight: bold;
@@ -309,7 +310,46 @@
  
  .implement {
      height: 842px;
-     width: 1600px;
+     display: flex;
+ }
+ 
+ .implement__image {
+     margin-top: 120px;
+     margin-left: 269px;
+ }
+ 
+ .implement__content {
+     margin-top: 294px;
+     margin-left: 139px;
+ }
+ 
+ .implement_h3 {
+     font-family: 'Roboto', Verdana, sans-serif;
+     font-style: normal;
+     font-weight: bold;
+     font-size: 24px;
+     line-height: 28px;
+     letter-spacing: 1px;
+     text-transform: uppercase;
+     color: #373737;
+ }
+ 
+ .implement_content {
+     font-family: 'Roboto', Verdana, sans-serif;
+     font-style: normal;
+     font-weight: normal;
+     font-size: 14px;
+     line-height: 140%;
+     color: #4e4e4e;
+     margin-top: 20px;
+ }
+ 
+ .span_bold {
+     font-weight: bold;
+ }
+ 
+ .implement__button {
+     margin-top: 17px;
  }
  
  .sign_up {
