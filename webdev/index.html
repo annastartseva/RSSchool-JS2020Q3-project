@@ -15,11 +15,11 @@
         <header class="header">
             <nav>
                 <ul>
-                    <li><a href="#! " class="header_link ">About</a></li>
-                    <li><a href="#! " class="header_link ">Syllabus</a> </li>
-                    <li><img src=" assets/vector.svg " class="header_link " alt="header logo "></li>
-                    <li> <a href="#! " class="header_link ">Projects</a> </li>
-                    <li> <a href="#! " class="header_link ">FAQ</a> </li>
+                    <li><a href="#! " class="header_link1 ">About</a></li>
+                    <li><a href="#! " class="header_link2 ">Syllabus</a> </li>
+                    <li><img src=" assets/vector.svg " class="img_link " alt="header logo "></li>
+                    <li> <a href="#! " class="header_link2 ">Projects</a> </li>
+                    <li> <a href="#! " class="header_link2 ">FAQ</a> </li>
                 </ul>
             </nav>
 
@@ -29,7 +29,7 @@
 
         <div class="your_life ">
             <h2 class="h2 your_life_header">YOUR LIFE IS WEBDEV</h2>
-            <p class="h4 your_life_text ">Whatever the approach to development may be, the final<br /> program must satisfy some fundamental properties</p>
+            <p class="your_life_text ">Whatever the approach to development may be, the final<br /> program must satisfy some fundamental properties</p>
             <div class="yourlife_button ">
                 <button class="button ">GET STARTED</button>
             </div>
@@ -38,25 +38,23 @@
         <div class="socials ">
             <a href="#" class=socials_link mail_fff”><img src=" assets/mail.svg" alt="mail_icon "></a>
             <a href="#" class=socials_link facebook_fff”><img src="assets/facebook_icon.svg " alt="facebook_icon "></a>
-
             <a href="#" class=socials_link insta_fff”><img src="assets/insta.svg " alt="insta_icon "></a>
             <a href="#" class=socials_link telegram_fff”><img src="assets/telegram_icon.svg " alt="telegram_icon "></a>
         </div>
     </div>
 
     <section class="rappresent ">
-        <div class="wrapper ">
-            <div class="promo__content ">
-                <h3 class="h3 ">RAPPRESENT YOUR IDEA WITH A SMART DESIGN</h3>
-                <p>Tasks accompanying and related to programming include: testing, debugging, source code maintenance, implementation of build systems, and management of derived artifacts, such as the machine code of computer programs. </p>
-                <div class="rappresent__button ">
-                    <button class="button_font ">GET STARTED</button>
-                </div>
+        <div class="rappresent__content ">
+            <h3 class="rappresent_h3 ">RAPPRESENT YOUR IDEA WITH<br> A SMART DESIGN</h3>
+            <p class="rappresent_text">Tasks accompanying and related to programming include:<br> testing, debugging, source code maintenance,
+                <span class="span_bold">implementation of<br> build systems,</span> and management of derived artifacts, such as the<br> machine code of computer programs.
+            </p>
+            <div class="rappresent__button ">
+                <button class="button">GET STARTED</button>
             </div>
         </div>
-
         <div class="rappresent__image">
-            <img src="assets/content-image-1.png" alt="image">
+            <img src="assets/rappresent_img.png" alt="image">
         </div>
     </section>
 
@@ -79,8 +77,8 @@
             <p class="our_community_text">A hacker is any skilled computer expert that uses their technical knowledge to overcome a problem, but it can also mean a security hacker in common language</p>
         </div>
         <div class="picture_slider ">
-            <img src="assets/rectangle 2.png " class="slider_pic" alt="photo example ">
-            <img src="assets/rectangle 3.png " class="slider_pic" alt="photo example ">
+            <img src="assets/rectangle2.png " class="slider_pic" alt="photo example ">
+            <img src="assets/rectangle3.png " class="slider_pic" alt="photo example ">
             <img src="assets/slider-item.png " class="slider_pic" alt="photo example ">
         </div>
     </div>
@@ -88,7 +86,7 @@
 
     <section class="implement ">
         <div class="implement__image">
-            <img src="assets/content-image-2.png" alt="image">
+            <img src="assets/implement_img.png" alt="image">
         </div>
         <div class="implement__content ">
             <h3 class="implement_h3 ">IMPLEMENT RIGHT CODE</h3>
@@ -96,9 +94,8 @@
                 <span class="span_bold">programming process,</span> but<br> often the term software development is used for this larger
                 <br> process with the term programming, implementation </p>
             <div class=" implement__button ">
-                <button class="button ">LEARN MORE</button>
+                <button class="button_1 ">LEARN MORE</button>
             </div>
-        </div>
         </div>
     </section>
 
@@ -110,32 +107,33 @@
             </div>
 
             <div class="sign_up_form ">
-                <form>
-                    <input type="email " name="email " class="email" placeholder="E-mail ">
-                    <button type="button" class="button_send "><img src="assets/check-icon.svg"></button>
-                </form>
+                <input type="email " name="email " class="email" placeholder="E-mail ">
+                <button type="button" class="button_send "><img src="assets/check-icon.svg"></button>
+
             </div>
         </div>
-
-
-
     </section>
 
     <section class="download ">
-        <div class="wrapper ">
-            <div class="promo__content ">
-                <h3 class="h3 ">DOWNLOAD THE APP</h3>
-                <p>Machine code was the language of early programs, written in the instruction set of the particular machine, often in binary notation. </p>
-                <div class="download__button ">
-                    <button class="button_font ">APPLE STORE</button>
-                    <button class="button_font ">PLAY MARKET</button>
-
+        <div class="download_block ">
+            <h3 class="download_h3 ">DOWNLOAD THE APP</h3>
+            <p class="download_text">Machine code was the language of early programs, written in the instruction<br> set of the particular machine, often in binary notation. </p>
+            <div class="store-buttons">
+                <div class="view_button">
+                    <button type="button" class="left_part" onclick="document.location='#'">APPLE STORE</button>
+                    <button type="button" class="right_part" onclick="document.location='#'"><img src="assets/apple.svg" alt="apple" /></button>
+                </div>
+                <div class="view_button">
+                    <button type="button" class="left_part" onclick="document.location='#'">PLAY MARKET</button>
+                    <button type="button" class="right_part" onclick="document.location='#'"><img src="assets/android.svg" alt="android" /></button>
                 </div>
             </div>
-        </div>
-    </section>
-    <footer class="footer ">
 
+        </div>
+
+    </section>
+
+    <footer class="footer ">
         <div class="footer_navigation ">
             <ul>
                 <li class=" footer_navigation_icons ">
