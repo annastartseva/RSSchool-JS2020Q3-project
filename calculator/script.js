@@ -52,7 +52,7 @@ function numberPress(symbolNum) {
 };
 
 function operation(op) {
-    localOperationMemory = display.value;
+    var localOperationMemory = display.value;
 
     if (MemoryNewNumber && MemoryPendingOperation !== '=') {
         display.value = MemoryCurrentNumber;
@@ -72,10 +72,21 @@ function operation(op) {
         display.value = MemoryCurrentNumber;
         MemoryPendingOperation = op;
     };
-    console.log('Клик по кнопке с операцией ' + op);
+    //console.log('Клик по кнопке с операцией ' + op);
 };
 
 function decimal() {
+    var localDecimalMemory = display.value;
+
+    if (MemoryNewNumber) {
+        localDecimalMemory = '0.';
+        MemoryNewNumber = false;
+    } else {
+        if (localDecimalMemory.indexOf('.') === -1) {
+            localDecimalMemory += '.';
+        };
+        display.value = localDecimalMemory;
+    };
     console.log('Клик по кнопке с десятичной дробью');
 };
 
@@ -83,9 +94,7 @@ function clear(id) {
     console.log('Клик по кнопке ' + id);
 };
 
-function result() {
-    console.log('Клик по кнопке =');
-};
+
 
 
 /*function howWork() {
