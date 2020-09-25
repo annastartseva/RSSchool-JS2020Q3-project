@@ -4,9 +4,9 @@ var numberBtns = document.querySelectorAll('.number'),
     decimalBtn = document.getElementById('decimal'),
     clearBtns = document.querySelectorAll('.clear-btn'),
     resultBtn = document.getElementById('result'),
-    memoryCurrentNumber = 0,
-    memoryNewNumber = false,
-    memoryPendingOperation = '';
+    MemoryCurrentNumber = 0,
+    MemoryNewNumber = false,
+    MemoryPendingOperation = '';
 
 console.log(decimalBtn);
 console.log(decimalBtn);
@@ -38,16 +38,41 @@ resultBtn.addEventListener('click', result);
 
 
 function numberPress(symbolNum) {
-    console.log('Клик по кнопке с номером ' + symbolNum);
-    if (display.value === '0') {
+    if (MemoryNewNumber) {
         display.value = symbolNum;
+        MemoryNewNumber = false;
     } else {
-        display.value += symbolNum;
-    }
+        if (display.value === '0') {
+            display.value = symbolNum;
+        } else {
+            display.value += symbolNum;
+        };
+    };
+    //console.log('Клик по кнопке с номером ' + symbolNum);
 };
 
-function operation(symbol) {
-    console.log('Клик по кнопке с операцией ' + symbol);
+function operation(op) {
+    localOperationMemory = display.value;
+
+    if (MemoryNewNumber && MemoryPendingOperation !== '=') {
+        display.value = MemoryCurrentNumber;
+    } else {
+        MemoryNewNumber = true;
+        if (MemoryPendingOperation === '+') {
+            MemoryCurrentNumber += parseFloat(localOperationMemory);
+        } else if (MemoryPendingOperation === '-') {
+            MemoryCurrentNumber -= parseFloat(localOperationMemory);
+        } else if (MemoryPendingOperation === '*') {
+            MemoryCurrentNumber *= parseFloat(localOperationMemory);
+        } else if (MemoryPendingOperation === '/') {
+            MemoryCurrentNumber /= parseFloat(localOperationMemory);
+        } else {
+            MemoryCurrentNumber = parseFloat(localOperationMemory);
+        };
+        display.value = MemoryCurrentNumber;
+        MemoryPendingOperation = op;
+    };
+    console.log('Клик по кнопке с операцией ' + op);
 };
 
 function decimal() {
