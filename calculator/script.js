@@ -1,31 +1,58 @@
-var numbers = document.querySelectorAll('.number'),
-    operations = document.querySelectorAll('.operator'),
-    decimal = document.getElementById('decimal'),
-    ce = document.getElementById('ce'),
-    c = document.getElementById('c');
-result = document.getElementById('result');
+var numberBtns = document.querySelectorAll('.number'),
+    operationBtns = document.querySelectorAll('.operator'),
+    decimalBtn = document.getElementById('decimal'),
+    clearBtns = document.querySelectorAll('.clear-btn'),
+    resultBtn = document.getElementById('result');
 
-console.log(decimal);
-console.log(ce);
-console.log(c);
-console.log(result);
 
-function numberPress() {
+for (var i = 0; i < numberBtns.length; i++) {
+    var number = numberBtns[i];
+    number.addEventListener('click', function(e) {
+        numberPress(e.target.textContent);
+    });
+};
+
+for (var i = 0; i < operationBtns.length; i++) {
+    var operationBtn = operationBtns[i];
+    operationBtn.addEventListener('click', function(e) {
+        operation(e.target.textContent);
+    });
 
 };
 
-function operation() {
+for (var i = 0; i < clearBtns.length; i++) {
+    var clearBtn = clearBtns[i];
+    clearBtn.addEventListener('click', function(e) {
+        //console.log(e.srcElement.id);
+        clear(e.srcElement.id);
+    });
 
+};
+
+decimalBtn.addEventListener('click', decimal);
+resultBtn.addEventListener('click', result);
+
+function numberPress(symbolNum) {
+    console.log('Клик по кнопке с номером ' + symbolNum);
+};
+
+function operation(symbol) {
+    console.log('Клик по кнопке с операцией ' + symbol);
 };
 
 function decimal() {
-
+    console.log('Клик по кнопке с десятичной дробью');
 };
 
-function clear() {
-
+function clear(id) {
+    console.log('Клик по кнопке ' + id);
 };
 
-function howWork() {
-
+function result() {
+    console.log('Клик по кнопке =');
 };
+
+
+/*function howWork() {
+
+};*/
