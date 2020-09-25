@@ -87,11 +87,20 @@ function decimal() {
         };
         display.value = localDecimalMemory;
     };
-    console.log('Клик по кнопке с десятичной дробью');
+    //console.log('Клик по кнопке с десятичной дробью');
 };
 
 function clear(id) {
-    console.log('Клик по кнопке ' + id);
+    if (id === 'ce') {
+        display.value = '0';
+        MemoryNewNumber = true;
+    } else if (id === 'c') {
+        display.value = '0';
+        MemoryNewNumber = true;
+        MemoryCurrentNumber = 0,
+            MemoryPendingOperation = '';
+    };
+    //console.log('Клик по кнопке ' + id);
 };
 
 
