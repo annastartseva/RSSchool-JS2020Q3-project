@@ -5,6 +5,7 @@ var numberBtns = document.querySelectorAll('.number'),
     clearBtns = document.querySelectorAll('.clear-btn'),
     resultBtn = document.getElementById('result'),
     sqrtBtn = document.getElementById('sqrt'),
+    //powerBtn = document.getElementById('power'),
     MemoryCurrentNumber = 0,
     MemoryNewNumber = false,
     MemoryPendingOperation = '';
@@ -20,8 +21,8 @@ for (var i = 0; i < numberBtns.length; i++) {
 for (var i = 0; i < operationBtns.length; i++) {
     var operationBtn = operationBtns[i];
     operationBtn.addEventListener('click', function(e) {
-        //console.log(e);
-        //console.log(e.target.textContent);
+        console.log(e);
+        console.log(e.target.textContent);
         operation(e.target.textContent);
     });
 }
@@ -37,6 +38,7 @@ for (var i = 0; i < clearBtns.length; i++) {
 decimalBtn.addEventListener('click', decimalFunc);
 resultBtn.addEventListener('click', result);
 sqrtBtn.addEventListener('click', sqrtFunc);
+//powerBtn.addEventListener('click', powFunc);
 
 
 function numberPress(symbolNum) {
@@ -55,6 +57,7 @@ function numberPress(symbolNum) {
 
 function operation(op) {
     var localOperationMemory = display.value;
+    //console.log('Клик по кнопке с операцией ' + op);
 
     if (MemoryNewNumber && MemoryPendingOperation !== '=') {
         display.value = MemoryCurrentNumber;
@@ -70,39 +73,43 @@ function operation(op) {
             MemoryCurrentNumber /= parseFloat(localOperationMemory);
         } else if (MemoryPendingOperation === '√') {
             MemoryCurrentNumber = Math.sqrt(localOperationMemory);
-            console.log('MemoryCurrentNumber v sqrt ' + MemoryCurrentNumber);
+        } else if (MemoryPendingOperation === '^') {
+            MemoryCurrentNumber = Math.pow(MemoryCurrentNumber, localOperationMemory);
         } else {
             MemoryCurrentNumber = parseFloat(localOperationMemory);
         };
         display.value = MemoryCurrentNumber;
         MemoryPendingOperation = op;
     };
-    //console.log('Клик по кнопке с операцией ' + op);
+
 };
 
-function sqrtFunc(oper) {
+function sqrtFunc() {
     //console.log('Клик по кнопке с операцией квадратный корень');
-    var localOperationMemory = parseFloat(display.value);
+    var localSqrtMemory = parseFloat(display.value);
     //console.log('MemoryNewNumber v nachale ' + MemoryNewNumber);
-    //console.log('localOperationMemory v nachale ' + localOperationMemory + typeof localOperationMemory);
+    //console.log('localSqrtMemory v nachale ' + localSqrtMemory + typeof localOperationMemory);
     //console.log('MemoryCurrentNumber v nachale ' + MemoryCurrentNumber);
     //console.log('MemoryPendingOperation v nachale ' + MemoryPendingOperation);
-    if (localOperationMemory !== 0) {
-        MemoryCurrentNumber = Math.sqrt(localOperationMemory);
-    } else if (localOperationMemory === 0) {
+    if (localSqrtMemory !== 0) {
+        MemoryCurrentNumber = Math.sqrt(localSqrtMemory);
+    } else if (localSqrtMemory === 0) {
         MemoryPendingOperation = '√';
         // console.log('MemoryPendingOperation posle vipolneniya ' + MemoryPendingOperation);
     }
 
     display.value = MemoryCurrentNumber;
     //MemoryPendingOperation = '√';
-    //console.log('localOperationMemory posle vipolneniya ' + localOperationMemory);
+    //console.log('localSqrtMemory posle vipolneniya ' + localSqrtMemory);
     //console.log('MemoryCurrentNumber posle vipolneniya ' + MemoryCurrentNumber);
     //console.log('MemoryPendingOperation posle vipolneniya ' + MemoryPendingOperation);
 };
 
-
-
+function powFunc() {
+    console.log('Клик по кнопке с операцией возведения в степень');
+    var localPowMemory = display.value;
+    MemoryCurrentNumber = localPowMemory;
+};
 
 function decimalFunc() {
     var localDecimalMemory = display.value;
