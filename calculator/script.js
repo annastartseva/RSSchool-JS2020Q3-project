@@ -8,8 +8,10 @@ var numberBtns = document.querySelectorAll('.number'),
     negativeBtn = document.getElementById('negative'),
     MemoryCurrentNumber = 0,
     MemoryNewNumber = false,
-    MemoryPendingOperation = '';
-MemoryLastOperation = 0;
+    MemoryPendingOperation = '',
+    MemoryLastOperation = 0;
+
+
 
 
 for (var i = 0; i < numberBtns.length; i++) {
@@ -43,6 +45,11 @@ sqrtBtn.addEventListener('click', sqrtFunc);
 negativeBtn.addEventListener('click', negativeFunc);
 
 
+function input(input_taker) {
+    var displayInfo = document.getElementById('display').value;
+    document.getElementById('block').innerHTML = input_taker;
+}
+
 function numberPress(symbolNum) {
     MemoryLastOperation = 0;
     if (MemoryNewNumber) {
@@ -59,9 +66,12 @@ function numberPress(symbolNum) {
 };
 
 function operation(op) {
-    var localOperationMemory = display.value;
-    if (op !== '=') { MemoryLastOperation = MemoryLastOperation + 1; };
     //console.log('Клик по кнопке с операцией ' + op);
+    var localOperationMemory = display.value;
+    //console.log('localOperationMemory ' + localOperationMemory);
+    if (op !== '=') { MemoryLastOperation = MemoryLastOperation + 1; };
+    //console.log('MemoryLastOperation ' + MemoryLastOperation);
+    //console.log('MemoryPendingOperation ' + MemoryPendingOperation);
 
     if (MemoryNewNumber && MemoryPendingOperation !== '=') {
         display.value = MemoryCurrentNumber;
@@ -76,7 +86,16 @@ function operation(op) {
         } else if (MemoryPendingOperation === '/') {
             MemoryCurrentNumber /= parseFloat(localOperationMemory);
         } else if (MemoryPendingOperation === '√') {
-            MemoryCurrentNumber = Math.sqrt(localOperationMemory);
+            if (localOperationMemory < 0 || op === '-') {
+                //console.log('проверка на отрицательное число');
+                MemoryCurrentNumber = 0;
+                //console.log('MemoryCurrentNumber ' + MemoryCurrentNumber);
+                input('√ из отрицательного числа не существует');
+                MemoryLastOperation = 0;
+            } else {
+                console.log('проверка на отрицательное число else');
+                MemoryCurrentNumber = Math.sqrt(localOperationMemory);
+            };
         } else if (MemoryPendingOperation === '^') {
             MemoryCurrentNumber = Math.pow(MemoryCurrentNumber, localOperationMemory);
         } else {
@@ -84,9 +103,9 @@ function operation(op) {
         };
         display.value = MemoryCurrentNumber;
         MemoryPendingOperation = op;
-        //console.log('MemoryPendingOperation v konce ' + MemoryPendingOperation);
+        console.log('MemoryPendingOperation v konce ' + MemoryPendingOperation);
     };
-    if (op === '-' && MemoryPendingOperation === '-' && MemoryCurrentNumber === 0) {
+    if (op === '-' && MemoryPendingOperation === '-' && MemoryCurrentNumber === 0 && MemoryLastOperation === 1) {
         MemoryPendingOperation = '';
         //console.log('MemoryPendingOperation v if ' + MemoryPendingOperation);
     };
@@ -94,42 +113,41 @@ function operation(op) {
 };
 
 function negativeFunc() {
-    //console.log('Клик по кнопке -, negativeFunc');
-    //console.log('MemoryNewNumber v nachale ' + MemoryNewNumber);
-    //console.log('MemoryCurrentNumber v nachale ' + MemoryCurrentNumber);
-    //console.log('MemoryLastOperation ' + MemoryLastOperation);
+    console.log('Клик по кнопке -, negativeFunc');
+    console.log('MemoryLastOperation ' + MemoryLastOperation);
     var localNegativeMemory = parseFloat(display.value);
     //console.log('localNegativeMemory v nachale ' + localNegativeMemory + typeof localNegativeMemory);
-    if (MemoryCurrentNumber === 0 && (MemoryNewNumber === true && MemoryLastOperation !== 'operation')) {
+    if (MemoryCurrentNumber === 0 && (MemoryNewNumber === true && MemoryLastOperation === 1)) {
         display.value = '-';
         MemoryNewNumber = false;
 
     } else if (MemoryNewNumber === true && MemoryLastOperation === 2) {
         display.value = '-';
         MemoryNewNumber = false;
-        MemoryLastOperation = '';
+        MemoryLastOperation = 0;
     };
 };
 
 function sqrtFunc() {
-    //console.log('Клик по кнопке с операцией квадратный корень');
+    console.log('Клик по кнопке с операцией квадратный корень');
+
     var localSqrtMemory = parseFloat(display.value);
-    //console.log('MemoryNewNumber v nachale ' + MemoryNewNumber);
-    //console.log('localSqrtMemory v nachale ' + localSqrtMemory + typeof localOperationMemory);
-    //console.log('MemoryCurrentNumber v nachale ' + MemoryCurrentNumber);
-    //console.log('MemoryPendingOperation v nachale ' + MemoryPendingOperation);
-    if (localSqrtMemory !== 0) {
+
+    if (localSqrtMemory > 0) {
         MemoryCurrentNumber = Math.sqrt(localSqrtMemory);
+        MemoryLastOperation = 0;
+        MemoryPendingOperation = '';
     } else if (localSqrtMemory === 0) {
         MemoryPendingOperation = '√';
-        // console.log('MemoryPendingOperation posle vipolneniya ' + MemoryPendingOperation);
-    }
+        MemoryLastOperation = MemoryLastOperation + 1;
+        console.log('MemoryPendingOperation v sqrtFunc ' + MemoryPendingOperation);
+    } else {
+        MemoryCurrentNumber = 0;
+        input('√ из отрицательного числа не существует');
+    };
 
     display.value = MemoryCurrentNumber;
-    //MemoryPendingOperation = '√';
-    //console.log('localSqrtMemory posle vipolneniya ' + localSqrtMemory);
-    //console.log('MemoryCurrentNumber posle vipolneniya ' + MemoryCurrentNumber);
-    //console.log('MemoryPendingOperation posle vipolneniya ' + MemoryPendingOperation);
+
 };
 
 function powFunc() {
@@ -160,14 +178,19 @@ function clear(id) {
     } else if (id === 'c') {
         display.value = '0';
         MemoryNewNumber = true;
-        MemoryCurrentNumber = 0,
-            MemoryPendingOperation = '';
+        MemoryCurrentNumber = 0;
+        MemoryPendingOperation = '';
+        input('');
     };
     //console.log('Клик по кнопке ' + id);
 };
 
 
-
-
-/*function howWork() {
-};*/
+//console.log('MemoryNewNumber v nachale ' + MemoryNewNumber);
+//console.log('localSqrtMemory v nachale ' + localSqrtMemory + typeof localOperationMemory);
+//console.log('MemoryCurrentNumber v nachale ' + MemoryCurrentNumber);
+//console.log('MemoryPendingOperation v nachale ' + MemoryPendingOperation);
+//MemoryPendingOperation = '√';
+//console.log('localSqrtMemory posle vipolneniya ' + localSqrtMemory);
+//console.log('MemoryCurrentNumber posle vipolneniya ' + MemoryCurrentNumber);
+//console.log('MemoryPendingOperation posle vipolneniya ' + MemoryPendingOperation);
