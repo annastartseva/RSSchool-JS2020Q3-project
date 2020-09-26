@@ -5,10 +5,11 @@ var numberBtns = document.querySelectorAll('.number'),
     clearBtns = document.querySelectorAll('.clear-btn'),
     resultBtn = document.getElementById('result'),
     sqrtBtn = document.getElementById('sqrt'),
-    //powerBtn = document.getElementById('power'),
+    negativeBtn = document.getElementById('negative'),
     MemoryCurrentNumber = 0,
     MemoryNewNumber = false,
     MemoryPendingOperation = '';
+MemoryLastOperation = 0;
 
 
 for (var i = 0; i < numberBtns.length; i++) {
@@ -24,6 +25,7 @@ for (var i = 0; i < operationBtns.length; i++) {
         console.log(e);
         console.log(e.target.textContent);
         operation(e.target.textContent);
+
     });
 }
 
@@ -38,10 +40,11 @@ for (var i = 0; i < clearBtns.length; i++) {
 decimalBtn.addEventListener('click', decimalFunc);
 resultBtn.addEventListener('click', result);
 sqrtBtn.addEventListener('click', sqrtFunc);
-//powerBtn.addEventListener('click', powFunc);
+negativeBtn.addEventListener('click', negativeFunc);
 
 
 function numberPress(symbolNum) {
+    MemoryLastOperation = 0;
     if (MemoryNewNumber) {
         display.value = symbolNum;
         MemoryNewNumber = false;
@@ -57,6 +60,7 @@ function numberPress(symbolNum) {
 
 function operation(op) {
     var localOperationMemory = display.value;
+    if (op !== '=') { MemoryLastOperation = MemoryLastOperation + 1; };
     //console.log('Клик по кнопке с операцией ' + op);
 
     if (MemoryNewNumber && MemoryPendingOperation !== '=') {
@@ -80,8 +84,31 @@ function operation(op) {
         };
         display.value = MemoryCurrentNumber;
         MemoryPendingOperation = op;
+        //console.log('MemoryPendingOperation v konce ' + MemoryPendingOperation);
+    };
+    if (op === '-' && MemoryPendingOperation === '-' && MemoryCurrentNumber === 0) {
+        MemoryPendingOperation = '';
+        //console.log('MemoryPendingOperation v if ' + MemoryPendingOperation);
     };
 
+};
+
+function negativeFunc() {
+    //console.log('Клик по кнопке -, negativeFunc');
+    //console.log('MemoryNewNumber v nachale ' + MemoryNewNumber);
+    //console.log('MemoryCurrentNumber v nachale ' + MemoryCurrentNumber);
+    //console.log('MemoryLastOperation ' + MemoryLastOperation);
+    var localNegativeMemory = parseFloat(display.value);
+    //console.log('localNegativeMemory v nachale ' + localNegativeMemory + typeof localNegativeMemory);
+    if (MemoryCurrentNumber === 0 && (MemoryNewNumber === true && MemoryLastOperation !== 'operation')) {
+        display.value = '-';
+        MemoryNewNumber = false;
+
+    } else if (MemoryNewNumber === true && MemoryLastOperation === 2) {
+        display.value = '-';
+        MemoryNewNumber = false;
+        MemoryLastOperation = '';
+    };
 };
 
 function sqrtFunc() {
