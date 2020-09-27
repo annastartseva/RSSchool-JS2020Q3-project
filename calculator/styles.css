@@ -16,16 +16,16 @@
         
         .calc {
             background-color: #A9A9F5;
-            width: 385px;
-            padding: 30px;
+            width: 365px;
+            padding: 25px;
             border-radius: 10px;
-            margin-top: 60px;
+            margin: 60px;
         }
         
         .calc-display-input {
-            width: 360px;
-            height: 60px;
-            margin: 20px 0;
+            width: 345px;
+            height: 50px;
+            margin: 10px 0;
             border-radius: 8px;
             background-color: #424242;
             color: #fff;
@@ -36,14 +36,14 @@
         }
         
         .calc-display-info {
-            width: 360px;
-            height: 40px;
+            width: 345px;
+            height: 30px;
             margin: 5px 0;
             border-radius: 8px;
             background-color: #A9A9F5;
             color: #424242;
             text-align: right;
-            font-size: 20px;
+            font-size: 18px;
             padding: 5px;
         }
         
@@ -54,7 +54,7 @@
         
         .btn {
             width: 85px;
-            height: 60px;
+            height: 50px;
             background-color: #D8D8D8;
             font-size: 27px;
             color: #666666;
@@ -93,7 +93,7 @@
         input,
         button {
             padding: 5px 15px;
-            margin: 10px;
+            margin: 5px;
             border: 0;
             outline: 0;
             border-radius: 4px;
