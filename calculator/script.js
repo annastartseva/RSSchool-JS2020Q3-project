@@ -101,7 +101,8 @@ function operation(op) {
         } else {
             MemoryCurrentNumber = parseFloat(localOperationMemory);
         };
-        display.value = MemoryCurrentNumber;
+        //display.value = MemoryCurrentNumber;
+        display.value = normalizeFractional(MemoryCurrentNumber);
         MemoryPendingOperation = op;
         console.log('MemoryPendingOperation v konce ' + MemoryPendingOperation);
     };
@@ -146,7 +147,9 @@ function sqrtFunc() {
         input('√ из отрицательного числа не существует');
     };
 
-    display.value = MemoryCurrentNumber;
+
+    display.value = normalizeFractional(MemoryCurrentNumber);
+    //display.value = MemoryCurrentNumber;
 
 };
 
@@ -185,8 +188,23 @@ function clear(id) {
     //console.log('Клик по кнопке ' + id);
 };
 
+function normalizeFractional(forNorma) {
+    var localNormalizeMemory = 0;
 
-//console.log('MemoryNewNumber v nachale ' + MemoryNewNumber);
+    //Подкорректированная ф-ция toFixed для остальных чисел, не входящих в диапазон (-1.1)
+    var power = Math.pow(10, 14);
+    localNormalizeMemory = Number(Math.round(forNorma * power) / power);
+
+    //в этом контексте toFixed можно использовать для корректного вывода дробных чисел от (-1.1)
+    //localNormalizeMemory = Number(forNorma.toFixed(14));
+
+    //console.log(typeof(localNormalizeMemory));
+    return localNormalizeMemory;
+
+};
+
+
+
 //console.log('localSqrtMemory v nachale ' + localSqrtMemory + typeof localOperationMemory);
 //console.log('MemoryCurrentNumber v nachale ' + MemoryCurrentNumber);
 //console.log('MemoryPendingOperation v nachale ' + MemoryPendingOperation);
@@ -194,3 +212,8 @@ function clear(id) {
 //console.log('localSqrtMemory posle vipolneniya ' + localSqrtMemory);
 //console.log('MemoryCurrentNumber posle vipolneniya ' + MemoryCurrentNumber);
 //console.log('MemoryPendingOperation posle vipolneniya ' + MemoryPendingOperation);
+
+//console.log('Rezultat bez okrugleniya ' + forNorma);
+//console.log(typeof(forNorma));
+//console.log('forNorma * power ' + forNorma * power);
+//console.log('Math.round(forNorma * power) ' + Math.round(forNorma * power));
