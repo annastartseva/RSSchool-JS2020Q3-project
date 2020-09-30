@@ -1,71 +1,168 @@
-body {
-    margin: 0;
-}
-
-.wrapper {
-    display: flex;
-    margin: 0 auto;
-    max-width: 1200px;
-    justify-content: space-between;
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .header {
-    width: 100vw;
-    top: 0;
-    background-color: black;
+  left: 0;
+  right: 0;
+  position: absolute;
+  top: 60px;
+}
+
+.wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 1280px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .menu {
-    width: 443px;
-    display: flex;
+  width: 443px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .logo {
-    display: flex;
-    flex-direction: column;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .logo__title {
-    color: #F1CDB3;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 32px;
-    letter-spacing: 6%;
-    line-height: 110%;
+  color: #F1CDB3;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0.12rem;
+  line-height: 110%;
 }
 
 .logo__subtitle {
-    color: #FFFFFF;
-    font-size: 13px;
-    line-height: 110%;
-    letter-spacing: 10%;
+  margin-top: 10px;
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 110%;
+  letter-spacing: 0.11rem;
+  text-align: center;
 }
 
 .menu {
-    display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .list {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
+  list-style-type: none;
 }
 
-.list_item {
-    display: flex;
-    align-items: center;
-    ;
+.list__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .list__link {
-    color: #FFFFFF;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 15px;
-    line-height: 160%;
+  color: #FFFFFF;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 160%;
+}
+
+.list__link_active {
+  border-bottom: solid 3px #F1CDB3;
 }
 
 .list__link_disabled {
-    color: #CDCDCD;
+  color: #CDCDCD;
 }
+
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.hero {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 180px;
+  background: url(../../assets/noise_transparent.png), radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
+}
+
+.hero__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.content-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-bottom: 84px;
+}
+
+.content-section__title {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #FFFFFF;
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 130%;
+  max-width: 19.375rem;
+}
+
+.content-section__subtitle {
+  margin-top: 42px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #CDCDCD;
+  font-size: 0.9375rem;
+  line-height: 160%;
+}
+
+.content-section__button {
+  padding: 15px 45px;
+  margin-top: 42px;
+  width: 207px;
+  background-color: #F1CDB3;
+  border-radius: 100px;
+  border: none;
+}
+/*# sourceMappingURL=main.css.map */
