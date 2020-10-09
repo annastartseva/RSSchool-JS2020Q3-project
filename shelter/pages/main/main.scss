@@ -15,7 +15,7 @@ radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
 $footer-gradient-background: url(../../assets/noise_transparent.png),
 radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 #211F20;
-:root {
+ :root {
     font-size: 10px;
 }
 
@@ -36,7 +36,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         weight: normal;
     }
     line-height: 130%;
-    letter-spacing: 0.06rem;
+    letter-spacing: 0.21rem;
 }
 
 @mixin h4 {
@@ -102,6 +102,22 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     letter-spacing: 0.13rem;
 }
 
+@mixin slider_button {
+    border: 3px solid $color-primary;
+    border-radius: 100%;
+    padding: 1.9rem;
+    background: none;
+}
+
+@mixin button {
+    border-radius: 100px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.7rem;
+    line-height: 130%;
+    font-weight: normal;
+    letter-spacing: 0.1rem;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -111,13 +127,6 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     box-sizing: border-box;
 }
 
-.header {
-    left: 0;
-    right: 0;
-    position: absolute;
-    top: 60px;
-}
-
 .wrapper {
     display: flex;
     margin: 0 auto;
@@ -125,63 +134,59 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     width: 1280px;
 }
 
-.header__wrapper {
-    display: flex;
-    justify-content: space-between;
+.header {
+    left: 0;
+    right: 0;
+    position: absolute;
+    top: 60px;
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+    .logo {
+        display: flex;
+        flex-direction: column;
+        &__title {
+            color: $color-primary;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            @include logo_title;
+        }
+        &__subtitle {
+            margin-top: 10px;
+            color: $color-light-xl;
+            text-align: center;
+            @include logo_subtitle;
+        }
+    }
 }
 
 .menu {
+    display: flex;
     width: 443px;
-    display: flex;
-}
-
-.logo {
-    display: flex;
-    flex-direction: column;
-    &__title {
-        color: $color-primary;
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        @include logo_title;
+    .list {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        list-style-type: none;
     }
-    &__subtitle {
-        margin-top: 10px;
+    .list__item {
+        display: flex;
+        align-items: center;
+    }
+    .list__link {
         color: $color-light-xl;
-        text-align: center;
-        @include logo_subtitle;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        line-height: 160%;
     }
-}
-
-.menu {
-    display: flex;
-}
-
-.list {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    list-style-type: none;
-}
-
-.list__item {
-    display: flex;
-    align-items: center;
-}
-
-.list__link {
-    color: $color-light-xl;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 160%;
-}
-
-.list__link_active {
-    border-bottom: solid 2px $color-primary;
-}
-
-.list__link_disabled {
-    color: $color-dark-s;
-    padding-bottom: 2px;
+    .list__link_active {
+        border-bottom: solid 2px $color-primary;
+    }
+    .list__link_disabled {
+        color: $color-dark-s;
+        padding-bottom: 2px;
+    }
 }
 
 .main {
@@ -193,77 +198,78 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     display: flex;
     padding-top: 180px;
     background: $start-screen-gradient-background;
-}
-
-.hero__wrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
-.hero__content {
-    display: flex;
-}
-
-.content-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-bottom: 81px;
-}
-
-.content-section__title {
-    color: $color-light-xl;
-    max-width: 31rem;
-    @include h2;
-}
-
-.content-section__subtitle {
-    margin-top: 42px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: $color-dark-s;
-    font-size: 1.5rem;
-    line-height: 160%;
-    max-width: 46rem;
-}
-
-.content-section__button {
-    padding: 15px 45px;
-    margin-top: 42px;
-    width: 207px;
-    background-color: $color-primary;
-    border-radius: 100px;
-    border: none;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 1.7rem;
-    line-height: 130%;
-    font-weight: normal;
-    letter-spacing: 0.1rem;
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__content {
+        display: flex;
+    }
+    &__content-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-bottom: 81px;
+        width: 46rem;
+    }
+    .content-section__title {
+        color: $color-light-xl;
+        width: 31rem;
+        @include h2;
+    }
+    .content-section__subtitle {
+        margin-top: 41px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: $color-dark-s;
+        font-size: 1.5rem;
+        line-height: 160%;
+        width: 46rem;
+    }
+    .content-section__button {
+        padding: 15px 45px;
+        margin-top: 40px;
+        width: 207px;
+        background-color: $color-primary;
+        border: none;
+        @include button;
+    }
+    h1 {
+        visibility: hidden;
+        width: 1px;
+    }
 }
 
 .hero__image-wrapper {
-    padding-left: 42px;
+    padding-left: 41px;
 }
 
 .about {
     display: flex;
     &__wrapper {
         display: flex;
-        justify-content: center;
+        width: 100%;
+        justify-content: space-between;
         padding: 8rem 17.5rem 10rem 17.5rem;
     }
     &__image-wrapper {
         display: flex;
     }
     &__image {
-        width: 100%;
+        max-width: 300px;
+        height: 100%;
     }
     &__content {
         display: flex;
         justify-self: center;
         flex-direction: column;
+        justify-content: center;
         width: 43rem;
     }
     &__title {
+        span {
+            display: block;
+            letter-spacing: 0.21rem;
+        }
         color: $color-dark-l;
         @include h3;
     }
@@ -276,5 +282,93 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
             color: $color-dark-xl;
             @include paragraph-l;
         }
+    }
+}
+
+.pets {
+    padding-top: 8rem;
+    padding-bottom: 10rem;
+    background-color: $color-light-l;
+    &__wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    &__title {
+        width: 40rem;
+        text-align: center;
+        span {
+            display: block;
+            letter-spacing: 0.21rem;
+        }
+        color: $color-dark-l;
+        @include h3;
+    }
+    &__content {
+        display: flex;
+        padding: 6rem 0;
+        align-items: center;
+        .slider-button {
+            width: 5.2rem;
+            height: 5.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @include slider_button;
+        }
+        .slider-button_reverted {
+            width: 5.2rem;
+            height: 5.2rem;
+            transform: rotate(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @include slider_button;
+        }
+    }
+    &__cards {
+        display: flex;
+        justify-content: space-between;
+        width: 99rem;
+        margin: 0 5.3rem;
+    }
+    &__cards-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 3.1rem;
+        width: 270px;
+        height: 435px;
+        background: $color-light-s;
+        border-radius: 9px;
+        p {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 23px;
+            letter-spacing: 0.1rem;
+        }
+    }
+    .pets__cards-button {
+        width: 187px;
+        height: 52px;
+        letter-spacing: 0.06em;
+        border: 2px solid $color-primary;
+        background-color: $color-light-s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include button;
+    }
+    .pets__button {
+        width: 261px;
+        height: 52px;
+        letter-spacing: 0.09rem;
+        background-color: $color-primary;
+        border: none;
+        @include button;
     }
 }
