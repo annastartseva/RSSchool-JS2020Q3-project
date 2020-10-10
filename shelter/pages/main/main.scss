@@ -47,7 +47,8 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         weight: normal;
     }
     line-height: 115%;
-    letter-spacing: 0.06rem;
+    letter-spacing: 0.12rem;
+    color: $color-dark-l;
 }
 
 @mixin h5 {
@@ -102,20 +103,61 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     letter-spacing: 0.13rem;
 }
 
-@mixin slider_button {
-    border: 3px solid $color-primary;
-    border-radius: 100%;
-    padding: 1.9rem;
-    background: none;
-}
-
 @mixin button {
-    border-radius: 100px;
+    border-radius: 10rem;
+    padding: 1.5rem 4.5rem;
+    border: none;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 1.7rem;
+    color: $color-dark-3xl;
     line-height: 130%;
     font-weight: normal;
     letter-spacing: 0.1rem;
+    cursor: pointer;
+    outline: none;
+}
+
+@mixin button_color {
+    background-color: $color-primary;
+    @include button;
+    &:hover {
+        background-color: $color-primary-light;
+        transition-duration: 0.5s;
+    }
+}
+
+@mixin button_border {
+    /* border: 2px solid $color-primary;*/
+    box-shadow: inset 0 0 0 2px $color-primary;
+    background-color: transparent;
+    @include button;
+    &:hover {
+        background-color: $color-primary-light;
+        box-shadow: none;
+        transition-duration: 0.5s;
+    }
+}
+
+@mixin slider_button {
+    box-shadow: inset 0 0 0 2px $color-primary;
+    border-radius: 100%;
+    background: transparent;
+    border: none;
+    width: 5.2rem;
+    height: 5.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+        background-color: $color-primary-light;
+        box-shadow: none;
+        transition-duration: 0.5s;
+    }
+    &:disabled {
+        box-shadow: inset 0 0 0 2px $color-dark-s;
+    }
 }
 
 * {
@@ -226,21 +268,17 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         width: 46rem;
     }
     .content-section__button {
-        padding: 15px 45px;
         margin-top: 40px;
         width: 207px;
-        background-color: $color-primary;
-        border: none;
-        @include button;
+        @include button_color;
     }
     h1 {
         visibility: hidden;
         width: 1px;
     }
-}
-
-.hero__image-wrapper {
-    padding-left: 41px;
+    .hero__image-wrapper {
+        padding-left: 41px;
+    }
 }
 
 .about {
@@ -286,7 +324,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 }
 
 .pets {
-    padding-top: 8rem;
+    padding-top: 7.8rem;
     padding-bottom: 10rem;
     background-color: $color-light-l;
     &__wrapper {
@@ -310,20 +348,10 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         padding: 6rem 0;
         align-items: center;
         .slider-button {
-            width: 5.2rem;
-            height: 5.2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             @include slider_button;
         }
         .slider-button_reverted {
-            width: 5.2rem;
-            height: 5.2rem;
             transform: rotate(180deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             @include slider_button;
         }
     }
@@ -338,37 +366,22 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        padding-bottom: 3.1rem;
+        padding-bottom: 3rem;
         width: 270px;
         height: 435px;
         background: $color-light-s;
         border-radius: 9px;
-        p {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 20px;
-            line-height: 23px;
-            letter-spacing: 0.1rem;
+        &:hover {
+            box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
         }
     }
-    .pets__cards-button {
-        width: 187px;
-        height: 52px;
-        letter-spacing: 0.06em;
-        border: 2px solid $color-primary;
-        background-color: $color-light-s;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        @include button;
+    &__cards-title {
+        @include h4;
     }
-    .pets__button {
-        width: 261px;
-        height: 52px;
-        letter-spacing: 0.09rem;
-        background-color: $color-primary;
-        border: none;
-        @include button;
+    &__cards-button {
+        @include button_border;
+    }
+    &__button {
+        @include button_color;
     }
 }
