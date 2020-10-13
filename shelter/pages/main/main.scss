@@ -9,10 +9,10 @@ $color-dark-l: #545454;
 $color-dark-xl: #4C4C4C;
 $color-dark-2xl: #444444;
 $color-dark-3xl: #292929;
-$start-screen-gradient-background: url(../../assets/noise_transparent.png),
+$start-screen-gradient-background: url(../../assets/images/noise_transparent.png),
 radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
 #211F20;
-$footer-gradient-background: url(../../assets/noise_transparent.png),
+$footer-gradient-background: url(../../assets/images/noise_transparent.png),
 radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 #211F20;
  :root {
@@ -239,6 +239,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         }
     }
     .list__link_active {
+        color: $color-light-s;
         border-bottom: solid 2px $color-primary;
     }
     .list__link_disabled {
@@ -328,6 +329,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         @include h3;
     }
     &__description {
+        color: $color-dark-xl;
         margin-top: 2.5rem;
         p {
             &:nth-child(2) {
