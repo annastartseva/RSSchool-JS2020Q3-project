@@ -1,0 +1,392 @@
+$color-primary: #F1CDB3;
+$color-primary-light: #FDDCC4;
+$color-light-s: #FAFAFA;
+$color-light-l: #F6F6F6;
+$color-light-xl: #FFFFFF;
+$color-dark-s: #CDCDCD;
+$color-dark-m: #B2B2B2;
+$color-dark-l: #545454;
+$color-dark-xl: #4C4C4C;
+$color-dark-2xl: #444444;
+$color-dark-3xl: #292929;
+$start-screen-gradient-background: url(../../assets/images/noise_transparent.png),
+radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
+#211F20;
+$footer-gradient-background: url(../../assets/images/noise_transparent.png),
+radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
+#211F20;
+ :root {
+    font-size: 10px;
+}
+
+@mixin h3 {
+    font: {
+        family: Georgia, 'Times New Roman', Times, serif;
+        size: 3.5rem;
+        style: normal;
+        weight: normal;
+    }
+    line-height: 130%;
+    letter-spacing: 0.21rem;
+}
+
+@mixin h4 {
+    font: {
+        family: Georgia, 'Times New Roman', Times, serif;
+        size: 2rem;
+        style: normal;
+        weight: normal;
+    }
+    line-height: 115%;
+    letter-spacing: 0.12rem;
+}
+
+@mixin paragraph-l {
+    font: {
+        family: Arial;
+        size: 1.5rem;
+        style: normal;
+        weight: normal;
+    }
+    line-height: 160%;
+}
+
+@mixin logo_title {
+    font: {
+        family: Georgia, 'Times New Roman', Times, serif;
+        size: 3.2rem;
+        style: normal;
+        weight: normal;
+    }
+    line-height: 110%;
+    letter-spacing: 0.192rem;
+}
+
+@mixin logo_subtitle {
+    font: {
+        family: Arial;
+        size: 1.3rem;
+        style: normal;
+        weight: normal;
+    }
+    letter-spacing: 0.13rem;
+}
+
+@mixin button {
+    border-radius: 10rem;
+    padding: 1.5rem 4.5rem;
+    border: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.7rem;
+    color: $color-dark-3xl;
+    line-height: 130%;
+    font-weight: normal;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    outline: none;
+}
+
+@mixin button_border {
+    /* border: 2px solid $color-primary;*/
+    box-shadow: inset 0 0 0 2px $color-primary;
+    background-color: transparent;
+    @include button;
+    &:hover {
+        background-color: $color-primary-light;
+        box-shadow: none;
+        transition-duration: 0.5s;
+    }
+}
+
+@mixin slider_button {
+    border-radius: 100%;
+    border: none;
+    width: 5.2rem;
+    height: 5.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin button_arrow {
+    box-shadow: inset 0 0 0 2px $color-primary;
+    background: transparent;
+    @include slider_button;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+        background-color: $color-primary-light;
+        box-shadow: none;
+        transition-duration: 0.5s;
+    }
+    &:disabled {
+        box-shadow: inset 0 0 0 2px $color-dark-s;
+    }
+}
+
+@mixin button_arrow_disabled {
+    box-shadow: inset 0 0 0 2px $color-primary;
+    background: transparent;
+    @include slider_button;
+    &:disabled {
+        box-shadow: inset 0 0 0 2px $color-dark-s;
+    }
+}
+
+@mixin button_color {
+    background-color: $color-primary;
+    @include slider_button;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+        background-color: $color-primary-light;
+        transition-duration: 0.5s;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: flex;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 1280px;
+}
+
+.header {
+    left: 0;
+    right: 0;
+    padding: 3rem 0;
+    position: fixed;
+    top: 0px;
+    background-color: $color-light-xl;
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100vw;
+    }
+    .logo {
+        display: flex;
+        flex-direction: column;
+        width: 186px;
+        height: 60px;
+        &__title {
+            color: $color-dark-l;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            @include logo_title;
+        }
+        &__subtitle {
+            margin-top: 10px;
+            color: $color-dark-3xl;
+            text-align: center;
+            @include logo_subtitle;
+        }
+    }
+}
+
+.menu {
+    display: flex;
+    width: 443px;
+    .list {
+        display: flex;
+        justify-content: space-between;
+        list-style-type: none;
+        width: 44.3rem;
+        height: 100%;
+    }
+    .list__item {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .list__link {
+        color: $color-light-xl;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        line-height: 160%;
+        &:hover {
+            border-bottom: solid 2px $color-primary;
+            color: $color-dark-3xl;
+        }
+    }
+    .list__link_active {
+        color: $color-dark-3xl;
+        border-bottom: solid 2px $color-primary;
+    }
+    .list__link_disabled {
+        color: $color-dark-l;
+        padding-bottom: 2px;
+    }
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.pets {
+    padding-top: 8rem;
+    padding-bottom: 10rem;
+    margin-top: 12rem;
+    background-color: $color-light-l;
+    &__wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    h1 {
+        visibility: hidden;
+        height: 1px;
+    }
+    &__title {
+        width: 40rem;
+        text-align: center;
+        span {
+            display: block;
+            letter-spacing: 0.21rem;
+        }
+        color: $color-dark-l;
+        @include h3;
+    }
+    &__cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5.9rem 0 3rem;
+    }
+    &__cards-info {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 3rem;
+        margin-bottom: 3rem;
+        width: 270px;
+        height: 435px;
+        background: $color-light-s;
+        border-radius: 9px;
+        &:hover {
+            box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+        }
+    }
+    &__cards-title {
+        @include h4;
+        color: $color-dark-l;
+    }
+    &__cards-button {
+        color: $color-dark-3xl;
+        @include button_border;
+    }
+    &__button {
+        display: flex;
+        width: 34rem;
+        justify-content: space-between;
+    }
+    &__button-left {
+        @include button_arrow_disabled;
+    }
+    &__button-number {
+        @include button_color;
+    }
+    &__button-right {
+        @include button_arrow;
+    }
+}
+
+.footer {
+    display: flex;
+    background: $footer-gradient-background;
+    &__wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        padding: 5.7rem 0 2.5rem 0;
+    }
+    &__question {
+        display: flex;
+        flex-direction: column;
+        margin-right: 16.1rem;
+        max-width: 27.9rem;
+    }
+    &__question-title {
+        margin-bottom: 3.8rem;
+        color: $color-light-xl;
+        @include h3;
+        span {
+            display: block;
+            letter-spacing: 0.21rem;
+        }
+    }
+    &__question-email {
+        margin-bottom: 4rem;
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        p {
+            margin-left: 2rem;
+            color: $color-primary;
+            @include h4;
+            text-decoration: none;
+        }
+    }
+    &__question-phone {
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        p {
+            margin-left: 2rem;
+            color: $color-primary;
+            @include h4;
+            text-decoration: none;
+        }
+    }
+    &__addres {
+        display: flex;
+        flex-direction: column;
+        max-width: 30.2rem;
+    }
+    &__addres-title {
+        color: $color-light-xl;
+        margin-bottom: 3.2rem;
+        @include h3;
+        span {
+            display: block;
+            letter-spacing: 0.21rem;
+        }
+    }
+    &__addres-info {
+        a {
+            display: flex;
+            margin-bottom: 3.4rem;
+            align-items: center;
+            text-decoration: none;
+        }
+        p {
+            margin-left: 2rem;
+            color: $color-primary;
+            @include h4;
+        }
+    }
+    &__image {
+        display: flex;
+        align-items: flex-end;
+    }
+}
