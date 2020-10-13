@@ -91,6 +91,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  cursor: pointer;
 }
 
 .menu .list__link {
@@ -99,6 +100,11 @@
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 160%;
+}
+
+.menu .list__link:hover {
+  border-bottom: solid 2px #F1CDB3;
+  color: #FAFAFA;
 }
 
 .menu .list__link_active {
@@ -444,9 +450,11 @@
   font-weight: normal;
   line-height: 115%;
   letter-spacing: 0.12rem;
+  color: #545454;
 }
 
 .pets__cards-button {
+  color: #292929;
   /* border: 2px solid $color-primary;*/
   -webkit-box-shadow: inset 0 0 0 2px #F1CDB3;
           box-shadow: inset 0 0 0 2px #F1CDB3;
@@ -564,6 +572,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  color: #545454;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 2rem;
   font-style: normal;
@@ -576,6 +585,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  background-color: #F6F6F6;
 }
 
 .donation__wrapper {
@@ -669,6 +679,14 @@
   letter-spacing: 0.12rem;
 }
 
+.donation__content-card:hover {
+  background-color: #FDDCC4;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
 .donation__content-info {
   margin-top: 2rem;
   max-width: 38rem;
@@ -737,12 +755,16 @@
 
 .footer__question-email {
   margin-bottom: 4rem;
+}
+
+.footer__question-email a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  text-decoration: none;
 }
 
 .footer__question-email p {
@@ -754,15 +776,17 @@
   font-weight: normal;
   line-height: 115%;
   letter-spacing: 0.12rem;
+  text-decoration: none;
 }
 
-.footer__question-phone {
+.footer__question-phone a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  text-decoration: none;
 }
 
 .footer__question-phone p {
@@ -774,6 +798,7 @@
   font-weight: normal;
   line-height: 115%;
   letter-spacing: 0.12rem;
+  text-decoration: none;
 }
 
 .footer__addres {
@@ -803,7 +828,7 @@
   letter-spacing: 0.21rem;
 }
 
-.footer__addres-info {
+.footer__addres-info a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -811,6 +836,7 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  text-decoration: none;
 }
 
 .footer__addres-info p {

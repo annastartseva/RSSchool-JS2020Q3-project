@@ -225,6 +225,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     .list__item {
         display: flex;
         align-items: center;
+        cursor: pointer;
     }
     .list__link {
         color: $color-light-xl;
@@ -232,6 +233,10 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         font-size: 1.5rem;
         font-weight: 400;
         line-height: 160%;
+        &:hover {
+            border-bottom: solid 2px $color-primary;
+            color: $color-light-s;
+        }
     }
     .list__link_active {
         border-bottom: solid 2px $color-primary;
@@ -388,8 +393,10 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     }
     &__cards-title {
         @include h4;
+        color: $color-dark-l;
     }
     &__cards-button {
+        color: $color-dark-3xl;
         @include button_border;
     }
     &__button {
@@ -433,12 +440,14 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         margin-top: 3rem;
         display: flex;
         justify-content: center;
+        color: $color-dark-l;
         @include h4;
     }
 }
 
 .donation {
     display: flex;
+    background-color: $color-light-l;
     &__wrapper {
         display: flex;
         width: 100%;
@@ -487,6 +496,11 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
             color: $color-dark-l;
             @include h4;
         }
+        &:hover {
+            background-color: $color-primary-light;
+            box-shadow: none;
+            transition-duration: 0.5s;
+        }
     }
     &__content-info {
         margin-top: 2rem;
@@ -525,21 +539,29 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     }
     &__question-email {
         margin-bottom: 4rem;
-        display: flex;
-        align-items: center;
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
         p {
             margin-left: 2rem;
             color: $color-primary;
             @include h4;
+            text-decoration: none;
         }
     }
     &__question-phone {
-        display: flex;
-        align-items: center;
+        a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
         p {
             margin-left: 2rem;
             color: $color-primary;
             @include h4;
+            text-decoration: none;
         }
     }
     &__addres {
@@ -557,9 +579,12 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         }
     }
     &__addres-info {
-        display: flex;
-        margin-bottom: 3.2rem;
-        align-items: center;
+        a {
+            display: flex;
+            margin-bottom: 3.2rem;
+            align-items: center;
+            text-decoration: none;
+        }
         p {
             margin-left: 2rem;
             color: $color-primary;
