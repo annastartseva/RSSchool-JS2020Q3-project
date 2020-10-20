@@ -183,8 +183,11 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 .wrapper {
     display: flex;
     margin: 0 auto;
-    padding: 0 40px;
-    width: 1280px;
+    // padding: 0 40px;
+    // width: 1280px;
+    max-width: 128rem;
+    padding: 0 4rem;
+    flex: 1;
 }
 
 .header {
@@ -215,7 +218,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 
 .menu {
     display: flex;
-    width: 443px;
+    width: 44.3rem;
     .list {
         display: flex;
         justify-content: space-between;
@@ -255,7 +258,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 
 .hero {
     display: flex;
-    padding-top: 180px;
+    padding-top: 17.8rem;
     background: $start-screen-gradient-background;
     &__wrapper {
         display: flex;
@@ -268,8 +271,8 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-bottom: 81px;
-        width: 46rem;
+        padding-bottom: 8rem;
+        max-width: 46rem;
     }
     .content-section__title {
         color: $color-light-xl;
@@ -277,7 +280,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         @include h2;
     }
     .content-section__subtitle {
-        margin-top: 41px;
+        margin-top: 4.1rem;
         font-family: Arial, Helvetica, sans-serif;
         color: $color-dark-s;
         font-size: 1.5rem;
@@ -285,8 +288,8 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         width: 46rem;
     }
     .content-section__button {
-        margin-top: 40px;
-        width: 207px;
+        margin-top: 4rem;
+        width: 20.7rem;
         @include button_color;
     }
     h1 {
@@ -294,24 +297,26 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         width: 1px;
     }
     .hero__image-wrapper {
-        padding-left: 41px;
+        padding-left: 4.1rem;
     }
 }
 
 .about {
     display: flex;
+    padding-top: 8rem;
+    padding-bottom: 10rem;
     &__wrapper {
         display: flex;
         width: 100%;
         justify-content: space-between;
-        padding: 8rem 17.5rem 10rem 17.5rem;
+        padding: 0 21.5rem;
     }
     &__image-wrapper {
         display: flex;
     }
     &__image {
-        max-width: 300px;
-        height: 100%;
+        width: 300px;
+        height: 408px;
     }
     &__content {
         display: flex;
@@ -342,7 +347,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 }
 
 .pets {
-    padding-top: 7.8rem;
+    padding-top: 8rem;
     padding-bottom: 10rem;
     background-color: $color-light-l;
     &__wrapper {
@@ -352,7 +357,6 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         align-items: center;
     }
     &__title {
-        width: 40rem;
         text-align: center;
         span {
             display: block;
@@ -408,15 +412,12 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 
 .help {
     padding-top: 8rem;
-    padding-bottom: 4rem;
+    padding-bottom: 10rem;
     &__wrapper {
-        width: 100%;
         display: flex;
         flex-direction: column;
-        align-items: center;
     }
     &__title {
-        width: 40rem;
         text-align: center;
         span {
             display: block;
@@ -426,14 +427,17 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         @include h3;
     }
     &__table {
-        padding: 3.25rem 0;
-        width: 100%;
+        margin-top: 6rem;
+        // padding: 3.25rem 0;
+        // width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        column-gap: 12rem;
+        row-gap: 5.5rem;
     }
     &__table-point {
-        margin: 2.75rem 6rem;
+        // margin: 2.75rem 6rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -448,16 +452,16 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 }
 
 .donation {
-    display: flex;
+    padding-top: 8.2rem;
+    padding-bottom: 10.1rem;
     background-color: $color-light-l;
     &__wrapper {
         display: flex;
-        width: 100%;
-        justify-content: space-between;
-        padding: 8.2rem 14.3rem 10.1rem;
+        justify-content: center;
     }
     &__image-wrapper {
         display: flex;
+        justify-content: center;
         align-items: center;
     }
     &__image {
@@ -467,8 +471,8 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     &__content {
         display: flex;
         flex-direction: column;
-        width: 43rem;
-        padding-left: 3rem;
+        width: 38rem;
+        margin-left: 3rem;
     }
     &__content-title {
         span {
@@ -516,19 +520,18 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     background: $footer-gradient-background;
     &__wrapper {
         display: flex;
-        width: 100%;
         justify-content: space-between;
     }
-    &__content {
-        display: flex;
-        justify-content: space-between;
-        padding: 5.7rem 0 2.7rem 0;
-    }
+    // &__content {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     padding: 5.7rem 0 2.7rem 0;
+    // }
     &__question {
         display: flex;
         flex-direction: column;
-        margin-right: 16.1rem;
         max-width: 27.9rem;
+        padding: 5.7rem 0 2.7rem 0;
     }
     &__question-title {
         margin-bottom: 3.8rem;
@@ -570,6 +573,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         display: flex;
         flex-direction: column;
         max-width: 30.2rem;
+        padding: 5.7rem 0 2.7rem 0;
     }
     &__addres-title {
         color: $color-light-xl;

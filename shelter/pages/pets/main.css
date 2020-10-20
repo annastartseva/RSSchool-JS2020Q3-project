@@ -14,16 +14,22 @@
   display: -ms-flexbox;
   display: flex;
   margin: 0 auto;
-  padding: 0 40px;
-  width: 1280px;
+  padding: 0 4rem;
+  width: 128rem;
 }
 
 .header {
-  left: 0;
-  right: 0;
-  padding: 3rem 0;
-  position: fixed;
-  top: 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100vw;
+  max-width: 100%;
+  min-height: 12rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: -webkit-sticky;
+  position: sticky;
   background-color: #FFFFFF;
 }
 
@@ -45,8 +51,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 186px;
-  height: 60px;
 }
 
 .header .logo__title {
@@ -123,25 +127,13 @@
   padding-bottom: 2px;
 }
 
-.main {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
 .pets {
   padding-top: 8rem;
   padding-bottom: 10rem;
-  margin-top: 12rem;
   background-color: #F6F6F6;
 }
 
 .pets__wrapper {
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -160,7 +152,6 @@
 }
 
 .pets__title {
-  width: 40rem;
   text-align: center;
   color: #545454;
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -357,20 +348,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100%;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-}
-
-.footer__content {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 5.7rem 0 2.5rem 0;
 }
 
 .footer__question {
@@ -381,8 +361,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-right: 16.1rem;
   max-width: 27.9rem;
+  padding: 5.7rem 0 2.7rem 0;
 }
 
 .footer__question-title {
@@ -458,11 +438,12 @@
       -ms-flex-direction: column;
           flex-direction: column;
   max-width: 30.2rem;
+  padding: 5.7rem 0 2.7rem 0;
 }
 
 .footer__addres-title {
   color: #FFFFFF;
-  margin-bottom: 3.2rem;
+  margin-bottom: 3.4rem;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 3.5rem;
   font-style: normal;
@@ -480,7 +461,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 3.4rem;
+  margin-bottom: 3.2rem;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
