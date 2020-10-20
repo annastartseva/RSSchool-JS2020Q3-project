@@ -173,11 +173,10 @@
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  width: 100%;
-  padding: 5.9rem 0 3rem;
+  -webkit-column-gap: 4rem;
+          column-gap: 4rem;
+  row-gap: 3rem;
+  margin-top: 5.9rem;
 }
 
 .pets__cards-info {
@@ -195,7 +194,6 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding-bottom: 3rem;
-  margin-bottom: 3rem;
   width: 270px;
   height: 435px;
   background: #FAFAFA;
@@ -244,87 +242,46 @@
           transition-duration: 0.5s;
 }
 
-.pets__button {
+.pets-pagination {
+  margin-top: 6rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 34rem;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.pets__button-left {
+.pets-pagination__button {
+  margin: 0 1rem;
+  border-radius: 100%;
+  border: none;
+  width: 5.2rem;
+  height: 5.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-shadow: inset 0 0 0 2px #F1CDB3;
           box-shadow: inset 0 0 0 2px #F1CDB3;
   background: transparent;
-  border-radius: 100%;
-  border: none;
-  width: 5.2rem;
-  height: 5.2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.pets__button-left:disabled {
-  -webkit-box-shadow: inset 0 0 0 2px #CDCDCD;
-          box-shadow: inset 0 0 0 2px #CDCDCD;
-}
-
-.pets__button-number {
-  background-color: #F1CDB3;
-  border-radius: 100%;
-  border: none;
-  width: 5.2rem;
-  height: 5.2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   cursor: pointer;
   outline: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 115%;
+  letter-spacing: 0.12rem;
+  color: .pets-pagination__button #292929;
 }
 
-.pets__button-number:hover {
-  background-color: #FDDCC4;
-  -webkit-transition-duration: 0.5s;
-          transition-duration: 0.5s;
-}
-
-.pets__button-right {
-  -webkit-box-shadow: inset 0 0 0 2px #F1CDB3;
-          box-shadow: inset 0 0 0 2px #F1CDB3;
-  background: transparent;
-  border-radius: 100%;
-  border: none;
-  width: 5.2rem;
-  height: 5.2rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  cursor: pointer;
-  outline: none;
-}
-
-.pets__button-right:hover {
+.pets-pagination__button:hover {
   background-color: #FDDCC4;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -332,9 +289,32 @@
           transition-duration: 0.5s;
 }
 
-.pets__button-right:disabled {
+.pets-pagination__button:disabled {
   -webkit-box-shadow: inset 0 0 0 2px #CDCDCD;
           box-shadow: inset 0 0 0 2px #CDCDCD;
+}
+
+.pets-pagination__button-active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background-color: #F1CDB3;
+  cursor: auto;
+}
+
+.pets-pagination__button-active:hover {
+  background-color: #F1CDB3;
+}
+
+.pets-pagination__button:disabled {
+  -webkit-box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+          box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+}
+
+.pets-pagination__button:disabled:hover {
+  -webkit-box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+          box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+  background: transparent;
+  cursor: auto;
 }
 
 .footer {

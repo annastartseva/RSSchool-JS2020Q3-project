@@ -98,7 +98,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     }
 }
 
-@mixin slider_button {
+@mixin pagination_button {
     border-radius: 100%;
     border: none;
     width: 5.2rem;
@@ -106,12 +106,8 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-@mixin button_arrow {
     box-shadow: inset 0 0 0 2px $color-primary;
     background: transparent;
-    @include slider_button;
     cursor: pointer;
     outline: none;
     &:hover {
@@ -121,26 +117,6 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     }
     &:disabled {
         box-shadow: inset 0 0 0 2px $color-dark-s;
-    }
-}
-
-@mixin button_arrow_disabled {
-    box-shadow: inset 0 0 0 2px $color-primary;
-    background: transparent;
-    @include slider_button;
-    &:disabled {
-        box-shadow: inset 0 0 0 2px $color-dark-s;
-    }
-}
-
-@mixin button_color {
-    background-color: $color-primary;
-    @include slider_button;
-    cursor: pointer;
-    outline: none;
-    &:hover {
-        background-color: $color-primary-light;
-        transition-duration: 0.5s;
     }
 }
 
@@ -257,9 +233,10 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     &__cards {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
-        width: 100%;
-        padding: 5.9rem 0 3rem;
+        column-gap: 4rem;
+        row-gap: 3rem;
+        //justify-content: space-between;
+        margin-top: 5.9rem;
     }
     &__cards-info {
         display: flex;
@@ -267,7 +244,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         flex-direction: column;
         justify-content: space-between;
         padding-bottom: 3rem;
-        margin-bottom: 3rem;
+        //margin-bottom: 3rem;
         width: 270px;
         height: 435px;
         background: $color-light-s;
@@ -284,19 +261,33 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         color: $color-dark-3xl;
         @include button_border;
     }
-    &__button {
+    &-pagination {
+        margin-top: 6rem;
         display: flex;
-        width: 34rem;
-        justify-content: space-between;
-    }
-    &__button-left {
-        @include button_arrow_disabled;
-    }
-    &__button-number {
-        @include button_color;
-    }
-    &__button-right {
-        @include button_arrow;
+        //width: 34rem;
+        justify-content: center;
+        &__button {
+            margin: 0 1rem;
+            @include pagination_button;
+            @include h4;
+            color: &$color-dark-3xl;
+            &-active {
+                box-shadow: none;
+                background-color: $color-primary;
+                cursor: auto;
+                &:hover {
+                    background-color: $color-primary;
+                }
+            }
+            &:disabled {
+                box-shadow: inset 0 0 0 0.2rem $color-dark-s;
+                &:hover {
+                    box-shadow: inset 0 0 0 0.2rem $color-dark-s;
+                    background: transparent;
+                    cursor: auto;
+                }
+            }
+        }
     }
 }
 
