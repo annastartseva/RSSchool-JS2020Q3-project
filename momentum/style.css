@@ -5,20 +5,73 @@
 }
 
 body {
+    margin: 0px;
+    height: 100wh;
+    width: 100vw;
+    padding: 3vh;
     font-family: 'Quicksand', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
-    height: 100vh;
     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-image: url("https://raw.githubusercontent.com/irinainina/ready-projects/momentum/momentum/assets/images/night/17.jpg"); */
+    transition: background-image 1s ease-in-out;
     color: white;
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
+.header {
+    width: 95%;
+    min-height: 25vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    /* align-items: flex-start; */
+}
+
+.reloud-bgr {
+    width: 5vh;
+    height: 5vh;
+    border: 0;
+    background: url("assets/images/reload.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: center center;
+    border-radius: 50%;
+    filter: grayscale(0.7);
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    opacity: 0.8;
+    box-shadow: 1px 1px 10px #444444;
+    /* &:hover {
+        filter: grayscale(0.8);
+    } */
+}
+
+.reloud-bgr:hover {
+    opacity: 1;
+}
+
+.reloud-bgr:active,
+.reloud-bgr:focus {
+    outline: 0;
+}
+
+.reloud-bgr:active {
+    transform: scale(1.02)
+}
+
 .time {
-    font-size: 8rem;
+    font-size: 7rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .date {

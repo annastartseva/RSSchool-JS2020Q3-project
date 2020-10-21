@@ -7,7 +7,9 @@ const time = document.querySelector('.time'),
     date = document.querySelector('.date'),
     greeting = document.querySelector('.greeting'),
     name = document.querySelector('.name'),
-    focus = document.querySelector('.focus-field');
+    focus = document.querySelector('.focus-field'),
+    btn = document.querySelector('.reloud-bgr');
+
 //object
 const monthText = {
     '0': 'January',
@@ -38,6 +40,8 @@ const dayWeekText = {
 const showAmPm = true;
 let memoryVarName = '';
 let memoryVarFocus = '';
+let arrImg = [];
+let numberSetImage = 0;
 
 // function show time
 function showTime() {
@@ -55,7 +59,7 @@ function showTime() {
 
     //output time
     //time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)} ${showAmPm ? amPm : ''}`;
-    time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}`;
+    time.innerHTML = `<span class="time_block">${addZero(hour)} </span> <span> : </span> <span class="time_block"> ${addZero(min)} </span> <span> : </span> <span class="time_block">${addZero(sec)}</span>`;
     changeDate(hour, min, sec);
 
     setTimeout(showTime, 1000);
@@ -83,31 +87,7 @@ function addZero(n) {
     return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
-//background
-function setBgGreet() {
-    let today = new Date(),
-        hour = today.getHours();
 
-    if (hour < 6) {
-        //night
-        document.body.style.backgroundImage = "url('assets/images/night/01.jpg')";
-        greeting.textContent = 'Good Night, ';
-        document.body.style.color = 'white';
-    } else if (hour < 12) {
-        //morning
-        document.body.style.backgroundImage = "url('assets/images/morning/01.jpg')";
-        greeting.textContent = 'Good Morning, ';
-    } else if (hour < 18) {
-        //day
-        document.body.style.backgroundImage = "url('assets/images/day/01.jpg')";
-        greeting.textContent = 'Good Afternoon, ';
-    } else {
-        //evening
-        document.body.style.backgroundImage = "url('assets/images/evening/01.jpg')";
-        greeting.textContent = 'Good Evening, ';
-        //document.body.style.color = 'white';
-    }
-}
 // BLOCK WITH FUNCTION FOR CHANGE NAME
 //get name
 function getName() {
@@ -233,6 +213,120 @@ function clearFocus(e1) {
     setFocus(e1);
 }
 
+// BLOCK for change image
+
+let i = 0;
+
+// set image on time
+function setBgImage() {
+    const today = new Date(),
+        hour = today.getHours('img');
+    console.log('function setBgImage: hour:' + hour);
+    document.body.style.backgroundImage = `url(${arrImg[hour]})`;
+    console.log('function setBgImage: arrImg[hour]:' + arrImg[hour]);
+    numberSetImage = hour;
+}
+
+//change image by button
+function changeBgImage() {
+    const body = document.querySelector('body');
+    const img = document.createElement('img');
+    console.log('function changeBgImage: numberSetImage do:' + numberSetImage);
+    numberSetImage = (numberSetImage + 1) % arrImg.length;
+    console.log('function changeBgImage: numberSetImage posle:' + numberSetImage);
+
+    const src = arrImg[numberSetImage];
+    console.log('function changeBgImage: src:' + src);
+    img.src = src;
+    img.onload = () => {
+        document.body.style.backgroundImage = `url(${src})`
+    }
+
+
+    //     const index = i % arrImg.length;
+    //     const imageSrc = base + arrImg[index];
+    //     viewBgImage(imageSrc);
+    //     i++;
+    //     btn.disabled = true;
+    //     setTimeout(function() { btn.disabled = false }, 1000);
+}
+
+
+
+//background
+function setBgGreet() {
+    let today = new Date(),
+        hour = today.getHours();
+
+    if (hour < 6) {
+        //night
+        //document.body.style.backgroundImage = "url('assets/images/night/01.jpg')";
+        greeting.textContent = 'Good Night, ';
+    } else if (hour < 12) {
+        //morning
+        //document.body.style.backgroundImage = "url('assets/images/morning/01.jpg')";
+        greeting.textContent = 'Good Morning, ';
+    } else if (hour < 18) {
+        //day
+        //document.body.style.backgroundImage = "url('assets/images/day/01.jpg')";
+        greeting.textContent = 'Good Afternoon, ';
+    } else {
+        //evening
+        //document.body.style.backgroundImage = "url('assets/images/evening/01.jpg')";
+        greeting.textContent = 'Good Evening, ';
+        //document.body.style.color = 'white';
+    }
+}
+
+// Get array of image for background
+function makeArrImg() {
+    let i = 0;
+    let randomImg = '';
+    while (i < 6) {
+        randomImg = `assets/images/night/${addZero(Math.floor(Math.random()*20 + 1))}.jpg`;
+        //console.log('makeArrImg: ' + randomImg);
+        if (!arrImg.includes(randomImg)) {
+            arrImg.push(randomImg)
+            i++
+        }
+    }
+    while (i < 12) {
+        randomImg = `assets/images/morning/${addZero(Math.floor(Math.random()*20 + 1))}.jpg`;
+        //console.log('makeArrImg: ' + randomImg);
+        if (!arrImg.includes(randomImg)) {
+            arrImg.push(randomImg);
+            i++;
+        }
+    }
+    while (i < 18) {
+        randomImg = `assets/images/day/${addZero(Math.floor(Math.random()*20 + 1))}.jpg`;
+        //console.log('makeArrImg: ' + randomImg);
+        if (!arrImg.includes(randomImg)) {
+            arrImg.push(randomImg);
+            i++;
+        }
+    }
+    while (i < 24) {
+        randomImg = `assets/images/evening/${addZero(Math.floor(Math.random()*20 + 1))}.jpg`;
+        //console.log('makeArrImg: ' + randomImg);
+        if (!arrImg.includes(randomImg)) {
+            arrImg.push(randomImg);
+            i++;
+        }
+    }
+    console.log('arrImg: ' + arrImg);
+}
+
+
+// run
+showTime();
+showDate();
+makeArrImg();
+setBgImage();
+setBgGreet();
+getName();
+getFocus();
+
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', blurName);
 name.addEventListener('click', clearName);
@@ -241,9 +335,4 @@ focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', blurFocus);
 focus.addEventListener('click', clearFocus);
 
-// run
-showTime();
-showDate();
-setBgGreet();
-getName();
-getFocus();
+btn.addEventListener('click', changeBgImage);
