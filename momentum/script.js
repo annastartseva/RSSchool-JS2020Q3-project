@@ -72,14 +72,20 @@ function showTime() {
     //time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)} ${showAmPm ? amPm : ''}`;
     time.innerHTML = `<span class="time_block">${addZero(hour)} </span> <span> : </span> <span class="time_block"> ${addZero(min)} </span> <span> : </span> <span class="time_block">${addZero(sec)}</span>`;
 
-    if (min == 00 && sec == 00) {
-        setBgGreet();
-        setBgImage();
-        //getWeather()
-    }
-    if (hour === 0 && min === 0 && sec === 0) {
+    if (hour === 00 && min === 00 && sec === 00) {
+        makeArrImg();
         showDate();
     }
+
+    if (min == 00 && sec == 00) {
+
+        setBgGreet();
+        setBgImage();
+        getWeather();
+        getQuote();
+
+    }
+
 
     setTimeout(showTime, 1000);
 }
@@ -93,7 +99,7 @@ function showDate() {
         dayWeek = today.getDay();
 
     //output date
-    date.innerHTML = `${dayWeekText[dayWeek]}<span> , </span>${dateDay}<span> </span>${monthText[month]}`;
+    date.innerHTML = `${dayWeekText[dayWeek]}<span>, </span>${dateDay}<span> </span>${monthText[month]}`;
 }
 
 //add zero
@@ -329,19 +335,15 @@ function setBgGreet() {
 
     if (hour < 6) {
         //night
-        //document.body.style.backgroundImage = "url('assets/images/night/01.jpg')";
         greeting.textContent = 'Good Night,';
     } else if (hour < 12) {
         //morning
-        //document.body.style.backgroundImage = "url('assets/images/morning/01.jpg')";
         greeting.textContent = 'Good Morning,';
     } else if (hour < 18) {
         //day
-        //document.body.style.backgroundImage = "url('assets/images/day/01.jpg')";
         greeting.textContent = 'Good Afternoon,';
     } else {
         //evening
-        //document.body.style.backgroundImage = "url('assets/images/evening/01.jpg')";
         greeting.textContent = 'Good Evening,';
         //document.body.style.color = 'white';
     }
