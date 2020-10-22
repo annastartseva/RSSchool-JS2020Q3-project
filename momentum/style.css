@@ -38,8 +38,8 @@ body {
 
 .reloud-bgr,
 .quote-btn {
-    width: 4vh;
-    height: 4vh;
+    width: 2rem;
+    height: 2rem;
     border: 0;
     background: url("assets/images/reload.svg");
     background-size: contain;
@@ -75,10 +75,16 @@ body {
 .city-weather {
     font-size: 1rem;
     font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* align-items: flex-start; */
 }
 
 .city {
     margin-top: 1.5vw;
+    margin-bottom: 1vw;
 }
 
 .wrapper {
@@ -86,6 +92,7 @@ body {
     display: flex;
     color: #ffffff;
     flex-direction: column;
+    align-items: center;
     display: block;
 }
 
@@ -114,6 +121,10 @@ body {
 
 .focus-wrapper {
     margin-top: 4rem;
+}
+
+.focus-field {
+    max-width: 80vw;
 }
 
 .name:focus {
@@ -151,8 +162,86 @@ h2 {
     margin-top: 1rem;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+    .reloud-bgr,
+    .quote-btn {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    .city-weather {
+        font-size: 0.7rem;
+        font-weight: 400;
+    }
+    .name-wrapper {
+        font-size: 1.3rem;
+        font-weight: 400;
+    }
     .time {
-        font-size: 6rem;
+        font-size: 4rem;
+    }
+    .date {
+        font-size: 1.3rem;
+        justify-content: center;
+    }
+    .focus-wrapper {
+        margin-top: 3rem;
+    }
+    h1 {
+        margin-bottom: 1rem;
+    }
+    h2 {
+        margin-bottom: 0.5rem;
+        opacity: 0.8;
+        font-size: 1rem;
+    }
+    .quote-text {
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+}
+
+@media screen and (min-width:480px) and (max-width:800px) {
+    /* @media (min-width: 401px,
+max-width: 800px) { */
+    body {
+        font-size: 14px;
+    }
+    .reloud-bgr,
+    .quote-btn {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+    .city-weather {
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+    .name-wrapper {
+        font-size: 2rem;
+        font-weight: 400;
+    }
+    .time {
+        font-size: 5rem;
+    }
+    .date {
+        font-size: 2rem;
+        justify-content: center;
+    }
+    .focus-wrapper {
+        margin-top: 2rem;
+    }
+    h1 {
+        margin-bottom: 1rem;
+    }
+    h2 {
+        margin-bottom: 0.5rem;
+        opacity: 0.8;
+        font-size: 1rem;
+    }
+    .quote-text {
+        font-size: 0.8rem;
+        font-weight: 400;
     }
 }
