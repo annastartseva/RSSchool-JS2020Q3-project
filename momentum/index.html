@@ -4,41 +4,46 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@600&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Cousine:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="owfont-regular.css">
     <link rel="stylesheet" href="style.css" />
     <title>momentum</title>
 </head>
 
 <body>
-    <div class="header">
+    <div class="header-wrapper">
         <button class="reloud-bgr" title="change background"></button>
-        <h4 class="gr-name">
-            <div class="city" contenteditable="true">city</div>
-        </h4>
+        <div class="city-weather">
+            <div class="city" contenteditable="true"></div>
+            <i class="weather-icon owf"></i>
+            <div class="temperature">C</div>
+            <div class="humidity"></div>
+            <div class="wind"></div>
+            <div class="weather-description">sd</div>
+        </div>
 
     </div>
 
+    <div class="wrapper">
+        <h1 class="name-wrapper">
+            <span class="greeting"></span>
+            <div class="name" contenteditable="true"></div>
+        </h1>
+        <time class="time"></time>
+        <date class="date">12d</date>
 
-    <time class="time"></time>
-    <date class="date">12d</date>
-    <h1 class="gr-name">
-        <span class="greeting"></span>
-        <div class="name" contenteditable="true"></div>
-    </h1>
-    <h2>
-        <span>What Is Your Focus For Today?</span>
-        <div class="focus-field" contenteditable="true"></div>
-    </h2>
+        <h2 class="focus-wrapper">
+            <span>What Is Your Focus For Today?</span>
+            <div class="focus-field" contenteditable="true"></div>
+        </h2>
+    </div>
+
     <div class="quote-wrapper">
+        <span class="quote-text">ssffdsfsdf</span>
 
-        <span class="quote-text">
-
-        </span>
-        <span class="figcaption">
-
-        </span>
+        <button class="quote-btn" title="New quote"></button>
     </div>
-    <button class="quote-btn" title="New quote"></button>
     <script src="script.js"></script>
 </body>
 

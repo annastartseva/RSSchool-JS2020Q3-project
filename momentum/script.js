@@ -12,7 +12,12 @@ const time = document.querySelector('.time'),
     blockquote = document.querySelector('.quote-text'),
     //figcaption = document.querySelector('.figcaption'),
     quoteBtn = document.querySelector('.quote-btn'),
-    city = document.querySelector('.city');
+    city = document.querySelector('.city'),
+    weatherIcon = document.querySelector('.weather-icon'),
+    temperature = document.querySelector('.temperature'),
+    weatherDescription = document.querySelector('.weather-description'),
+    humidity = document.querySelector('.humidity'),
+    wind = document.querySelector('.wind');
 
 
 //object
@@ -231,6 +236,7 @@ function getCity() {
         city.textContent = '[Enter city]';
     } else {
         city.textContent = localStorage.getItem('city');
+        getWeather()
     }
 }
 
@@ -270,6 +276,7 @@ function blurCity(e) {
         localStorage.setItem('city', e.target.innerText);
         getCity();
     }
+    getWeather();
 }
 
 //CLEAR entry field for city on click
@@ -315,7 +322,6 @@ function changeBgImage() {
 }
 
 
-
 //background
 function setBgGreet() {
     let today = new Date(),
@@ -324,19 +330,19 @@ function setBgGreet() {
     if (hour < 6) {
         //night
         //document.body.style.backgroundImage = "url('assets/images/night/01.jpg')";
-        greeting.textContent = 'Good Night, ';
+        greeting.textContent = 'Good Night,';
     } else if (hour < 12) {
         //morning
         //document.body.style.backgroundImage = "url('assets/images/morning/01.jpg')";
-        greeting.textContent = 'Good Morning, ';
+        greeting.textContent = 'Good Morning,';
     } else if (hour < 18) {
         //day
         //document.body.style.backgroundImage = "url('assets/images/day/01.jpg')";
-        greeting.textContent = 'Good Afternoon, ';
+        greeting.textContent = 'Good Afternoon,';
     } else {
         //evening
         //document.body.style.backgroundImage = "url('assets/images/evening/01.jpg')";
-        greeting.textContent = 'Good Evening, ';
+        greeting.textContent = 'Good Evening,';
         //document.body.style.color = 'white';
     }
 }
@@ -393,20 +399,51 @@ async function getQuote() {
     blockquote.textContent = data.quoteText;
     //figcaption.textContent = data.quoteAuthor;
 
+    // const url = `https://cors-anywhere.herokuapp.com/https://favqs.com/api/qotd`;
+    // const res = await fetch(url);
+    // const data = await res.json();
+    // console.log('getQuote ' + data.quote.body);
+    // blockquote.textContent = data.quote.body;
+
+
+    if (blockquote === '') {
+        const url = `https://cors-anywhere.herokuapp.com/https://api.adviceslip.com/advice`;
+        const res = await fetch(url);
+        const data = await res.json();
+        console.log('getQuote ' + data.slip.advice);
+        blockquote.textContent = data.slip.advice;
+    }
+
     // const url = `https://cors-anywhere.herokuapp.com/https://api.adviceslip.com/advice`;
     // const res = await fetch(url);
     // const data = await res.json();
-    // console.log('getQuote ' + data.quoteText);
-    // blockquote.textContent = data.advice;
-    // //figcaption.textContent = data.quoteAuthor;
+    // console.log('getQuote ' + data.slip.advice);
+    // blockquote.textContent = data.slip.advice;
 
-    // const url = `https://cors-anywhere.herokuapp.com/https://type.fit/api/quotes`;
-    // const res = await axios.get(url);
+    // const url = `https://cors-anywhere.herokuapp.com/https://quote-garden.herokuapp.com/api/v2/quotes/random`;
+    // const res = await fetch(url);
     // const data = await res.json();
-    // console.log('getQuote ' + data.text);
-    // blockquote.textContent = data.text;
+    // console.log('getQuote ' + data.quoteText);
+    // blockquote.textContent = data.quoteText;
+
 }
 
+// POGODA
+async function getWeather() {
+    console.log('getWeather city.textContent: ' + localStorage.getItem('city'));
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${localStorage.getItem('city')}&lang=en&appid=a02ecb70744342b247d342098dbaf515&units=metric`;
+    console.log('getWeather url: ' + url);
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.weather[0].id, data.weather[0].description, data.main.temp, data.wind.speed, data.main.humidity);
+
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+
+    temperature.textContent = `t ${data.main.temp}°C`;
+    humidity.textContent = `humidity ${data.main.humidity} %`;
+    wind.textContent = `wind ${data.wind.speed} m/s`;
+    weatherDescription.textContent = data.weather[0].description;
+}
 
 
 // run
@@ -419,6 +456,7 @@ getName();
 getFocus();
 getCity();
 getQuote();
+getWeather();
 
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', blurName);

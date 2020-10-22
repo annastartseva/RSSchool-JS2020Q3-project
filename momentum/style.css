@@ -6,10 +6,12 @@
 
 body {
     margin: 0px;
-    height: 100wh;
+    height: 100vh;
     width: 100vw;
     padding: 3vh;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Cousine', monospace;
+    /* font-family: 'Overpass Mono', monospace; */
+    font-size: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,9 +26,9 @@ body {
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-.header {
+.header-wrapper {
     width: 95%;
-    min-height: 25vh;
+    min-height: 20vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -70,19 +72,48 @@ body {
     transform: scale(1.02)
 }
 
+.city-weather {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
 .city {
     margin-top: 1.5vw;
 }
 
-.time {
-    font-size: 7rem;
+.wrapper {
+    max-width: 100vh;
     display: flex;
-    justify-content: space-between;
+    color: #ffffff;
+    flex-direction: column;
+    display: block;
+}
+
+.name-wrapper {
+    display: flex;
+    font-size: 2.5rem;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.name {
+    margin-left: 1rem;
+    text-align: center;
+}
+
+.time {
+    font-size: 9rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
 }
 
 .date {
-    font-size: 2.5rem;
-    margin-bottom: 4rem;
+    font-size: 2rem;
+}
+
+.focus-wrapper {
+    margin-top: 4rem;
 }
 
 .name:focus {
@@ -94,7 +125,7 @@ body {
 }
 
 h1 {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 h2 {
@@ -103,7 +134,21 @@ h2 {
 }
 
 .quote-wrapper {
-    max-width: 80wv;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 12vh;
+    width: 80wv;
+}
+
+.quote-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.quote-btn {
+    margin-top: 1rem;
 }
 
 @media (max-width: 700px) {
