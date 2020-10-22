@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0px;
+    height: 100vh;
+    width: 100vw;
+    padding: 3vh;
+    font-family: 'Cousine', monospace;
+    /* font-family: 'Overpass Mono', monospace; */
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-image: url("https://raw.githubusercontent.com/irinainina/ready-projects/momentum/momentum/assets/images/night/17.jpg"); */
+    transition: background-image 1s ease-in-out;
+    color: white;
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header-wrapper {
+    width: 95%;
+    min-height: 20vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    /* align-items: flex-start; */
+}
+
+.reloud-bgr,
+.quote-btn {
+    width: 4vh;
+    height: 4vh;
+    border: 0;
+    background: url("assets/images/reload.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-position: center center;
+    border-radius: 50%;
+    filter: grayscale(0.7);
+    margin: 10px;
+    cursor: pointer;
+    outline: none;
+    opacity: 0.7;
+    box-shadow: 1px 1px 10px #444444;
+}
+
+.reloud-bgr:hover,
+.quote-btn:hover {
+    opacity: 1;
+}
+
+.reloud-bgr:active,
+.reloud-bgr:focus,
+.quote-btn:active,
+.quote-btn:focus {
+    outline: 0;
+}
+
+.reloud-bgr:active,
+.quote-btn:active {
+    transform: scale(1.02)
+}
+
+.city-weather {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.city {
+    margin-top: 1.5vw;
+}
+
+.wrapper {
+    max-width: 100vh;
+    display: flex;
+    color: #ffffff;
+    flex-direction: column;
+    display: block;
+}
+
+.name-wrapper {
+    display: flex;
+    font-size: 2.5rem;
+    font-weight: 700;
+    justify-content: center;
+}
+
+.name {
+    margin-left: 1rem;
+    text-align: center;
+}
+
+.time {
+    font-size: 9rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+}
+
+.date {
+    font-size: 2rem;
+}
+
+.focus-wrapper {
+    margin-top: 4rem;
+}
+
+.name:focus {
+    outline: none;
+}
+
+.focus-field:focus {
+    outline: none;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.quote-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 12vh;
+    width: 80wv;
+}
+
+.quote-text {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.quote-btn {
+    margin-top: 1rem;
+}
+
+@media (max-width: 700px) {
+    .time {
+        font-size: 6rem;
+    }
+}
