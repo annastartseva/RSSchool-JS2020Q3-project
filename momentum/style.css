@@ -58,6 +58,8 @@ body {
 .reloud-bgr:hover,
 .quote-btn:hover {
     opacity: 1;
+    transform: rotate(100deg);
+    transition-duration: 1s;
 }
 
 .reloud-bgr:active,
@@ -88,7 +90,7 @@ body {
 }
 
 .wrapper {
-    max-width: 100vh;
+    max-width: 90vh;
     display: flex;
     color: #ffffff;
     flex-direction: column;
@@ -120,11 +122,16 @@ body {
 }
 
 .focus-wrapper {
-    margin-top: 4rem;
+    margin-top: 6vh;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .focus-field {
-    max-width: 80vw;
+    margin-top: 2vh;
+    /* max-width: 100em; */
 }
 
 .name:focus {
@@ -139,15 +146,16 @@ h1 {
     margin-bottom: 1rem;
 }
 
-h2 {
+
+/* h2 {
     margin-bottom: 0.5rem;
     opacity: 0.8;
-}
+} */
 
 .quote-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     min-height: 12vh;
     width: 80wv;
@@ -187,15 +195,16 @@ h2 {
         justify-content: center;
     }
     .focus-wrapper {
-        margin-top: 3rem;
-    }
-    h1 {
-        margin-bottom: 1rem;
-    }
-    h2 {
+        margin-top: 6vh;
         margin-bottom: 0.5rem;
         opacity: 0.8;
         font-size: 1rem;
+    }
+    .focus-field {
+        margin-top: 2vh;
+    }
+    h1 {
+        margin-bottom: 1rem;
     }
     .quote-text {
         font-size: 0.8rem;
@@ -203,7 +212,7 @@ h2 {
     }
 }
 
-@media screen and (min-width:480px) and (max-width:800px) {
+@media (min-width:480px) and (max-width:800px) {
     /* @media (min-width: 401px,
 max-width: 800px) { */
     body {
@@ -223,14 +232,15 @@ max-width: 800px) { */
         font-weight: 400;
     }
     .time {
-        font-size: 5rem;
+        font-size: 5.5rem;
     }
     .date {
         font-size: 2rem;
         justify-content: center;
     }
     .focus-wrapper {
-        margin-top: 2rem;
+        margin-top: 4vh;
+        max-width: inherit;
     }
     h1 {
         margin-bottom: 1rem;
@@ -238,10 +248,10 @@ max-width: 800px) { */
     h2 {
         margin-bottom: 0.5rem;
         opacity: 0.8;
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
     .quote-text {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         font-weight: 400;
     }
 }
