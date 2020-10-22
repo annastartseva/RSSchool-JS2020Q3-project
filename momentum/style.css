@@ -48,7 +48,7 @@ body {
     background-position: center center;
     border-radius: 50%;
     filter: grayscale(0.7);
-    margin: 10px;
+    margin: 0.5rem;
     cursor: pointer;
     outline: none;
     opacity: 0.7;
@@ -58,7 +58,7 @@ body {
 .reloud-bgr:hover,
 .quote-btn:hover {
     opacity: 1;
-    transform: rotate(100deg);
+    transform: rotate(60deg);
     transition-duration: 1s;
 }
 
@@ -71,7 +71,8 @@ body {
 
 .reloud-bgr:active,
 .quote-btn:active {
-    transform: scale(1.02)
+    transform: scale(1.2, 1.2);
+    transition-duration: 0.5s;
 }
 
 .city-weather {
@@ -159,6 +160,7 @@ h1 {
     align-items: center;
     min-height: 12vh;
     width: 80wv;
+    margin-top: 6vh;
 }
 
 .quote-text {
@@ -180,7 +182,7 @@ h1 {
         height: 1.2rem;
     }
     .city-weather {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
         font-weight: 400;
     }
     .name-wrapper {
@@ -252,6 +254,50 @@ max-width: 800px) { */
     }
     .quote-text {
         font-size: 0.9rem;
+        font-weight: 400;
+    }
+}
+
+@media (min-width:800px) and (max-width:1400px) {
+    /* @media (min-width: 401px,
+max-width: 800px) { */
+    body {
+        font-size: 20px;
+    }
+    .reloud-bgr,
+    .quote-btn {
+        width: 1.7rem;
+        height: 1.7rem;
+    }
+    .city-weather {
+        font-size: 0.9rem;
+        font-weight: 400;
+    }
+    .name-wrapper {
+        font-size: 1.7rem;
+        font-weight: 400;
+    }
+    .time {
+        font-size: 6.5rem;
+    }
+    .date {
+        font-size: 2rem;
+        justify-content: center;
+    }
+    .focus-wrapper {
+        margin-top: 4vh;
+        max-width: inherit;
+    }
+    h1 {
+        margin-bottom: 1rem;
+    }
+    h2 {
+        margin-bottom: 0.5rem;
+        opacity: 0.8;
+        font-size: 1.2rem;
+    }
+    .quote-text {
+        font-size: 1rem;
         font-weight: 400;
     }
 }
