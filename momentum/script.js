@@ -458,7 +458,7 @@ async function getWeather() {
     } catch (e) {
         console.log('catch e: ' + e);
         if (localStorage.getItem('city') !== null && localStorage.getItem('city') !== '' && localStorage.getItem('city') !== '[Enter city]') {
-            city.textContent = 'Non-existent city, enter correct city name';
+            city.textContent = 'Enter correct city name';
             clearWeather();
 
         }
@@ -481,8 +481,8 @@ async function getWeather() {
 
 function clearWeather() {
     console.log('function clearWeather');
-    if (city.textContent === 'Non-existent city, enter correct city name') {
-        console.log('function clearWeather if');
+    if (city.textContent === 'Enter correct city name') {
+        // console.log('function clearWeather if');
         // weatherIcon.innerText = '';
         weatherIcon.classList.add('hidden');
         temperature.innerText = '';
@@ -491,12 +491,11 @@ function clearWeather() {
         weatherDescription.innerText = '';
     }
 
-
-    console.log('city: ' + city.textContent);
-    console.log('weatherIcon: ' + weatherIcon.textContent);
-    console.log('temperature: ' + temperature.textContent);
-    console.log('humidity: ' + humidity.textContent);
-    console.log('wind: ' + wind.textContent);
+    // console.log('city: ' + city.textContent);
+    // console.log('weatherIcon: ' + weatherIcon.textContent);
+    // console.log('temperature: ' + temperature.textContent);
+    // console.log('humidity: ' + humidity.textContent);
+    // console.log('wind: ' + wind.textContent);
 }
 
 
