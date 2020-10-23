@@ -207,6 +207,15 @@ h1 {
     .name-wrapper {
         font-size: 1.3rem;
         font-weight: 400;
+        display: flex;
+        column-gap: 1.5vw;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .name {
+        margin-left: 0;
+        text-align: center;
     }
     .time {
         font-size: 4rem;
@@ -251,6 +260,15 @@ max-width: 800px) { */
     .name-wrapper {
         font-size: 2rem;
         font-weight: 400;
+        display: flex;
+        column-gap: 1.5vw;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .name {
+        margin-left: 0;
+        text-align: center;
     }
     .time {
         font-size: 5.5rem;
@@ -289,7 +307,7 @@ max-width: 800px) { */
         height: 1.7rem;
     }
     .city-weather {
-        font-size: 0.9rem;
+        font-size: 1rem;
         font-weight: 400;
     }
     .name-wrapper {
@@ -316,12 +334,12 @@ max-width: 800px) { */
         font-size: 1.2rem;
     }
     .quote-text {
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: 400;
     }
 }
 
-@media screen and (orientation:landscape) and (max-width: 600px) {
+@media screen and (orientation:landscape) and (max-width: 800px) {
     body {
         font-size: 14px;
     }
