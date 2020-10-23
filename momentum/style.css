@@ -135,6 +135,11 @@ body {
     /* max-width: 100em; */
 }
 
+.city:focus,
+.city:active {
+    outline: none;
+}
+
 .name:focus {
     outline: none;
 }
@@ -172,9 +177,23 @@ h1 {
     margin-top: 1rem;
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 480px) {
     body {
         font-size: 14px;
+        height: calc(var(--vh, 1vh) * 100);
+    }
+    .header-wrapper {
+        width: 95%;
+        min-height: 20vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 0 auto;
+        /* align-items: flex-start; */
     }
     .reloud-bgr,
     .quote-btn {
