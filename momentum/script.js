@@ -1,8 +1,4 @@
 //DOM elements
-// const time = document.getElementByClassName('.time'),
-//     greeting = document.getElementsByClassName('greeting'),
-//     name = document.getElementsByClassName('name'),
-//     focus = document.getElementsByClassName('focus');
 const time = document.querySelector('.time'),
     date = document.querySelector('.date'),
     greeting = document.querySelector('.greeting'),
@@ -19,7 +15,6 @@ const time = document.querySelector('.time'),
     humidity = document.querySelector('.humidity'),
     wind = document.querySelector('.wind');
 
-
 //object
 const monthText = {
     '0': 'January',
@@ -35,7 +30,6 @@ const monthText = {
     '10': 'November',
     '11': 'December',
 };
-
 const dayWeekText = {
     '0': 'Sunday',
     '1': 'Monday',
@@ -45,6 +39,8 @@ const dayWeekText = {
     '5': 'Friday',
     '6': 'Saturday',
 };
+
+
 
 // options
 const showAmPm = true;
@@ -56,6 +52,7 @@ let numberSetImage = 0;
 
 // function show time
 function showTime() {
+    //console.log('function showTime');
     //let today = new Date(2019, 06, 10, 20, 33, 30);
     let today = new Date(),
         hour = today.getHours(),
@@ -78,20 +75,17 @@ function showTime() {
     }
 
     if (min == 00 && sec == 00) {
-
         setBgGreet();
         setBgImage();
         getWeather();
         getQuote();
-
     }
-
-
     setTimeout(showTime, 1000);
 }
 
 // function show date
 function showDate() {
+    console.log('function showDate');
     //let today = new Date (2019, 06, 10, 20, 33, 30);
     let today = new Date(),
         month = today.getMonth(),
@@ -174,6 +168,7 @@ function clearName(e1) {
 
 //get focus
 function getFocus() {
+    console.log('function getFocus');
     if (localStorage.getItem('focus') === null || localStorage.getItem('focus') === '') {
         focus.textContent = '[Enter Focus]';
     } else {
@@ -183,7 +178,7 @@ function getFocus() {
 
 // set Focus Enter button
 function setFocus(e) {
-    //console.log('function setFocus');
+    console.log('function setFocus');
     if (e.type === 'keypress') {
         //make sure enter is pressed
         if (e.which === 13 || e.keyCode === 13) {
@@ -248,13 +243,15 @@ function getCity() {
 
 // set city Enter button
 function setCity(e) {
-    console.log('function setCity');
+    console.log('function setCity')
+    console.log('function setCity: e.type = ' + e.type);
     if (e.type === 'keypress') {
         //make sure enter is pressed
         if (e.which === 13 || e.keyCode === 13) {
             if (city.textContent === '' && memoryVarCity === '') {
                 city.textContent = localStorage.getItem('city');
                 getCity();
+
             } else if (city.textContent === '' && memoryVarCity !== '') {
                 city.textContent = memoryVarCity;
                 localStorage.setItem('city', memoryVarCity);
@@ -263,10 +260,13 @@ function setCity(e) {
                 localStorage.setItem('city', e.target.innerText);
             }
             city.blur();
+            getWeather();
         }
     } else {
         localStorage.setItem('city', e.target.innerText);
+        console.log('function setCity: e.target.innerText = ' + e.target.innerText);
     }
+    // getWeather();
 }
 // set city on click mouse
 function blurCity(e) {
@@ -282,19 +282,19 @@ function blurCity(e) {
         localStorage.setItem('city', e.target.innerText);
         getCity();
     }
-    getWeather();
 }
 
 //CLEAR entry field for city on click
 function clearCity(e1) {
     console.log('function clearCity');
+    console.log('function clearCity: e1 ' + e1);
     if (localStorage.getItem('city') !== null && localStorage.getItem('city') !== '') {
         memoryVarCity = localStorage.getItem('city');
     }
-    console.log("memoryVarCity " + memoryVarCity)
+    console.log("memoryVarCity:  " + memoryVarCity)
     city.textContent = '';
     //localStorage.setItem('city', memoryVar);
-    setCity(e1);
+    // setCity(e1);
 }
 
 // BLOCK for change image
@@ -303,9 +303,10 @@ let i = 0;
 
 // set image on time
 function setBgImage() {
+    console.log('function setBgImage');
     const today = new Date(),
         hour = today.getHours('img');
-    console.log('function setBgImage: hour:' + hour);
+    //console.log('function setBgImage: hour:' + hour);
     document.body.style.backgroundImage = `url(${arrImg[hour]})`;
     console.log('function setBgImage: arrImg[hour]:' + arrImg[hour]);
     numberSetImage = hour;
@@ -313,11 +314,12 @@ function setBgImage() {
 
 //change image by button
 function changeBgImage() {
+    console.log('function changeBgImage');
     const body = document.querySelector('body');
     const img = document.createElement('img');
-    console.log('function changeBgImage: numberSetImage do:' + numberSetImage);
+    //console.log('function changeBgImage: numberSetImage do:' + numberSetImage);
     numberSetImage = (numberSetImage + 1) % arrImg.length;
-    console.log('function changeBgImage: numberSetImage posle:' + numberSetImage);
+    //console.log('function changeBgImage: numberSetImage posle:' + numberSetImage);
 
     const src = arrImg[numberSetImage];
     console.log('function changeBgImage: src:' + src);
@@ -330,6 +332,7 @@ function changeBgImage() {
 
 //background
 function setBgGreet() {
+    console.log('function setBgGreet');
     let today = new Date(),
         hour = today.getHours();
 
@@ -351,6 +354,7 @@ function setBgGreet() {
 
 // Get array of image for background
 function makeArrImg() {
+    console.log('function makeArrImg');
     let i = 0;
     let randomImg = '';
     while (i < 6) {
@@ -394,6 +398,7 @@ function makeArrImg() {
 // если в ссылке заменить lang=en на lang=ru, цитаты будут на русском языке
 // префикс https://cors-anywhere.herokuapp.com используем для доступа к данным с других сайтов если браузер возвращает ошибку Cross-Origin Request Blocked 
 async function getQuote() {
+    console.log('function getQuote');
     const url = `https://cors-anywhere.herokuapp.com/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en`;
     const res = await fetch(url);
     const data = await res.json();
@@ -408,7 +413,7 @@ async function getQuote() {
     // blockquote.textContent = data.quote.body;
 
 
-    if (blockquote === '') {
+    if (blockquote === 'quote') {
         const url = `https://cors-anywhere.herokuapp.com/https://api.adviceslip.com/advice`;
         const res = await fetch(url);
         const data = await res.json();
@@ -432,19 +437,66 @@ async function getQuote() {
 
 // POGODA
 async function getWeather() {
-    console.log('getWeather city.textContent: ' + localStorage.getItem('city'));
+    console.log('function getWeather');
+    console.log('getWeather localStorage.getItem:(city) ' + localStorage.getItem('city'));
+    console.log('getWeather city.textContent: ' + city.textContent);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${localStorage.getItem('city')}&lang=en&appid=a02ecb70744342b247d342098dbaf515&units=metric`;
     console.log('getWeather url: ' + url);
+
     const res = await fetch(url);
-    const data = await res.json();
-    console.log(data.weather[0].id, data.weather[0].description, data.main.temp, data.wind.speed, data.main.humidity);
+    console.log('res: ' + fetch(url));
+    try {
+        const data = await res.json();
+        console.log(data.weather[0].id, data.weather[0].description, data.main.temp, data.wind.speed, data.main.humidity);
+        weatherIcon.classList.remove('hidden');
+        weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+        temperature.textContent = `t ${data.main.temp}°C`;
+        humidity.textContent = `humidity ${data.main.humidity} %`;
+        wind.textContent = `wind ${data.wind.speed} m/s`;
+        weatherDescription.textContent = data.weather[0].description;
+        console.log(data.weather[0].id, data.weather[0].description, data.main.temp, data.wind.speed, data.main.humidity);
+    } catch (e) {
+        console.log('catch e: ' + e);
+        if (localStorage.getItem('city') !== null && localStorage.getItem('city') !== '' && localStorage.getItem('city') !== '[Enter city]') {
+            city.textContent = 'Non-existent city, enter correct city name';
+            clearWeather();
 
-    weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+        }
+        // }     finally {
+        //     if (city.textContent === 'Non-existent city, enter correct city name') {
+        //         weatherIcon.classList.add('');
+        //         temperature.innerText = '';
+        //         humidity.innerText = '';
+        //         wind.innerText = '';
+        //         weatherDescription.innerText = '';
+        //         console.log('city: ' + city.textContent);
+        //         console.log('weatherIcon: ' + weatherIcon.textContent);
+        //         console.log('temperature: ' + temperature.textContent);
+        //         console.log('humidity: ' + humidity.textContent);
+        //         console.log('wind: ' + wind.textContent);
+        //     }
+    }
 
-    temperature.textContent = `t ${data.main.temp}°C`;
-    humidity.textContent = `humidity ${data.main.humidity} %`;
-    wind.textContent = `wind ${data.wind.speed} m/s`;
-    weatherDescription.textContent = data.weather[0].description;
+}
+
+function clearWeather() {
+    console.log('function clearWeather');
+    if (city.textContent === 'Non-existent city, enter correct city name') {
+        console.log('function clearWeather if');
+        // weatherIcon.innerText = '';
+        weatherIcon.classList.add('hidden');
+        temperature.innerText = '';
+        humidity.innerText = '';
+        wind.innerText = '';
+        weatherDescription.innerText = '';
+    }
+
+
+    console.log('city: ' + city.textContent);
+    console.log('weatherIcon: ' + weatherIcon.textContent);
+    console.log('temperature: ' + temperature.textContent);
+    console.log('humidity: ' + humidity.textContent);
+    console.log('wind: ' + wind.textContent);
 }
 
 
