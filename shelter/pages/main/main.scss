@@ -174,9 +174,6 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
 * {
     margin: 0;
     padding: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -325,9 +322,9 @@ a:hover {
         justify-content: space-between;
         padding: 0 21.5rem;
     }
-    &__image-wrapper {
-        // display: flex;
-    }
+    // &__image-wrapper {
+    //     // display: flex;
+    // }
     // &__image {
     //     width: 300px;
     //     height: 408px;
@@ -365,7 +362,7 @@ a:hover {
     padding-bottom: 10rem;
     background-color: $color-light-l;
     &__wrapper {
-        width: 100%;
+        // width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -393,11 +390,24 @@ a:hover {
     }
     &__cards {
         display: flex;
+        margin: 0 5.3rem;
+    }
+    &__cards-list {
+        display: none;
+        padding-left: 0;
+        padding-right: 0;
+        opacity: 0;
+        animation: fadeout 1s;
+    }
+    .cards-list-active {
+        display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        column-gap: 4rem;
+        // margin-top: 5.9rem;
+        column-gap: 9rem;
         row-gap: 3rem;
-        margin: 0 5.3rem;
+        opacity: 1;
+        animation: fadein 1s;
     }
     &__cards-info {
         display: flex;

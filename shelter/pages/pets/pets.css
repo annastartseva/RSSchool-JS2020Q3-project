@@ -30,7 +30,6 @@ img {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 100vw;
   max-width: 100%;
   min-height: 12rem;
   -webkit-box-align: center;
