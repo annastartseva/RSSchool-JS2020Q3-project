@@ -180,6 +180,20 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     box-sizing: border-box;
 }
 
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
 .wrapper {
     display: flex;
     margin: 0 auto;
@@ -237,7 +251,7 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         font-weight: 400;
         line-height: 160%;
         &:hover {
-            border-bottom: solid 2px $color-primary;
+            // border-bottom: solid 2px $color-primary;
             color: $color-light-s;
         }
     }
@@ -312,12 +326,12 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
         padding: 0 21.5rem;
     }
     &__image-wrapper {
-        display: flex;
+        // display: flex;
     }
-    &__image {
-        width: 300px;
-        height: 408px;
-    }
+    // &__image {
+    //     width: 300px;
+    //     height: 408px;
+    // }
     &__content {
         display: flex;
         justify-self: center;
@@ -379,8 +393,10 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     }
     &__cards {
         display: flex;
-        justify-content: space-between;
-        width: 99rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 4rem;
+        row-gap: 3rem;
         margin: 0 5.3rem;
     }
     &__cards-info {

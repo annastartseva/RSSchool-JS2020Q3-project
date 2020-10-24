@@ -18,10 +18,10 @@
                 </div>
                 <nav class="menu">
                     <ul class="list">
-                        <li class="list__item"><a class="list__link list__link_disabled">About the shelter</a></li>
-                        <li class="list__item"><a class="list__link list__link_active">Our pets</a></li>
-                        <li class="list__item"><a class="list__link list__link_disabled">Help the shelter</a></li>
-                        <li class="list__item"><a class="list__link list__link_disabled">Contacts</a></li>
+                        <li class="list__item"><a href="../main/main.html" class="list__link list__link_disabled">About the shelter</a></li>
+                        <li class="list__item"><a href="./pets.html" class="list__link list__link_active">Our pets</a></li>
+                        <li class="list__item"><a href="/" class="list__link list__link_disabled">Help the shelter</a></li>
+                        <li class="list__item"><a href="/" class="list__link list__link_disabled">Contacts</a></li>
                     </ul>
                 </nav>
             </div>
@@ -37,8 +37,9 @@
                         <span>Our friends who</span>
                         <span>are looking for a house</span>
                     </h3>
+
                     <div class="pets__cards">
-                        <div class="pets__cards-info">
+                        <!-- <div class="pets__cards-info">
                             <img src="../../assets/images/pets-katrine.png" alt="Pet's foto">
                             <h4 class="pets__cards-title">Katrine</h4>
                             <button class="pets__cards-button">Learn more</button>
@@ -77,8 +78,9 @@
                             <img src="../../assets/images/pets-freddie.png" alt="Pet's foto">
                             <h4 class="pets__cards-title">Freddie</h4>
                             <button class="pets__cards-button">Learn more</button>
-                        </div>
+                        </div> -->
                     </div>
+
                     <div class="pets-pagination">
                         <button class="pets-pagination__button" disabled>
                             &#60;&#60;
@@ -142,6 +144,42 @@
             </div>
         </div>
     </footer>
+
+    <section class="popup" id="popup">
+        <div class="popup__container">
+            <button type="button" class="btn btn--circle btn--transparent btn--close" id="btn-close-popup"></button>
+            <div class="popup__column popup__column--left">
+                <img src="" alt="">
+            </div>
+            <div class="popup__column popup__column--right">
+                <h3 class="title">Jennifer</h3>
+                <span class="undertitle">
+                    <span id="popup-pet-type"></span> - <span id="popup-breed"></span>
+                </span>
+                <p class="text description">Jennifer is a sweet 2 months old Labrador that is patiently waiting to find a new forever home. This girl really enjoys being able to go outside to run and play, but won't hesitate to play up a storm in the house if she has all of her
+                    favorite toys.</p>
+                <ul class="popup__list">
+                    <li class="popup__item">
+                        <b>Age: </b>
+                        <span id="popup-age"></span>
+                    </li>
+                    <li class="popup__item">
+                        <b>Inoculations: </b>
+                        <span id="popup-inoculations"></span>
+                    </li>
+                    <li class="popup__item">
+                        <b>Diseases: </b>
+                        <span id="popup-diseases"></span>
+                    </li>
+                    <li class="popup__item">
+                        <b>Parasites: </b>
+                        <span id="popup-parasites"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <script src="pets.js"></script>
 </body>
 
 </html>
