@@ -724,9 +724,6 @@ a:hover {
 }
 
 .footer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   background: url(../../assets/images/noise_transparent.png), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
 }
 
@@ -737,9 +734,23 @@ a:hover {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  padding-top: 40px;
+}
+
+.footer__content {
+  padding-top: 16px;
+  width: 740px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .footer__question {
+  height: 234px;
+  width: 278px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -747,12 +758,16 @@ a:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-width: 27.9rem;
-  padding: 5.7rem 0 2.7rem 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .footer__question-title {
-  margin-bottom: 3.8rem;
+  width: 280px;
+}
+
+.footer__h3 {
   color: #FFFFFF;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 3.5rem;
@@ -762,16 +777,13 @@ a:hover {
   letter-spacing: 0.21rem;
 }
 
-.footer__question-title span {
-  display: block;
-  letter-spacing: 0.21rem;
+.footer__question-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.footer__question-email {
-  margin-bottom: 4rem;
-}
-
-.footer__question-email a {
+.footer__link {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -781,30 +793,7 @@ a:hover {
   text-decoration: none;
 }
 
-.footer__question-email p {
-  margin-left: 2rem;
-  color: #F1CDB3;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 115%;
-  letter-spacing: 0.12rem;
-  text-decoration: none;
-}
-
-.footer__question-phone a {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  text-decoration: none;
-}
-
-.footer__question-phone p {
-  margin-left: 2rem;
+.footer__h4 {
   color: #F1CDB3;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 2rem;
@@ -816,6 +805,8 @@ a:hover {
 }
 
 .footer__addres {
+  height: 234px;
+  width: 302px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -823,54 +814,138 @@ a:hover {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  max-width: 30.2rem;
-  padding: 5.7rem 0 2.7rem 0;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .footer__addres-title {
-  color: #FFFFFF;
-  margin-bottom: 3.4rem;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 3.5rem;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 130%;
-  letter-spacing: 0.21rem;
+  width: 28rem;
 }
 
-.footer__addres-title span {
-  display: block;
-  letter-spacing: 0.21rem;
-}
-
-.footer__addres-info a {
+.footer__addres-item {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-bottom: 3.2rem;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  text-decoration: none;
 }
 
-.footer__addres-info p {
-  margin-left: 2rem;
-  color: #F1CDB3;
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: normal;
-  line-height: 115%;
-  letter-spacing: 0.12rem;
+.footer__icon {
+  margin-right: 2rem;
 }
 
 .footer__image {
+  width: 30rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .wrapper {
+    max-width: 76.8rem;
+    padding: 0 3rem;
+  }
+  .footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    background: url(../../assets/images/noise_transparent.png), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
+  }
+  .footer__wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding-top: 3rem;
+  }
+  .footer__content {
+    width: 708px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    padding: 0;
+  }
+  .footer__image {
+    width: 30rem;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    padding-top: 6.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .wrapper {
+    max-width: 32rem;
+    padding: 0 1rem;
+  }
+  .footer {
+    background: url(../../assets/images/noise_transparent.png), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
+  }
+  .footer__wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding-top: 3rem;
+  }
+  .footer__content {
+    width: 300px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding-top: 0;
+  }
+  .footer__question {
+    width: 280px;
+    height: 208px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .footer__question-title {
+    width: 260px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .footer__h3 {
+    color: #FFFFFF;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.21rem;
+    letter-spacing: 0.15rem;
+  }
+  .footer__addres {
+    padding-top: 40px;
+    width: 300px;
+    height: 260px;
+  }
+  .footer__addres-title {
+    width: 260px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .footer__image {
+    padding-top: 40px;
+    width: 260px;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+  }
 }
 /*# sourceMappingURL=main.css.map */

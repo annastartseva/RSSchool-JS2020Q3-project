@@ -39,6 +39,17 @@ radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%),
     letter-spacing: 0.21rem;
 }
 
+@mixin h3-mobile {
+    font: {
+        family: Georgia, 'Times New Roman', Times, serif;
+        size: 2.5rem;
+        style: normal;
+        weight: 400;
+    }
+    line-height: 130%;
+    letter-spacing: 0.21rem;
+}
+
 @mixin h4 {
     font: {
         family: Georgia, 'Times New Roman', Times, serif;
@@ -542,84 +553,196 @@ a:hover {
 }
 
 .footer {
-    display: flex;
     background: $footer-gradient-background;
     &__wrapper {
         display: flex;
         justify-content: space-between;
+        padding-top: 40px;
+    }
+    &__content {
+        padding-top: 16px;
+        width: 740px;
+        display: flex;
+        justify-content: space-between;
     }
     &__question {
+        height: 234px;
+        width: 278px;
         display: flex;
         flex-direction: column;
-        max-width: 27.9rem;
-        padding: 5.7rem 0 2.7rem 0;
+        justify-content: space-between;
     }
     &__question-title {
-        margin-bottom: 3.8rem;
+        width: 280px;
+    }
+    &__h3 {
         color: $color-light-xl;
         @include h3;
-        span {
-            display: block;
-            letter-spacing: 0.21rem;
-        }
     }
-    &__question-email {
-        margin-bottom: 4rem;
-        a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        p {
-            margin-left: 2rem;
-            color: $color-primary;
-            @include h4;
-            text-decoration: none;
-        }
+    &__question-item {
+        display: flex;
     }
-    &__question-phone {
-        a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-        p {
-            margin-left: 2rem;
-            color: $color-primary;
-            @include h4;
-            text-decoration: none;
-        }
+    &__link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    &__h4 {
+        color: $color-primary;
+        @include h4;
+        text-decoration: none;
     }
     &__addres {
+        height: 234px;
+        width: 302px;
         display: flex;
         flex-direction: column;
-        max-width: 30.2rem;
-        padding: 5.7rem 0 2.7rem 0;
+        justify-content: space-between;
     }
     &__addres-title {
-        color: $color-light-xl;
-        margin-bottom: 3.4rem;
-        @include h3;
-        span {
-            display: block;
-            letter-spacing: 0.21rem;
-        }
+        width: 28rem;
     }
-    &__addres-info {
-        a {
-            display: flex;
-            margin-bottom: 3.2rem;
-            align-items: center;
-            text-decoration: none;
-        }
-        p {
-            margin-left: 2rem;
-            color: $color-primary;
-            @include h4;
-        }
+    &__addres-item {
+        display: flex;
+    }
+    &__icon {
+        margin-right: 2rem;
     }
     &__image {
+        width: 30rem;
         display: flex;
         align-items: flex-end;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+    .wrapper {
+        max-width: 76.8rem;
+        padding: 0 3rem;
+    }
+    // .pets {
+    //     padding-bottom: 7.5rem;
+    //     &__cards {
+    //         margin-top: 3rem;
+    //     }
+    //     .pets-pagination {
+    //         margin-top: 4rem;
+    //     }
+    // }
+    .footer {
+        display: flex;
+        background: $footer-gradient-background;
+        &__wrapper {
+            display: flex;
+            flex-direction: column;
+            padding-top: 3rem;
+        }
+        &__content {
+            width: 708px;
+            display: flex;
+            justify-content: space-around;
+            padding: 0;
+        }
+        &__image {
+            width: 30rem;
+            align-self: center;
+            padding-top: 6.5rem;
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .wrapper {
+        max-width: 32rem;
+        padding: 0 1rem;
+    }
+    // .header {
+    //     // padding-top: 0;
+    //     // right: 0;
+    //     // top: 0;
+    //     // left: inherit;
+    //     // position: sticky;
+    //     // top: 0px;
+    //     // background-color: $color-light-xl;
+    //     &__wrapper {
+    //         display: flex;
+    //         justify-content: space-between;
+    //         width: 100vw;
+    //     }
+    //     .logo {
+    //         &__title {
+    // color: $color-dark-l;
+    //         }
+    //         &__subtitle {
+    //             margin-top: 10px;
+    //             color: $color-dark-3xl;
+    //             text-align: center;
+    //             @include logo_subtitle;
+    //         }
+    //     }
+    // }
+    // .pets {
+    //     padding-top: 4.2rem;
+    //     padding-bottom: 4.2rem;
+    //     &__title {
+    //         // text-align: center;
+    //         span {
+    //             letter-spacing: 0.15rem;
+    //         }
+    //         // color: $color-dark-l;
+    //         @include h3-mobile;
+    //     }
+    //     &__cards {
+    //         margin-top: 4.2rem;
+    //     }
+    //     .pets-pagination {
+    //         margin-top: 4.2rem;
+    //     }
+    //     .pets-pagination__button {
+    //         margin: 0 0.5rem;
+    //     }
+    // }
+    .footer {
+        background: $footer-gradient-background;
+        &__wrapper {
+            flex-direction: column;
+            padding-top: 3rem;
+        }
+        &__content {
+            width: 300px;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 0;
+        }
+        &__question {
+            width: 280px;
+            height: 208px;
+            align-items: center;
+        }
+        &__question-title {
+            width: 260px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        &__h3 {
+            color: $color-light-xl;
+            @include h3-mobile;
+            letter-spacing: 0.15rem;
+        }
+        &__addres {
+            padding-top: 40px;
+            width: 300px;
+            height: 260px;
+        }
+        &__addres-title {
+            width: 260px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        &__image {
+            padding-top: 40px;
+            width: 260px;
+            align-self: center;
+        }
     }
 }
