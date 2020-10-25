@@ -1,10 +1,42 @@
-const elemCardsPets = document.querySelector(".petsArray__cards-info");
+// BURGER MENU active/disable
+
+const burger = document.querySelector(".burger"),
+    header = document.querySelector(".header");
+const navWrapper = document.querySelector(".menu");
+
+burger.addEventListener("click", (event) => {
+    // event.stopPropagation();
+    header.classList.toggle("header__active");
+    changeBodyScrolling();
+});
+
+navWrapper.addEventListener("click", function(event) {
+    if (event.target !== this) {
+        return;
+    }
+    event.stopPropagation();
+    header.classList.toggle("header__active");
+});
+
+header.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isHeaderShown = event.target.classList.contains("header__active");
+    return isHeaderShown ? header.classList.toggle("header__active") : null;
+});
+
+
+
+
+const btnToStart = document.querySelector('.btn-to-start'),
+    btnPrev = document.querySelector('.btn-prev'),
+    btnNumber = document.querySelector('.btn-number'),
+    btnNext = document.querySelector('.btn-next'),
+    btnToEnd = document.querySelector('.btn-to-end');
 
 // VAR
 let petsArray = []; // array of 8 elements
 let fullPetsList = []; //array of 48 elements
-let petsArray2 = [];
-
+let copyFullPetsList = [];
 
 //Download and create array with information about Pets
 const request = new XMLHttpRequest();
@@ -13,7 +45,7 @@ request.open('GET', './pets.json');
 fetch('./pets.json').then(res => res.json()).then(list => {
     console.log('function fetch');
     petsArray = list;
-    console.log('petsArray array' + petsArray)
+    // console.log('petsArray array' + petsArray)
 
     fullPetsList = (() => {
         console.log('function fullPetsList');
@@ -29,17 +61,19 @@ fetch('./pets.json').then(res => res.json()).then(list => {
             }
             tempArr = [...tempArr, ...newPets];
         }
-        console.log('tempArr: ' + tempArr);
+        // console.log('tempArr: ' + tempArr);
         return tempArr;
     })();
     //для 6 и 3 проверяем массив на повторяющиеся элементы
     fullPetsList = sort6Recursiveely(fullPetsList);
-
+    // let dublicateList = fullPetsList;
     fillPetCard(fullPetsList);
 })
 
 
 request.send();
+
+
 
 // функция проверяющая повторы в 6-ках картинок через рекурсию - вызов самой себя
 const sort6Recursiveely = (list) => {
@@ -48,7 +82,7 @@ const sort6Recursiveely = (list) => {
 
     for (let i = 0; i < (length / 6); i++) {
         const stepList = list.slice(i * 6, (i * 6) + 6);
-        console.log('stepList: ' + stepList);
+        // console.log('stepList: ' + stepList);
 
         for (let j = 0; j < 6; j++) {
             const duplicatedItem = stepList.find((item, ind) => {
@@ -68,13 +102,6 @@ const sort6Recursiveely = (list) => {
     }
     return list;
 }
-
-/* <div class="pets__cards">
-                    <div class="pets__cards-info">
-                        <img src="../../assets/images/pets-katrine.png" alt="Pet's foto">
-                        <h4 class="pets__cards-title">Katrine</h4>
-                        <button class="pets__cards-button">Learn more</button>
-                    </div>*/
 
 const createPetCard = (cardInfo) => {
     console.log('function createPetCard');
@@ -96,101 +123,307 @@ const createPetCard = (cardInfo) => {
     btn.textContent = "Learn more";
     cardsItem.appendChild(btn);
 
-    // cardsItem.addEventListener('click', () => {
-    //     const currentPetInfo = pets.find(pet => pet.name === cardInfo.name);
-    //     fillPopup(currentPetInfo);
-    //     // const popup = document.querySelector('#popup');
-    //     // popup.classList.add('popup--active')
-    //     togglePopup();
-    //     // popup.style.visibility = 'visible';
-    //     // popup.style.opacity = '1';
-    //     toggleBodyScrolling();
-    // });
+    cardsItem.addEventListener('click', () => {
+        const currentPetInfo = petsArray.find(pet => pet.name === cardInfo.name);
+        fillPopup(currentPetInfo);
+        // const popup = document.querySelector('.popup');
+        // popup.classList.add('popup__scr-active')
+        togglePopup();
+        // вкл-выкл окно popup
+        changeBodyScrolling(); //отключение скрола
+    });
 
     return cardsItem;
 }
 
 const fillPetCard = (list) => {
     console.log('function fillPetCard');
+    copyFullPetsList = list.slice();
+
+    // console.log('function fillPetCard: copyFullPetsList ' + copyFullPetsList);
     const petsCardsWrapper = document.querySelector(".pets__cards");
     const bodyWidth = document.querySelector('body').offsetWidth;
     const numberPetsCards = bodyWidth >= 1280 ? 8 : bodyWidth >= 768 ? 6 : 3;
+
+    // console.log('function fillPetCard: numberPetsCards ' + numberPetsCards);
+    console.log('function fillPetCardOnResize: bodyWidth ' + bodyWidth);
+
     let listCounter = 1;
-    while (list.length > 0) {
+    while (copyFullPetsList.length > 0) {
+        // console.log('function fillPetCard while');
         const sliderList = document.createElement('div');
         sliderList.classList.add('pets__cards-list');
 
         if (listCounter === 1) {
             sliderList.classList.add('cards-list-active');
+            toggleDisablingBtn(btnPrev, true);
+            toggleDisablingBtn(btnToStart, true);
         }
 
         sliderList.setAttribute('cards-list-number', `${listCounter}`);
 
         for (let i = 0; i < numberPetsCards; i++) {
-            const petItem = createPetCard(list[i]);
+            // console.log('function fillPetCard: for');
+            const petItem = createPetCard(copyFullPetsList[i]);
             sliderList.appendChild(petItem);
         }
 
         listCounter++;
 
         petsCardsWrapper.append(sliderList);
-        list.splice(0, numberPetsCards);
+        // console.log('function fillPetCard: sliderList ' + sliderList);
+        copyFullPetsList.splice(0, numberPetsCards);
     }
 }
 
-// const btn = document.querySelector(".pets__cards-button");
-// btn.addEventListener('click', () => {
-//     const currentPetInfo = petsArray.find(pet => pet.name === cardInfo.name);
-//     fillPopup(currentPetInfo);
-//     // const popup = document.querySelector('#popup');
-//     // popup.classList.add('popup--active')
-//     togglePopup();
-//     // popup.style.visibility = 'visible';
-//     // popup.style.opacity = '1';
-//     toggleBodyScrolling();
-// });
-//popup
+// пересоздание pets cards при изменении экрана
+const fillPetCardOnResize = (list) => {
+    console.log('function fillPetCardOnResize');
+    copyFullPetsList = list.slice();
 
-const fillPopup = petInfo => {
-    const popupTitle = document.querySelector("#popup .title");
-    popupTitle.textContent = petInfo.name;
+    const petsCardsWrapper = document.querySelector(".pets__cards");
+    const cardsList = document.querySelector(".pets__cards-list");
+    const prevPage = document.querySelector('.cards-list-active');
+    const prevPageNumber = +prevPage.getAttribute('cards-list-number');
+    const bodyWidth = document.querySelector('body').offsetWidth;
+    const numberPetsCards = bodyWidth >= 1280 ? 8 : bodyWidth >= 768 ? 6 : 3;
 
-    const popupDescription = document.querySelector("#popup .description");
-    popupDescription.textContent = petInfo.description;
+    console.log('function fillPetCardOnResize: bodyWidth ' + bodyWidth);
 
-    const popupImg = document.querySelector("#popup img");
-    popupImg.setAttribute("src", petInfo.img);
+    while (petsCardsWrapper.firstChild) {
+        petsCardsWrapper.removeChild(petsCardsWrapper.firstChild);
+    }
 
-    const popupPetType = document.querySelector("#popup-pet-type");
-    popupPetType.textContent = petInfo.type;
+    let listCounter = 1;
+    while (copyFullPetsList.length > 0) {
+        // console.log('function fillPetCardOnResize: bodyWidth ' + bodyWidth);
+        // console.log('function fillPetCardOnResize: numberPetsCards ' + numberPetsCards);
+        // console.log('function fillPetCardOnResize: btnNumber ' + btnNumber.textContent);
+        // console.log('function fillPetCardOnResize copyFullPetsList.length: ' + copyFullPetsList.length);
+        // console.log('function fillPetCardOnResize listCounter: ' + listCounter);
+        // console.log('function fillPetCardOnResize: prevPageNumber ' + prevPageNumber);
 
-    const popupBreed = document.querySelector("#popup-breed");
-    popupBreed.textContent = petInfo.breed;
+        const sliderList = document.createElement('div');
+        sliderList.classList.add('pets__cards-list');
 
-    const popupAge = document.querySelector("#popup-age");
-    popupAge.textContent = petInfo.age;
+        if (listCounter === prevPageNumber) {
+            // console.log('listCounter === prevPageNumber: ' + listCounter + ' ' + prevPageNumber);
+            btnNumber.textContent = 48 / numberPetsCards;
+            sliderList.classList.add('cards-list-active');
+        }
+        if (copyFullPetsList.length === numberPetsCards && listCounter < prevPageNumber) {
+            btnNumber.textContent = listCounter;
+            sliderList.classList.add('cards-list-active');
+        }
 
-    const popupInoculations = document.querySelector("#popup-inoculations");
-    popupInoculations.textContent = petInfo.inoculations.join(', ');
+        sliderList.setAttribute('cards-list-number', `${listCounter}`);
 
-    const popupDiseases = document.querySelector("#popup-diseases");
-    popupDiseases.textContent = petInfo.diseases.join(', ');
+        for (let i = 0; i < numberPetsCards; i++) {
+            const petItem = createPetCard(copyFullPetsList[i]);
+            sliderList.appendChild(petItem);
+        }
 
-    const popupParasites = document.querySelector("#popup-parasites");
-    popupParasites.textContent = petInfo.parasites.join(', ');
+        listCounter++;
+
+        petsCardsWrapper.append(sliderList);
+        copyFullPetsList.splice(0, numberPetsCards);
+    }
 }
 
-const popupCloseBtn = document.querySelector('#btn-close-popup');
-const popup = document.querySelector("#popup");
+// ожидание изменения размера окна
+window.addEventListener('resize', function(event) {
+    console.log('resized: ' + document.querySelector('body').offsetWidth);
+    fillPetCardOnResize(fullPetsList);
+});
+
+
+// Pagination on pets cards
+
+
+btnNext.addEventListener("click", () => {
+
+    const prevPage = document.querySelector('.cards-list-active');
+    const prevPageNumber = +prevPage.getAttribute('cards-list-number');
+    const pages = document.querySelectorAll('.pets__cards-list').length;
+
+    const nextPageNumber = prevPageNumber + 1;
+    const nextPage = document.querySelector(`.pets__cards-list[cards-list-number="${nextPageNumber}"]`);
+
+    if (prevPageNumber === pages) {
+        return;
+    }
+
+    if (prevPageNumber === 1 && pages > 1) {
+        toggleDisablingBtn(btnPrev);
+        toggleDisablingBtn(btnToStart);
+    }
+
+
+
+    if (nextPageNumber === pages) {
+        toggleDisablingBtn(btnNext, true);
+        toggleDisablingBtn(btnToEnd, true);
+    }
+
+
+    prevPage.classList.remove('cards-list-active');
+    nextPage.classList.add('cards-list-active');
+
+    btnNumber.textContent = nextPageNumber;
+});
+
+// btnNext.addEventListener("click", () => {
+
+//     const prevPage = document.querySelector('.cards-list-active');
+//     const prevPageNumber = +prevPage.getAttribute('cards-list-number');
+//     const pages = document.querySelectorAll('.pets__cards-list').length;
+
+//     if (prevPageNumber === pages) {
+//         return;
+//     }
+
+//     if (prevPageNumber === 1 && pages > 1) {
+//         const prevBtn = document.querySelector('.btn-prev');
+//         const toStartBtn = document.querySelector('.btn-to-start');
+//         toggleDisablingBtn(prevBtn);
+//         toggleDisablingBtn(toStartBtn);
+//     }
+
+//     const nextPageNumber = prevPageNumber + 1;
+
+//     if (nextPageNumber === pages) {
+//         const nextBtn = document.querySelector('.btn-next');
+//         const toEndBtn = document.querySelector('.btn-to-end');
+//         toggleDisablingBtn(nextBtn, true);
+//         toggleDisablingBtn(toEndBtn, true);
+//     }
+
+//     const nextPage = document.querySelector(`.pets__cards-list[cards-list-number="${nextPageNumber}"]`);
+
+//     prevPage.classList.remove('cards-list-active');
+//     nextPage.classList.add('cards-list-active');
+
+//     btnNumber.textContent = nextPageNumber;
+// });
+
+
+btnPrev.addEventListener("click", () => {
+    const btnNumber = document.querySelector('.btn-number');
+    const prevPage = document.querySelector('.cards-list-active');
+    const prevPageNumber = +prevPage.getAttribute('cards-list-number');
+    const pages = document.querySelectorAll('.pets__cards-list').length;
+    const currentPageNumber = prevPageNumber - 1;
+
+    if (currentPageNumber === 1) {
+        const prevBtn = document.querySelector('.btn-prev');
+        const toStartBtn = document.querySelector('.btn-to-start');
+        toggleDisablingBtn(prevBtn, true);
+        toggleDisablingBtn(toStartBtn, true);
+    }
+
+    if (currentPageNumber < pages) {
+        const nextBtn = document.querySelector('.btn-next');
+        const toEndBtn = document.querySelector('.btn-to-end');
+        toggleDisablingBtn(nextBtn);
+        toggleDisablingBtn(toEndBtn);
+    }
+
+    const currentPage = document.querySelector(`.pets__cards-list[cards-list-number="${currentPageNumber}"]`);
+
+    prevPage.classList.remove('cards-list-active');
+    currentPage.classList.add('cards-list-active');
+
+    btnNumber.textContent = currentPageNumber;
+});
+
+
+btnToStart.addEventListener('click', function(event) {
+    toggleDisablingBtn(event.target, true);
+    const btnNumber = document.querySelector('.btn-number');
+    btnNumber.textContent = 1;
+
+    const btnPrev = document.querySelector('.btn-prev');
+    toggleDisablingBtn(btnPrev, true);
+
+    const btnNext = document.querySelector('.btn-next');
+    const btnToEnd = document.querySelector('.btn-to-end');
+
+    toggleDisablingBtn(btnNext);
+    toggleDisablingBtn(btnToEnd);
+
+    const prevPage = document.querySelector('.cards-list-active');
+    const currentPage = document.querySelector('.pets__cards-list[cards-list-number="1"]');
+
+    prevPage.classList.remove('cards-list-active');
+    currentPage.classList.add('cards-list-active');
+});
+
+
+
+btnToEnd.addEventListener('click', function(event) {
+    toggleDisablingBtn(event.target, true);
+    const btnNumber = document.querySelector('.btn-number');
+    const pages = document.querySelectorAll('.pets__cards-list').length;
+    btnNumber.textContent = pages;
+
+    const btnNext = document.querySelector('.btn-next');
+    toggleDisablingBtn(btnNext, true);
+
+    const btnPrev = document.querySelector('.btn-prev');
+    const btnToStart = document.querySelector('.btn-to-start');
+
+    toggleDisablingBtn(btnPrev);
+    toggleDisablingBtn(btnToStart);
+
+    const prevPage = document.querySelector('.cards-list-active');
+    const currentPage = document.querySelector(`.pets__cards-list[cards-list-number="${pages}"]`);
+
+    prevPage.classList.remove('cards-list-active');
+    currentPage.classList.add('cards-list-active');
+});
+
+//включение свойства disable на кнопки слайдера
+const toggleDisablingBtn = (btn, disable = false) => {
+        if (disable) {
+            btn.setAttribute("disabled", true)
+        } else {
+            btn.removeAttribute("disabled", false)
+        }
+    }
+    // ------ POPUP------
+
+const body = document.querySelector('body'),
+    popup = document.querySelector(".popup"),
+    popupCloseBtn = document.querySelector(".popup__close-btn"),
+    popupImg = document.querySelector(".popup__pets-img"),
+    popupTitle = document.querySelector(".popup__content-title"),
+    popupSubtitle = document.querySelector(".popup__content-subtitle"),
+    popupDescription = document.querySelector(".popup__description"),
+    popupAge = document.querySelector(".popup__item-age"),
+    popupInoculations = document.querySelector(".popup__item-inoculations"),
+    popupDiseases = document.querySelector(".popup__item-diseases"),
+    popupParasites = document.querySelector(".popup__item-parasites");
+
+const fillPopup = petInfo => {
+
+    popupTitle.textContent = petInfo.name;
+    popupDescription.textContent = petInfo.description;
+    popupImg.setAttribute("src", `../../assets/images/pets-${petInfo.name.toLowerCase()}.png`);
+    popupSubtitle.textContent = `${petInfo.type} - ${petInfo.breed}`;
+    popupAge.textContent = petInfo.age;
+    popupInoculations.textContent = petInfo.inoculations.join(', ');
+    popupDiseases.textContent = petInfo.diseases.join(', ');
+    popupParasites.textContent = petInfo.parasites.join(', ');
+}
 
 popupCloseBtn.addEventListener("click", () => {
     console.log('click button')
     togglePopup();
-    toggleBodyScrolling();
+    changeBodyScrolling();
 });
 
 popup.addEventListener("click", function(event) {
-    const isShown = popup.classList.contains('popup--active');
+    const isShown = popup.classList.contains("popup__scr-active");
 
     if (!isShown) {
         return;
@@ -201,15 +434,18 @@ popup.addEventListener("click", function(event) {
     }
 
     togglePopup();
-    toggleBodyScrolling();
+    changeBodyScrolling();
 });
 
-const toggleBodyScrolling = () => {
-    const body = document.querySelector('body');
-    body.classList.toggle("modal-open");
+//метод classList.toggle: 
+//класс у элемента существует - он его удаляет, если класса нет - добавляет
+
+const changeBodyScrolling = () => {
+    body.classList.toggle("popup-open");
 };
 
+// body.style.overflow = 'hidden'
+//     html.style.overflow = 'hidden'
 const togglePopup = () => {
-    const popup = document.querySelector('#popup');
-    popup.classList.toggle("popup--active");
+    popup.classList.toggle("popup__scr-active");
 }

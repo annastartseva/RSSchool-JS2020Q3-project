@@ -9,28 +9,37 @@
 </head>
 
 <body>
-    <header class="header">
+    <header class="header header__active header__white">
         <div class="wrapper">
             <div class="header__wrapper">
                 <div class="logo">
                     <div class="logo__title">Cozy House</div>
                     <div class='logo__subtitle'>Shelter for pets in Boston</div>
                 </div>
-                <nav class="menu">
-                    <ul class="list">
-                        <li class="list__item"><a href="../main/main.html" class="list__link list__link_disabled">About the shelter</a></li>
-                        <li class="list__item"><a href="./pets.html" class="list__link list__link_active">Our pets</a></li>
-                        <li class="list__item"><a href="/" class="list__link list__link_disabled">Help the shelter</a></li>
-                        <li class="list__item"><a href="/" class="list__link list__link_disabled">Contacts</a></li>
-                    </ul>
-                </nav>
+                <div class="menu__wrapper">
+                    <nav class="menu">
+                        <ul class="menu__list">
+                            <li class="list__item"><a href="../main/main.html" class="list__link list__link_disabled">About the shelter</a></li>
+                            <li class="list__item"><a href="./pets.html" class="list__link list__link_active">Our pets</a></li>
+                            <li class="list__item"><a href="/" class="list__link list__link_disabled">Help the shelter</a></li>
+                            <li class="list__item"><a href="/" class="list__link list__link_disabled">Contacts</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="burger">
+                    <div class="burger__wrapper burger__open">
+                        <div class="burger__item burger__item1"></div>
+                        <div class="burger__item burger__item2"></div>
+                        <div class="burger__item burger__item3"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="main">
         <div class="pets">
-            <div class="wrapper">
+            <div class="wrapper pets__wrapper-center">
                 <div class="pets__wrapper">
                     <h1>Cozy House</h1>
                     <h3 class="pets__title">
@@ -39,60 +48,23 @@
                     </h3>
 
                     <div class="pets__cards">
-                        <!-- <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-katrine.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Katrine</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-jennifer.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Jennifer</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-woody.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Woody</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-sophia.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Sophia</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-timmy.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Timmy</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-charly.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Charly</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-scarlet.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Scarlett</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div>
-                        <div class="pets__cards-info">
-                            <img src="../../assets/images/pets-freddie.png" alt="Pet's foto">
-                            <h4 class="pets__cards-title">Freddie</h4>
-                            <button class="pets__cards-button">Learn more</button>
-                        </div> -->
+                        <!-- petsCardsWrapper -->
                     </div>
 
                     <div class="pets-pagination">
-                        <button class="pets-pagination__button" disabled>
+                        <button class="pets-pagination__button btn-to-start">
+                            <!-- <button class="pets-pagination__button" id="btn-to-start" disabled> -->
                             &#60;&#60;
                         </button>
-                        <button class="pets-pagination__button" disabled="disabled">
+                        <button class="pets-pagination__button btn-prev">
+                            <!-- <button class="pets-pagination__button" id="btn-prev" disabled="disabled"> -->
                             &#60;       
                         </button>
-                        <button class="pets-pagination__button pets-pagination__button-active">1</button>
-                        <button class="pets-pagination__button">
+                        <button class="pets-pagination__button pets-pagination__button-active btn-number">1</button>
+                        <button class="pets-pagination__button btn-next">
                             &#62;
                         </button>
-                        <button class="pets-pagination__button">
+                        <button class="pets-pagination__button btn-to-end">
                             &#62;&#62;
                         </button>
                     </div>
@@ -145,40 +117,42 @@
         </div>
     </footer>
 
-    <section class="popup" id="popup">
-        <div class="popup__container">
-            <button type="button" class="btn btn--circle btn--transparent btn--close" id="btn-close-popup"></button>
-            <div class="popup__column popup__column--left">
-                <img src="" alt="">
+    <div class="popup">
+        <div class="popup__wrapper">
+            <div class="popup__close-btn-wrapper">
+                <button type="button" class="popup__close-btn"><img src="../../assets/icons/cross.svg"></button>
             </div>
-            <div class="popup__column popup__column--right">
-                <h3 class="title">Jennifer</h3>
-                <span class="undertitle">
-                    <span id="popup-pet-type"></span> - <span id="popup-breed"></span>
-                </span>
-                <p class="text description">Jennifer is a sweet 2 months old Labrador that is patiently waiting to find a new forever home. This girl really enjoys being able to go outside to run and play, but won't hesitate to play up a storm in the house if she has all of her
-                    favorite toys.</p>
-                <ul class="popup__list">
-                    <li class="popup__item">
-                        <b>Age: </b>
-                        <span id="popup-age"></span>
-                    </li>
-                    <li class="popup__item">
-                        <b>Inoculations: </b>
-                        <span id="popup-inoculations"></span>
-                    </li>
-                    <li class="popup__item">
-                        <b>Diseases: </b>
-                        <span id="popup-diseases"></span>
-                    </li>
-                    <li class="popup__item">
-                        <b>Parasites: </b>
-                        <span id="popup-parasites"></span>
-                    </li>
-                </ul>
+            <div class="popup__pets-info">
+                <div class="popup__pets-img-wrap">
+                    <img class="popup__pets-img" src="" alt="">
+                </div>
+                <div class="popup__content">
+                    <h3 class="popup__content-title"></h3>
+                    <span class="popup__content-subtitle"></span>
+                    <p class="text popup__description"></p>
+                    <ul class="popup__content-list">
+                        <li class="popup__list-item">
+                            <b>Age: </b>
+                            <span class="popup__item-age"></span>
+                        </li>
+                        <li class="popup__list-item">
+                            <b>Inoculations: </b>
+                            <span class="popup__item-inoculations"></span>
+                        </li>
+                        <li class="popup__list-item">
+                            <b>Diseases: </b>
+                            <span class="popup__item-diseases"></span>
+                        </li>
+                        <li class="popup__list-item">
+                            <b>Parasites: </b>
+                            <span class="popup__item-parasites"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
-    </section>
+    </div>
     <script src="pets.js"></script>
 </body>
 
