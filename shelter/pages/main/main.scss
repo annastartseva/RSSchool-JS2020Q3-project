@@ -333,13 +333,6 @@ a:hover {
         justify-content: space-between;
         padding: 0 21.5rem;
     }
-    // &__image-wrapper {
-    //     // display: flex;
-    // }
-    // &__image {
-    //     width: 300px;
-    //     height: 408px;
-    // }
     &__content {
         display: flex;
         justify-self: center;
@@ -656,52 +649,224 @@ a:hover {
         max-width: 32rem;
         padding: 0 1rem;
     }
-    // .header {
-    //     // padding-top: 0;
-    //     // right: 0;
-    //     // top: 0;
-    //     // left: inherit;
-    //     // position: sticky;
-    //     // top: 0px;
-    //     // background-color: $color-light-xl;
-    //     &__wrapper {
-    //         display: flex;
-    //         justify-content: space-between;
-    //         width: 100vw;
-    //     }
-    //     .logo {
-    //         &__title {
-    // color: $color-dark-l;
-    //         }
-    //         &__subtitle {
-    //             margin-top: 10px;
-    //             color: $color-dark-3xl;
-    //             text-align: center;
-    //             @include logo_subtitle;
-    //         }
-    //     }
-    // }
-    // .pets {
-    //     padding-top: 4.2rem;
-    //     padding-bottom: 4.2rem;
-    //     &__title {
-    //         // text-align: center;
-    //         span {
-    //             letter-spacing: 0.15rem;
-    //         }
-    //         // color: $color-dark-l;
-    //         @include h3-mobile;
-    //     }
-    //     &__cards {
-    //         margin-top: 4.2rem;
-    //     }
-    //     .pets-pagination {
-    //         margin-top: 4.2rem;
-    //     }
-    //     .pets-pagination__button {
-    //         margin: 0 0.5rem;
-    //     }
-    // }
+    .header {
+        top: 30px;
+        &__wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    .hero {
+        display: flex;
+        padding-top: 15rem;
+        background: $start-screen-gradient-background;
+        &__wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        &__content-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 5.8rem;
+            max-width: 46rem;
+        }
+        .content-section__title {
+            width: 31rem;
+            @include h3-mobile();
+            text-align: center;
+            padding: 0 3rem;
+            letter-spacing: 0.15rem;
+        }
+        .content-section__subtitle {
+            width: 30rem;
+            text-align: center;
+        }
+        .content-section__button {
+            margin-top: 4.3rem;
+        }
+        .hero__image {
+            width: 26rem;
+        }
+    }
+    .about {
+        padding-top: 4.2rem;
+        padding-bottom: 3.9rem;
+        &__wrapper {
+            flex-direction: column;
+            align-items: center;
+        }
+        &__content {
+            order: 0;
+            width: 27rem;
+            align-items: center;
+        }
+        &__image-wrapper {
+            margin-top: 4.2rem;
+            order: 1;
+        }
+        &__image {
+            width: 26rem;
+        }
+        &__title {
+            span {
+                text-align: center;
+                @include h3-mobile;
+                letter-spacing: 0.15rem;
+                width: 30rem;
+            }
+        }
+        &__description {
+            p {
+                text-align: justify;
+                &:nth-child(2) {
+                    margin-top: 2.2rem;
+                }
+            }
+        }
+    }
+    .pets {
+        padding-top: 4.2rem;
+        padding-bottom: 3.9rem;
+        &__wrapper {
+            // width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        &__title {
+            text-align: center;
+            span {
+                letter-spacing: 0.15rem;
+            }
+            @include h3-mobile();
+        }
+        &__content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 42px 0;
+        }
+        &__cards {
+            order: -1;
+            margin-bottom: 2rem;
+        }
+        .slider-button {
+            margin: 0 4rem;
+        }
+        .slider-button_reverted {
+            margin: 0 4rem;
+        }
+    }
+    .help {
+        padding-top: 4.2rem;
+        padding-bottom: 3.9rem;
+        &__wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+        &__title {
+            text-align: center;
+            span {
+                display: block;
+                letter-spacing: 0.21rem;
+            }
+            color: $color-dark-l;
+            @include h3;
+        }
+        &__table {
+            margin-top: 6rem;
+            // padding: 3.25rem 0;
+            // width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            column-gap: 12rem;
+            row-gap: 5.5rem;
+        }
+        &__table-point {
+            // margin: 2.75rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        &__table-title {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: center;
+            color: $color-dark-l;
+            @include h4;
+        }
+    }
+    .donation {
+        padding-top: 8.2rem;
+        padding-bottom: 10.1rem;
+        background-color: $color-light-l;
+        &__wrapper {
+            display: flex;
+            justify-content: center;
+        }
+        &__image-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        &__image {
+            max-width: 50.5rem;
+            max-height: 26.1rem;
+        }
+        &__content {
+            display: flex;
+            flex-direction: column;
+            width: 38rem;
+            margin-left: 3rem;
+        }
+        &__content-title {
+            span {
+                display: block;
+                letter-spacing: 0.21rem;
+            }
+            color: $color-dark-l;
+            @include h3;
+        }
+        &__content-text {
+            margin-top: 2rem;
+            @include h5;
+        }
+        &__content-card {
+            display: flex;
+            justify-content: space-between;
+            max-width: 34.9rem;
+            border-radius: 0.9rem;
+            margin-top: 2rem;
+            padding: 1rem 1.5rem;
+            border: none;
+            background-color: $color-primary;
+            cursor: pointer;
+            outline: none;
+            a {
+                text-decoration: none;
+                color: $color-dark-l;
+                @include h4;
+            }
+            &:hover {
+                background-color: $color-primary-light;
+                box-shadow: none;
+                transition-duration: 0.5s;
+            }
+        }
+        &__content-info {
+            margin-top: 2rem;
+            max-width: 38rem;
+            @include donation-description;
+        }
+    }
     .footer {
         background: $footer-gradient-background;
         &__wrapper {
@@ -744,5 +909,118 @@ a:hover {
             width: 260px;
             align-self: center;
         }
+    }
+    .menu {
+        position: fixed;
+        height: 100vh;
+        width: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #292929;
+        overflow: hidden;
+        transition: 0.5s;
+        align-items: center;
+        justify-content: flex-end;
+        // padding-top: 24.8rem;
+        padding-bottom: 4px;
+        &__list {
+            height: 32.7rem;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+        .list__item {
+            display: flex;
+            justify-content: center;
+            font-size: 3.2rem;
+            line-height: 5.1rem;
+            margin: 0 0 40px 0;
+            white-space: nowrap;
+        }
+        a {
+            text-decoration: none;
+        }
+        .list__link {
+            color: $color-light-xl;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            line-height: 160%;
+            &:hover {
+                // border-bottom: solid 2px $color-primary;
+                color: $color-light-s;
+            }
+        }
+        .list__link_active {
+            color: $color-light-s;
+            border-bottom: solid 2px $color-primary;
+        }
+        .list__link_disabled {
+            color: $color-dark-s;
+            padding-bottom: 2px;
+        }
+    }
+    .burger {
+        &__wrapper {
+            position: absolute;
+            display: block;
+            right: calc(53px - (100vw - 100%));
+        }
+    }
+    // свойства бургер меню значка
+    .header .burger {
+        display: flex;
+        height: 54px;
+        margin-right: 43px;
+        z-index: 4;
+        align-items: center;
+    }
+    .header .burger__wrapper {
+        width: 30px;
+        height: 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: auto;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+    }
+    .header .burger__item {
+        width: 100%;
+        height: 2px;
+        background-color: #292929;
+    }
+    //открытое бургер меню
+    .header__active {
+        height: 100%;
+        padding-top: 0;
+    }
+    .header__active .blackout__bgr-active {
+        display: block;
+    }
+    .header__active .logo {
+        position: fixed;
+        top: 30px;
+        right: calc(126px - (100vw - 100%));
+        z-index: 1;
+        &__title {
+            color: $color-primary;
+        }
+        &__subtitle {
+            color: $color-light-xl;
+        }
+    }
+    // .header__active .burger {
+    //     height: 54px;
+    // }
+    .header__active .burger__wrapper {
+        transform: rotate(90deg);
+    }
+    .header__active .burger__item {
+        background-color: #F1CDB3;
+    }
+    .header__active .menu {
+        width: 320px;
     }
 }
