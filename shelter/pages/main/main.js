@@ -1,3 +1,12 @@
+// disabled menu item
+const stopTransition = document.querySelectorAll('.list__link_stop');
+
+for (const item of stopTransition) {
+    item.addEventListener("click", (event) => {
+        event.preventDefault();
+    });
+}
+
 // BURGER MENU active/disable
 
 const burger = document.querySelector(".burger"),

@@ -122,7 +122,6 @@ a:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  cursor: pointer;
 }
 
 .menu .list__link {
@@ -133,18 +132,33 @@ a:hover {
   line-height: 160%;
 }
 
-.menu .list__link:hover {
-  color: #FAFAFA;
-}
-
 .menu .list__link_active {
   color: #FAFAFA;
   border-bottom: solid 2px #F1CDB3;
+  cursor: pointer;
+}
+
+.menu .list__link_active:hover {
+  border: none;
 }
 
 .menu .list__link_disabled {
   color: #CDCDCD;
   padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.menu .list__link_disabled:hover {
+  color: #FAFAFA;
+}
+
+.menu .list__link_stop {
+  color: #CDCDCD;
+  padding-bottom: 2px;
+}
+
+.menu .list__link_stop:hover {
+  cursor: default;
 }
 
 .burger {
@@ -480,6 +494,9 @@ a:hover {
   height: 435px;
   background: #FAFAFA;
   border-radius: 9px;
+  opacity: 1;
+  -webkit-transition: opacity 3s cubic-bezier(0, 0, 1, 1) 500ms;
+  transition: opacity 3s cubic-bezier(0, 0, 1, 1) 500ms;
   cursor: pointer;
 }
 
