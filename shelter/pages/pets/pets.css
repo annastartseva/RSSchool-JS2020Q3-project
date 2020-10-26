@@ -18,6 +18,10 @@ img {
   overflow: hidden;
 }
 
+a {
+  text-decoration: none;
+}
+
 .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -122,7 +126,6 @@ img {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  cursor: pointer;
 }
 
 .menu a {
@@ -137,18 +140,34 @@ img {
   line-height: 160%;
 }
 
-.menu .list__link:hover {
-  color: #292929;
-}
-
 .menu .list__link_active {
   color: #545454;
   border-bottom: solid 2px #F1CDB3;
+  cursor: pointer;
+}
+
+.menu .list__link_active:hover {
+  border: none;
+  color: #292929;
 }
 
 .menu .list__link_disabled {
   color: #545454;
   padding-bottom: 2px;
+  cursor: pointer;
+}
+
+.menu .list__link_disabled:hover {
+  color: #292929;
+}
+
+.menu .list__link_stop {
+  color: #545454;
+  padding-bottom: 2px;
+}
+
+.menu .list__link_stop:hover {
+  cursor: default;
 }
 
 .burger {
@@ -738,6 +757,32 @@ img {
         align-self: center;
     padding-top: 6.5rem;
   }
+  .popup__wrapper {
+    width: 682px;
+  }
+  .popup__pets-info {
+    width: 630px;
+    height: 350px;
+  }
+  .popup__pets-img {
+    width: 350px;
+  }
+  .popup__content {
+    width: 280px;
+    padding: 10px 9px 37px 11px;
+  }
+  .popup__content-title {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  .popup__content-subtitle {
+    margin-bottom: 20px;
+  }
+  .popup__description {
+    font-size: 13px;
+    line-height: 14.3px;
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -992,6 +1037,49 @@ img {
   }
   .header__active .menu {
     width: 320px;
+  }
+  .popup__wrapper {
+    width: 270px;
+  }
+  .popup__close-btn-wrapper {
+    margin-right: 0;
+  }
+  .popup__pets-info {
+    width: 240px;
+    height: 380px;
+  }
+  .popup__pets-img-wrap {
+    height: 100%;
+  }
+  .popup__pets-img {
+    width: 100px;
+    display: none;
+  }
+  .popup__content {
+    width: 400px;
+    padding: 10px 10px 10px 10px;
+  }
+  .popup__content-title {
+    text-align: center;
+    font-size: 35px;
+    line-height: 130%;
+    margin-bottom: 10px;
+  }
+  .popup__content-subtitle {
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
+  }
+  .popup__description {
+    font-size: 13px;
+    line-height: 110%;
+    margin-bottom: 24px;
+  }
+  .popup__content-list {
+    font-size: 15px;
+  }
+  .popup__list-item {
+    margin-bottom: 5px;
   }
 }
 /*# sourceMappingURL=pets.css.map */

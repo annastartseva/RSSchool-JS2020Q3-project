@@ -1,3 +1,12 @@
+// disabled menu item
+const stopTransition = document.querySelectorAll('.list__link_stop');
+
+for (const item of stopTransition) {
+    item.addEventListener("click", (event) => {
+        event.preventDefault();
+    });
+}
+
 // BURGER MENU active/disable
 
 const burger = document.querySelector(".burger"),
@@ -47,6 +56,7 @@ header.addEventListener("click", (event) => {
     return isHeaderShown ? header.classList.toggle("header__active") : null;
 });
 
+// for pets create cards and pagination
 const btnToStart = document.querySelector('.btn-to-start'),
     btnPrev = document.querySelector('.btn-prev'),
     btnNumber = document.querySelector('.btn-number'),
@@ -227,7 +237,8 @@ const fillPetCardOnResize = (list) => {
 
         if (listCounter === prevPageNumber) {
             // console.log('listCounter === prevPageNumber: ' + listCounter + ' ' + prevPageNumber);
-            btnNumber.textContent = 48 / numberPetsCards;
+            // btnNumber.textContent = 48 / numberPetsCards;
+            btnNumber.textContent = prevPageNumber;
             sliderList.classList.add('cards-list-active');
         }
         if (copyFullPetsList.length === numberPetsCards && listCounter < prevPageNumber) {
