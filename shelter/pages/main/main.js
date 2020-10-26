@@ -1,4 +1,53 @@
-// const elemCardsPets = document.querySelector(".petsArray__cards-info");
+// BURGER MENU active/disable
+
+const burger = document.querySelector(".burger"),
+    header = document.querySelector(".header");
+const navWrapper = document.querySelector(".menu");
+const btnOurPets = document.querySelector(".list__link_active");
+
+burger.addEventListener("click", (event) => {
+    // event.stopPropagation();
+    header.classList.toggle("header__active");
+    changeBodyScrolling();
+});
+
+
+btnOurPets.addEventListener("click", function(event) {
+    header.classList.toggle("header__active");
+    changeBodyScrolling();
+});
+
+const blackoutBgrd = document.querySelector(".blackout__bgr");
+blackoutBgrd.addEventListener("click", function(event) {
+    const isShown = blackoutBgrd.classList.contains("blackout__bgr-active");
+
+    if (!isShown) {
+        return;
+    }
+
+    if (this !== event.target) {
+        return;
+    }
+
+    header.classList.toggle("header__active");
+    changeBodyScrolling();
+});
+
+navWrapper.addEventListener("click", function(event) {
+    if (event.target !== this) {
+        return;
+    }
+    event.stopPropagation();
+    header.classList.toggle("header__active");
+});
+
+header.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const isHeaderShown = event.target.classList.contains("header__active");
+    return isHeaderShown ? header.classList.toggle("header__active") : null;
+});
+
+// for pets create cards and pagination
 const btnPrev = document.querySelector('.btn-prev'),
     btnNext = document.querySelector('.btn-next');
 

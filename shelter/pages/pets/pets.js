@@ -47,6 +47,7 @@ header.addEventListener("click", (event) => {
     return isHeaderShown ? header.classList.toggle("header__active") : null;
 });
 
+// for pets create cards and pagination
 const btnToStart = document.querySelector('.btn-to-start'),
     btnPrev = document.querySelector('.btn-prev'),
     btnNumber = document.querySelector('.btn-number'),
