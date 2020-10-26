@@ -14,6 +14,10 @@ img {
   max-height: 100%;
 }
 
+.popup-open {
+  overflow: hidden;
+}
+
 a {
   text-decoration: none;
 }
@@ -462,6 +466,7 @@ a:hover {
   height: 435px;
   background: #FAFAFA;
   border-radius: 9px;
+  cursor: pointer;
 }
 
 .pets__cards-info:hover {
@@ -838,6 +843,200 @@ a:hover {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+}
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: none;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 1;
+  background-color: rgba(41, 41, 41, 0.6);
+}
+
+.popup__wrapper {
+  width: 952px;
+}
+
+.popup__scr-active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  opacity: 1;
+  -webkit-animation: fadein 1s;
+          animation: fadein 1s;
+}
+
+.popup__close-btn-wrapper {
+  width: 52px;
+  height: 52px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.popup__close-btn {
+  border-radius: 100%;
+  border: none;
+  width: 5.2rem;
+  height: 5.2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-shadow: inset 0 0 0 2px #F1CDB3;
+          box-shadow: inset 0 0 0 2px #F1CDB3;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.popup__close-btn:hover {
+  background-color: #FDDCC4;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+}
+
+.popup__close-btn:disabled {
+  -webkit-box-shadow: inset 0 0 0 2px #CDCDCD;
+          box-shadow: inset 0 0 0 2px #CDCDCD;
+}
+
+.popup__close-btn-active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background-color: #F1CDB3;
+  cursor: pointer;
+}
+
+.popup__close-btn-active:hover {
+  background-color: #F1CDB3;
+}
+
+.popup__close-btn:disabled {
+  -webkit-box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+          box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+}
+
+.popup__close-btn:disabled:hover {
+  -webkit-box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+          box-shadow: inset 0 0 0 0.2rem #CDCDCD;
+  background: transparent;
+  cursor: pointer;
+}
+
+.popup:hover .btn {
+  background-color: #F1CDB3;
+}
+
+.popup__pets-info {
+  width: 900px;
+  height: 500px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: #FAFAFA;
+  border-radius: 9px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+          box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
+  z-index: 1;
+}
+
+.popup__pets-img {
+  width: 500px;
+  border-radius: 9px;
+}
+
+.popup__content {
+  width: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 51px 20px 50px 30px;
+}
+
+.popup__content-title {
+  margin-top: 0;
+  text-align: left;
+  color: #000;
+  margin-bottom: 9px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 3.5rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 130%;
+  letter-spacing: 0.21rem;
+}
+
+.popup__content-subtitle {
+  color: #000;
+  margin-bottom: 40px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 115%;
+  letter-spacing: 0.12rem;
+}
+
+.popup__description {
+  margin-top: 0;
+  font-size: 15px;
+  line-height: 17.5px;
+  font-family: Georgia, serif;
+  letter-spacing: 0.06em;
+  text-align: left;
+  margin-bottom: 41px;
+  color: #000;
+}
+
+.popup__content-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  line-height: 23px;
+  font-size: 15px;
+  line-height: 16.5px;
+  letter-spacing: 0.06em;
+}
+
+.popup__list-item {
+  padding-left: 14px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.popup__list-item::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: #F1CDB3;
+  border-radius: 50%;
+  position: absolute;
+  top: 6px;
+  left: 0;
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {

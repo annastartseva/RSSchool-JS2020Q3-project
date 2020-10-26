@@ -68,15 +68,15 @@ const createPetCard = (cardInfo) => {
     btn.textContent = "Learn more";
     cardsItem.appendChild(btn);
 
-    // cardsItem.addEventListener('click', () => {
-    //     const currentPetInfo = petsArray.find(pet => pet.name === cardInfo.name);
-    //     fillPopup(currentPetInfo);
-    //     // const popup = document.querySelector('.popup');
-    //     // popup.classList.add('popup__scr-active')
-    //     togglePopup();
-    //     // вкл-выкл окно popup
-    //     changeBodyScrolling(); //отключение скрола
-    // });
+    cardsItem.addEventListener('click', () => {
+        const currentPetInfo = petsArray.find(pet => pet.name === cardInfo.name);
+        fillPopup(currentPetInfo);
+        // const popup = document.querySelector('.popup');
+        // popup.classList.add('popup__scr-active')
+        togglePopup();
+        // вкл-выкл окно popup
+        changeBodyScrolling(); //отключение скрола
+    });
 
     return cardsItem;
 }
@@ -152,3 +152,60 @@ btnPrev.addEventListener("click", () => {
 //         btn.removeAttribute("disabled", false)
 //     }
 // }
+
+// ------ POPUP------
+
+const body = document.querySelector('body'),
+    popup = document.querySelector(".popup"),
+    popupCloseBtn = document.querySelector(".popup__close-btn"),
+    popupImg = document.querySelector(".popup__pets-img"),
+    popupTitle = document.querySelector(".popup__content-title"),
+    popupSubtitle = document.querySelector(".popup__content-subtitle"),
+    popupDescription = document.querySelector(".popup__description"),
+    popupAge = document.querySelector(".popup__item-age"),
+    popupInoculations = document.querySelector(".popup__item-inoculations"),
+    popupDiseases = document.querySelector(".popup__item-diseases"),
+    popupParasites = document.querySelector(".popup__item-parasites");
+
+const fillPopup = petInfo => {
+
+    popupTitle.textContent = petInfo.name;
+    popupDescription.textContent = petInfo.description;
+    popupImg.setAttribute("src", `../../assets/images/pets-${petInfo.name.toLowerCase()}.png`);
+    popupSubtitle.textContent = `${petInfo.type} - ${petInfo.breed}`;
+    popupAge.textContent = petInfo.age;
+    popupInoculations.textContent = petInfo.inoculations.join(', ');
+    popupDiseases.textContent = petInfo.diseases.join(', ');
+    popupParasites.textContent = petInfo.parasites.join(', ');
+}
+
+popupCloseBtn.addEventListener("click", () => {
+    console.log('click button')
+    togglePopup();
+    changeBodyScrolling();
+});
+
+popup.addEventListener("click", function(event) {
+    const isShown = popup.classList.contains("popup__scr-active");
+
+    if (!isShown) {
+        return;
+    }
+
+    if (this !== event.target) {
+        return;
+    }
+
+    togglePopup();
+    changeBodyScrolling();
+});
+
+//метод classList.toggle: 
+//класс у элемента существует - он его удаляет, если класса нет - добавляет
+const changeBodyScrolling = () => {
+    body.classList.toggle("popup-open");
+};
+
+const togglePopup = () => {
+    popup.classList.toggle("popup__scr-active");
+}
