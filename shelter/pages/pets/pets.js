@@ -95,7 +95,7 @@ fetch('./pets.json').then(res => res.json()).then(list => {
         return tempArr;
     })();
     //для 6 и 3 проверяем массив на повторяющиеся элементы
-    fullPetsList = sort6Recursiveely(fullPetsList);
+    fullPetsList = sort6Recursively(fullPetsList);
     // let dublicateList = fullPetsList;
     fillPetCard(fullPetsList);
 })
@@ -105,8 +105,8 @@ request.send();
 
 
 // функция проверяющая повторы в 6-ках картинок через рекурсию - вызов самой себя
-const sort6Recursiveely = (list) => {
-    console.log('function sort6Recursiveely');
+const sort6Recursively = (list) => {
+    console.log('function sort6Recursively');
     let length = list.length;
 
     for (let i = 0; i < (length / 6); i++) {
@@ -115,7 +115,7 @@ const sort6Recursiveely = (list) => {
 
         for (let j = 0; j < 6; j++) {
             const duplicatedItem = stepList.find((item, ind) => {
-                return item.name === stepList.name && (ind !== j);
+                return item.name === stepList[j].name && (ind !== j);
                 // return item.name === stepList[j].name && (ind !== j);
             });
 
@@ -123,9 +123,9 @@ const sort6Recursiveely = (list) => {
                 const ind = (i * 6) + j;
                 const which8OfList = Math.trunc(ind / 8);
 
-                list.splice(which8OfList * 8, 0, list.splice(ind)[0]);
+                list.splice(which8OfList * 8, 0, list.splice(ind, 1)[0]);
 
-                sort6Recursiveely(list);
+                sort6Recursively(list);
             }
         }
     }
