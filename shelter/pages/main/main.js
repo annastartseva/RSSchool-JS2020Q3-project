@@ -1,10 +1,11 @@
-const elemCardsPets = document.querySelector(".petsArray__cards-info");
+// const elemCardsPets = document.querySelector(".petsArray__cards-info");
+const btnPrev = document.querySelector('.btn-prev'),
+    btnNext = document.querySelector('.btn-next');
+
 
 // VAR
 let petsArray = []; // array of 8 elements
 let fullPetsList = []; //array of 48 elements
-let petsArray2 = [];
-
 
 //Download and create array with information about Pets
 const request = new XMLHttpRequest();
@@ -13,60 +14,38 @@ request.open('GET', '../pets/pets.json');
 fetch('../pets/pets.json').then(res => res.json()).then(list => {
     console.log('function fetch');
     petsArray = list;
-    console.log('petsArray array' + petsArray)
+
 
     fullPetsList = (() => {
         console.log('function fullPetsList');
-        let tempArr = [];
+        let newPets = petsArray;
+        newPets = createRandomPets(newPets);
+        // for (let j = petsArray.length; j > 0; j--) {
+        //     let randId = Math.floor(Math.random() * j);
+        //     const randElem = newPets.splice(randId, 1)[0];
+        //     newPets.push(randElem);
+        // }
 
-        for (let i = 0; i < 6; i++) {
-            const newPets = petsArray;
-            //данные в восьмерках элементов не повторяются
-            for (let j = petsArray.length; j > 0; j--) {
-                let randId = Math.floor(Math.random() * j);
-                const randElem = newPets.splice(randId, 1)[0];
-                newPets.push(randElem);
-            }
-            tempArr = [...tempArr, ...newPets];
-        }
-        console.log('tempArr: ' + tempArr);
-        return tempArr;
+        console.log('newPets: ' + newPets);
+        return newPets;
     })();
-    //для 6 и 3 проверяем массив на повторяющиеся элементы
-    fullPetsList = sort6Recursiveely(fullPetsList);
 
+    console.log('fullPetsList: ' + fullPetsList);
     fillPetCard(fullPetsList);
+
 })
-
-
 request.send();
 
-// функция проверяющая повторы в 6-ках картинок через рекурсию - вызов самой себя
-const sort6Recursiveely = (list) => {
-    console.log('function sort6Recursiveely');
-    let length = list.length;
+const createRandomPets = (petsData) => {
 
-    for (let i = 0; i < (length / 6); i++) {
-        const stepList = list.slice(i * 6, (i * 6) + 6);
-        console.log('stepList: ' + stepList);
-
-        for (let j = 0; j < 6; j++) {
-            const duplicatedItem = stepList.find((item, ind) => {
-                return item.name === stepList.name && (ind !== j);
-                // return item.name === stepList[j].name && (ind !== j);
-            });
-
-            if (duplicatedItem !== undefined) {
-                const ind = (i * 6) + j;
-                const which8OfList = Math.trunc(ind / 8);
-
-                list.splice(which8OfList * 8, 0, list.splice(ind)[0]);
-
-                sort6Recursiveely(list);
-            }
-        }
+    for (let j = petsData.length; j > 0; j--) {
+        let randId = Math.floor(Math.random() * j);
+        const randElem = petsData.splice(randId, 1)[0];
+        petsData.push(randElem);
     }
-    return list;
+
+    console.log('petsData: ' + petsData);
+    return petsData;
 }
 
 const createPetCard = (cardInfo) => {
@@ -90,10 +69,13 @@ const createPetCard = (cardInfo) => {
     cardsItem.appendChild(btn);
 
     // cardsItem.addEventListener('click', () => {
-    //     const currentPetInfo = pets.find(pet => pet.name === cardInfo.name);
+    //     const currentPetInfo = petsArray.find(pet => pet.name === cardInfo.name);
     //     fillPopup(currentPetInfo);
-
+    //     // const popup = document.querySelector('.popup');
+    //     // popup.classList.add('popup__scr-active')
     //     togglePopup();
+    //     // вкл-выкл окно popup
+    //     changeBodyScrolling(); //отключение скрола
     // });
 
     return cardsItem;
@@ -101,29 +83,72 @@ const createPetCard = (cardInfo) => {
 
 const fillPetCard = (list) => {
     console.log('function fillPetCard');
+
+    // console.log('function fillPetCard: list ' + list);
     const petsCardsWrapper = document.querySelector(".pets__cards");
     const bodyWidth = document.querySelector('body').offsetWidth;
-    console.log('bodyWidth: ' + bodyWidth);
     const numberPetsCards = bodyWidth >= 1280 ? 3 : bodyWidth >= 768 ? 2 : 1;
-    let listCounter = 1;
-    while (list.length > 0) {
-        const sliderList = document.createElement('div');
-        sliderList.classList.add('pets__cards-list');
 
-        if (listCounter === 1) {
-            sliderList.classList.add('cards-list-active');
-        }
+    console.log('function fillPetCard: numberPetsCards ' + numberPetsCards);
+    console.log('function fillPetCard: bodyWidth ' + bodyWidth);
 
-        sliderList.setAttribute('cards-list-number', `${listCounter}`);
+    const sliderList = document.createElement('div');
+    sliderList.classList.add('pets__cards-list');
 
-        for (let i = 0; i < numberPetsCards; i++) {
-            const petItem = createPetCard(list[i]);
-            sliderList.appendChild(petItem);
-        }
-
-        listCounter++;
-
-        petsCardsWrapper.append(sliderList);
-        list.splice(0, numberPetsCards);
+    for (let i = 0; i < numberPetsCards; i++) {
+        // console.log('function fillPetCard: for');
+        const petItem = createPetCard(list[i]);
+        sliderList.appendChild(petItem);
     }
+
+    petsCardsWrapper.append(sliderList);
+    // console.log('function fillPetCard: petsCardsWrapper ' + petsCardsWrapper);
+    // console.log('function fillPetCard: sliderList ' + sliderList);
+
 }
+
+// пересоздание pets cards при изменении экрана
+const ClearCards = (list) => {
+    console.log('function ClearCards');
+
+    const petsCardsWrapper = document.querySelector(".pets__cards");
+
+    while (petsCardsWrapper.firstChild) {
+        petsCardsWrapper.removeChild(petsCardsWrapper.firstChild);
+    }
+
+
+}
+
+// ожидание изменения размера окна
+window.addEventListener('resize', function(event) {
+    console.log('resized: ' + document.querySelector('body').offsetWidth);
+    ClearCards();
+    fillPetCard(fullPetsList);
+
+});
+
+// Pagination on pets cards
+
+btnNext.addEventListener("click", () => {
+    console.log('function btnNext.addEventListener');
+    ClearCards(fullPetsList);
+    const petsRandom = createRandomPets(petsArray);
+    fillPetCard(petsRandom);
+});
+
+btnPrev.addEventListener("click", () => {
+    console.log('function btnNext.addEventListener');
+    ClearCards(fullPetsList);
+    const petsRandom = createRandomPets(petsArray);
+    fillPetCard(petsRandom);
+});
+
+// //включение свойства disable на кнопки слайдера
+// const toggleDisablingBtn = (btn, disable = false) => {
+//     if (disable) {
+//         btn.setAttribute("disabled", true)
+//     } else {
+//         btn.removeAttribute("disabled", false)
+//     }
+// }
