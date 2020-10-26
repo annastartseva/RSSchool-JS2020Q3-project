@@ -3,9 +3,32 @@
 const burger = document.querySelector(".burger"),
     header = document.querySelector(".header");
 const navWrapper = document.querySelector(".menu");
+const btnOurPets = document.querySelector(".list__link_active");
 
 burger.addEventListener("click", (event) => {
     // event.stopPropagation();
+    header.classList.toggle("header__active");
+    changeBodyScrolling();
+});
+
+
+btnOurPets.addEventListener("click", function(event) {
+    header.classList.toggle("header__active");
+    changeBodyScrolling();
+});
+
+const blackoutBgrd = document.querySelector(".blackout__bgr");
+blackoutBgrd.addEventListener("click", function(event) {
+    const isShown = blackoutBgrd.classList.contains("blackout__bgr-active");
+
+    if (!isShown) {
+        return;
+    }
+
+    if (this !== event.target) {
+        return;
+    }
+
     header.classList.toggle("header__active");
     changeBodyScrolling();
 });
@@ -23,9 +46,6 @@ header.addEventListener("click", (event) => {
     const isHeaderShown = event.target.classList.contains("header__active");
     return isHeaderShown ? header.classList.toggle("header__active") : null;
 });
-
-
-
 
 const btnToStart = document.querySelector('.btn-to-start'),
     btnPrev = document.querySelector('.btn-prev'),
@@ -72,7 +92,6 @@ fetch('./pets.json').then(res => res.json()).then(list => {
 
 
 request.send();
-
 
 
 // функция проверяющая повторы в 6-ках картинок через рекурсию - вызов самой себя
@@ -439,13 +458,10 @@ popup.addEventListener("click", function(event) {
 
 //метод classList.toggle: 
 //класс у элемента существует - он его удаляет, если класса нет - добавляет
-
 const changeBodyScrolling = () => {
     body.classList.toggle("popup-open");
 };
 
-// body.style.overflow = 'hidden'
-//     html.style.overflow = 'hidden'
 const togglePopup = () => {
     popup.classList.toggle("popup__scr-active");
 }
