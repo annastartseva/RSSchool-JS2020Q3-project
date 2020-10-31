@@ -13,8 +13,25 @@ const Keyboard = {
 
     properties: {
         value: "",
-        capsLock: false
+        capsLock: false,
+        shift: false
     },
+
+    keyLayoutEng: [
+        "done", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+        "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+        "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
+        "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+        "space"
+    ],
+
+    keyLayoutEngShift: [
+        "done", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "backspace",
+        "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
+        "caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", "enter",
+        "shift", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "/",
+        "space"
+    ],
 
     init() {
         //create main elements
@@ -22,7 +39,7 @@ const Keyboard = {
         this.elements.keysContainer = document.createElement("div");
 
         //setup main elements
-        this.elements.main.classList.add("keyboard", "1keyboard--hidden");
+        this.elements.main.classList.add("keyboard", "keyboard--hidden");
         this.elements.keysContainer.classList.add("keyboard__keys");
         this.elements.keysContainer.appendChild(this._createKeys());
 
@@ -44,20 +61,14 @@ const Keyboard = {
 
     _createKeys() {
         const fragment = document.createDocumentFragment();
-        const keyLayout = [
-            "done", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-            "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
-            "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-            "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-            "space"
-        ];
+        let currentLayout = this.keyLayoutEng;
 
         //create HTML for an icon
         const createIconHTML = (icon_name) => {
             return `<i class="material-icons">${icon_name}</i>`;
         };
 
-        keyLayout.forEach(key => {
+        currentLayout.forEach(key => {
             const keyElement = document.createElement("button");
             const insertLineBreak = ["backspace", "p", "enter", "?"].indexOf(key) !== -1;
 
@@ -84,6 +95,17 @@ const Keyboard = {
                     keyElement.addEventListener("click", () => {
                         this._toggleCapsLock();
                         keyElement.classList.toggle("keyboard__key--active", this.properties.capsLock);
+                    });
+
+                    break;
+
+                case "shift":
+                    keyElement.classList.add("keyboard__key--wide", "keyboard__key--activatable");
+                    keyElement.innerHTML = createIconHTML("keyboard_shift");
+
+                    keyElement.addEventListener("click", () => {
+                        this._toggleShift();
+                        keyElement.classList.toggle("keyboard__key--active", this.properties.shift);
                     });
 
                     break;
@@ -125,7 +147,8 @@ const Keyboard = {
                     keyElement.textContent = key.toLowerCase();
 
                     keyElement.addEventListener("click", () => {
-                        this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        // this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        this.properties.value += keyElement.textContent;
                         this._triggerEvent("oninput");
                     });
 
@@ -156,6 +179,40 @@ const Keyboard = {
                 key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
             }
         }
+    },
+
+    _toggleShift() {
+        this.properties.shift = !this.properties.shift;
+        this._changeSymbols();
+    },
+
+    _changeSymbols() {
+        console.log("_changeSymbols");
+        var currentLayout = this.keyLayoutEng;
+        if (this.properties.shift) {
+            currentLayout = this.keyLayoutEngShift;
+        }
+        console.log("currentLayout " + currentLayout);
+        let i = 0;
+        for (const key of this.elements.keys) {
+            if (currentLayout[i] != "backspace" &&
+                currentLayout[i] != "space" &&
+                currentLayout[i] != "enter" &&
+                currentLayout[i] != "done" &&
+                currentLayout[i] != "caps" &&
+                currentLayout[i] != "shift"
+            ) {
+                key.textContent = currentLayout[i];
+                if (key.childElementCount === 0) {
+
+
+                    // key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+                    key.textContent = this.properties.shift ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+                }
+            }
+            i++;
+        }
+
     },
 
     open(initialValue, oninput, onclose) {
