@@ -47,6 +47,7 @@
     padding: 0;
     -webkit-tap-highlight-color: transparent;
     position: relative;
+    transition: all 0.07s;
 }
 
 .keyboard__key:active {
@@ -74,13 +75,25 @@
 }
 
 .keyboard__key--active::after {
-    background: #08ff00;
+    background: rgb(0, 255, 21);
 }
 
 .keyboard__key--dark {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(21, 8, 92, 0.4);
 }
 
 .material-icons {
     max-width: 30%;
+}
+
+.keyboard__key--playing {
+    transform: scale(1.1);
+    border-color: khaki;
+    box-shadow: 0 0 10px khaki;
+}
+
+.keyboard__key--down {
+    /* background-color: rgba(60, 201, 25, 1); */
+    color: rgb(0, 255, 21);
+    box-shadow: inset 0 0 0 2px rgb(0, 255, 21, 0.6);
 }
