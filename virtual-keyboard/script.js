@@ -291,6 +291,7 @@ const Keyboard = {
         console.log("_toggleLanguage ")
         this.properties.english = !this.properties.english;
         this._changeSymbols();
+
     },
 
     _toggleSound(keyElement) {
@@ -318,7 +319,8 @@ const Keyboard = {
                 currentLayout[i] != "enter" &&
                 currentLayout[i] != "done" &&
                 currentLayout[i] != "caps" &&
-                currentLayout[i] != "shift"
+                currentLayout[i] != "shift" &&
+                currentLayout[i] != "mute"
             ) {
                 key.textContent = currentLayout[i];
                 if (!this.properties.capsLock && this.properties.shift && key.childElementCount === 0) {
