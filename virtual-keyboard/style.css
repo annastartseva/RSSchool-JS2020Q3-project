@@ -79,7 +79,7 @@
 }
 
 .keyboard__key--dark {
-    background: rgba(21, 8, 92, 0.4);
+    background: rgba(29, 27, 36, 0.4);
 }
 
 .material-icons {
@@ -98,28 +98,30 @@
     box-shadow: inset 0 0 0 2px rgb(0, 255, 21, 0.6);
 }
 
-@media only screenand (max-width:600px) {
+.keyboard__key--active-speech {
+    color: rgb(255, 0, 0, 0.7);
+}
+
+@media (max-width: 900px) {
     .use-keyboard-input {
         min-height: 200px;
     }
     .keyboard__key {
-        height: 30px;
-        width: 5%;
+        height: 40px;
+        width: 6%;
         max-width: 80px;
         margin: 2px;
         font-size: 1em;
     }
     .keyboard__key--wide {
-        width: 9%;
+        width: 10%;
+    }
+    .keyboard__key--extra-wide {
+        width: 34%;
+        max-width: 300px;
     }
     .keyboard__key--activatable::after {
-        content: '';
-        top: 8px;
-        right: 8px;
-        position: absolute;
-        width: 7px;
-        height: 7px;
-        background: rgba(100, 100, 100, 0.4);
-        border-radius: 50%;
+        top: 6px;
+        right: 6px;
     }
 }
