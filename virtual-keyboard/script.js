@@ -588,9 +588,9 @@ const Keyboard = {
         console.log("close ");
         this.properties.value = "";
         this.eventHandlers.oninput = oninput;
-        this.eventHandlers.onclose = onclose;
+        this.eventHandlers.onclose = "close";
         this.elements.main.classList.add("keyboard--hidden");
-        // this.keyboardInput.blur();
+        this.keyboardInput.blur();
     }
 };
 
