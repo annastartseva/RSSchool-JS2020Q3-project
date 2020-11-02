@@ -1,3 +1,9 @@
+// window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+// const recognition = new SpeechRecognition();
+// recognition.interimResults = true;
+// // recognition.continuous = true;
+
 const Keyboard = {
     elements: {
         main: null,
@@ -17,12 +23,12 @@ const Keyboard = {
         capsLock: false,
         shift: false,
         english: true,
-        // currentCursor: 0,
-        mute: false
+        mute: false,
+        speech: false
     },
 
     keyLayoutEng: [
-        "done", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+        "done", "speech", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
         "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
         "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "\'", "enter",
         "shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/",
@@ -30,14 +36,14 @@ const Keyboard = {
     ],
 
     keyLayoutEngShift: [
-        "done", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "backspace",
+        "done", "speech", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "backspace",
         "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}",
         "caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "enter",
         "shift", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?",
         "mute", "language", "space", "<", ">"
     ],
     keyLayoutRus: [
-        "done", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+        "done", "speech", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
         "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
         "caps", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "enter",
         "shift", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".",
@@ -45,7 +51,7 @@ const Keyboard = {
     ],
 
     keyLayoutRusShift: [
-        "done", "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "backspace",
+        "done", "speech", "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "backspace",
         "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ",
         "caps", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "enter",
         "shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "\,",
@@ -305,25 +311,27 @@ const Keyboard = {
                     });
                     break;
 
-                case 'mute':
+                case "mute":
                     keyElement.classList.add('keyboard__key--wide');
-                    keyElement.innerHTML = `<span class="material-icons">volume_up</span>`;
+                    keyElement.innerHTML = createIconHTML("volume_up");
 
                     keyElement.addEventListener('click', () => {
                         this._setSound('main');
                         this._toggleSound(keyElement);
                     });
+
                     keyElement.addEventListener("mousedown", () => {
                         keyElement.classList.add("keyboard__key--down");
                     });
+
                     keyElement.addEventListener("mouseup", () => {
                         keyElement.classList.remove("keyboard__key--down");
                     });
 
                     break;
-                case '<':
+                case "<":
                     keyElement.classList.add('keyboard__key--wide');
-                    keyElement.innerHTML = `<span class="material-icons">arrow_left</span>`;
+                    keyElement.innerHTML = createIconHTML("arrow_left");
                     keyElement.dataset.key = "ArrowLeft";
 
                     keyElement.addEventListener("mousedown", () => {
@@ -340,9 +348,9 @@ const Keyboard = {
                     });
                     break;
 
-                case '>':
+                case ">":
                     keyElement.classList.add('keyboard__key--wide');
-                    keyElement.innerHTML = `<span class="material-icons">arrow_right</span>`;
+                    keyElement.innerHTML = createIconHTML("arrow_right");
                     keyElement.dataset.key = "ArrowRight";
 
                     keyElement.addEventListener("mousedown", () => {
@@ -350,6 +358,20 @@ const Keyboard = {
                         this._setSound('main');
                         this.keyboardInput.selectionStart = this.keyboardInput.selectionEnd = this.keyboardInput.selectionStart + 1;
 
+                    });
+                    keyElement.addEventListener("mouseup", () => {
+                        keyElement.classList.remove("keyboard__key--down");
+                    });
+                    break;
+
+                case "speech":
+                    keyElement.classList.add('keyboard__key--wide');
+                    keyElement.innerHTML = createIconHTML("voice_over_off");
+
+                    keyElement.addEventListener("mousedown", () => {
+                        keyElement.classList.add("keyboard__key--down");
+                        this._setSound('main');
+                        this._toggleSpeechRecognition(keyElement);
                     });
                     keyElement.addEventListener("mouseup", () => {
                         keyElement.classList.remove("keyboard__key--down");
@@ -447,9 +469,47 @@ const Keyboard = {
     },
 
     _toggleSound(keyElement) {
-        console.log("_toggleSound")
+        console.log("_toggleSound");
         this.properties.mute = !this.properties.mute;
         keyElement.innerHTML = this.properties.mute ? `<span class="material-icons">volume_off</span>` : `<span class="material-icons">volume_up</span>`;
+    },
+
+    _toggleSpeechRecognition(keyElement) {
+        console.log("_toggleSpeechRecognition");
+        this.properties.speech = !this.properties.speech;
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        recognition.lang = this.properties.english ? 'en-US' : 'ru-Ru';
+
+        let currentValueText = this.properties.value;
+
+        if (this.properties.speech) {
+            keyElement.innerHTML = `<span class="material-icons">record_voice_over</span>`;
+            keyElement.classList.add("keyboard__key--active-speech");
+            recognition.start();
+
+            let transcript = "";
+
+            recognition.addEventListener('result', e => {
+                transcript = Array.from(e.results).map(result => result[0]).map(result => result.transcript)
+                    .join('');
+                // console.log(transcript);
+                this.properties.value = currentValueText + ' ' + transcript + ' ';
+                this._triggerEvent('oninput');
+
+            });
+
+            // recognition.addEventListener('end', recognition.start);
+
+        } else {
+            keyElement.innerHTML = `<span class="material-icons">voice_over_off</span>`;
+            keyElement.classList.remove("keyboard__key--active-speech");
+            recognition.stop();
+        };
+
     },
 
     _changeSymbols() {
@@ -472,7 +532,8 @@ const Keyboard = {
                 currentLayout[i] != "done" &&
                 currentLayout[i] != "caps" &&
                 currentLayout[i] != "shift" &&
-                currentLayout[i] != "mute"
+                currentLayout[i] != "mute" &&
+                currentLayout[i] != "speech"
             ) {
                 key.textContent = currentLayout[i];
                 if (!this.properties.capsLock && this.properties.shift && key.childElementCount === 0) {
@@ -529,6 +590,7 @@ const Keyboard = {
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
         this.elements.main.classList.add("keyboard--hidden");
+        // this.keyboardInput.blur();
     }
 };
 
