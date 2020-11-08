@@ -5,10 +5,11 @@ const empty = {
     top: 0,
     left: 0,
 };
-const cells = [];
-cells.push(empty);
 
-const numbers = [...Array(15).keys()]
+const cells = [];
+// cells.push(empty);
+
+const numbers = [...Array(16).keys()]
     .sort(() => Math.random() - 0.5);
 console.log(numbers);
 
@@ -32,34 +33,47 @@ document.body.appendChild(gameWrap);
 
 
 
-
 function createNewGame() {
+
     const fragment = document.createDocumentFragment();
-    for (let i = 1; i <= 15; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('cell');
-        const value = numbers[i - 1] + 1;
-        cell.innerHTML = value;
 
-        const left = i % 4;
-        const top = (i - left) / 4;
+    for (let i = 0; i <= 15; i++) {
+        if (numbers[i] === 0) {
+            empty.value = 16;
 
-        cells.push({
-            value: value,
-            left: left,
-            top: top,
-            element: cell
-        });
+            const left = i % 4;
+            const top = (i - left) / 4;
+            empty.left = left;
+            empty.top = top;
+            cells.push(empty);
+        } else {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            const value = numbers[i];
+            cell.innerHTML = value;
+
+            const left = i % 4;
+            const top = (i - left) / 4;
+
+            cells.push({
+                value: value,
+                left: left,
+                top: top,
+                element: cell
+            });
+
+            cell.style.left = `${left * cellSize}px`;
+            cell.style.top = `${top * cellSize}px`;
+
+            fragment.appendChild(cell);
+
+            cell.addEventListener('click', () => {
+                move(i);
+            })
+        }
 
 
-        cell.style.left = `${left * cellSize}px`;
-        cell.style.top = `${top * cellSize}px`;
 
-        fragment.appendChild(cell);
-
-        cell.addEventListener('click', () => {
-            move(i);
-        })
     }
 
     return fragment;
@@ -88,8 +102,16 @@ function move(index) {
     cell.left = emptyLeft;
     cell.top = emptyTop;
 
+    // console.log('cell.value ' + cell.value);
+    // console.log('cell.top : ' + cell.top);
+    // console.log('cell.top * 4 : ' + cell.top * 4);
+    // console.log(' cell.left : ' + cell.left);
+    // console.log('(cell.top * 4 + cell.left) : ' + (cell.top * 4 + cell.left));
+    // console.log('(cell.top * 4 + cell.left) +1 : ' + ((cell.top * 4 + cell.left) + 1));
+
     const isFinished = cells.every(cell => {
-        return cell.value === cell.top * 4 + cell.left;
+        return cell.value === (cell.top * 4 + cell.left) + 1;
+
     });
 
     if (isFinished) {
