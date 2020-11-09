@@ -1,3 +1,22 @@
+//CREATE ELEMENTS
+//create main elements
+const gameWrap = document.createElement('div');
+//create menu header
+const menuWrap = document.createElement('div');
+const timeInfo = document.createElement('div');
+const timer = document.createElement('span');
+const timeValue = document.createElement('span');
+const movesInfo = document.createElement('div');
+const numberMoves = document.createElement('span');
+const numberMovesCount = document.createElement('span');
+const pauseButton = document.createElement('button');
+// create game's field
+const field = document.createElement('div');
+//create main menu 
+const menuOverlay = document.createElement('span');
+const mainMenu = document.createElement('div');
+
+//CREATE GLOBAL VAR
 const cellSize = 100;
 //empty cell
 const empty = {
@@ -5,45 +24,39 @@ const empty = {
     top: 0,
     left: 0,
 };
-
+const timeCount = {
+    min: '00',
+    sec: '00',
+};
+let movesCount = 0;
 const cells = [];
-// cells.push(empty);
-
-const numbers = [...Array(16).keys()]
-    .sort(() => Math.random() - 0.5);
-console.log(numbers);
 
 function initGame() {
-    //create main elements
-    const gameWrap = document.createElement('div');
-    //create menu
-    const menuWrap = document.createElement('div');
-    const timeInfo = document.createElement('div');
-    const timer = document.createElement('span');
-    const timeValue = document.createElement('span');
-    const movesInfo = document.createElement('div');
-    const numberMoves = document.createElement('span');
-    const numberMovesCount = document.createElement('span');
-    const pauseButton = document.createElement('button');
-
-    // create game's field
-    const field = document.createElement('div');
+    console.log('function initGame');
 
     //setup properties for main elements
     gameWrap.classList.add('game_wrapper');
     menuWrap.classList.add('menu_wrapper');
 
-    timer.classList.add('menu_timer');
+    timeValue.classList.add('menu_timer');
+    numberMovesCount.classList.add('menu_moves');
+
     pauseButton.classList.add('menu_button');
     field.classList.add('field');
-    timer.innerHTML = "Time ";
-    timeValue.innerHTML = "00:00";
-    numberMoves.innerHTML = "Moves ";
-    numberMovesCount.innerHTML = "0";
+    menuOverlay.classList.add('overlay', 'visible');
 
-    pauseButton.innerHTML = "Pause game"
-        // movesInfo.innerHTML = "Moves";
-        // timeInfo.innerHTML = "Time";
+    timer.innerHTML = "Time ";
+    timeValue.innerHTML = `${timeCount.min}:${timeCount.sec}`;
+    numberMoves.innerHTML = "Moves ";
+    numberMovesCount.innerText = movesCount;
+    pauseButton.innerHTML = "Pause game";
+
+    pauseButton.addEventListener('click', () => {
+        field.appendChild(menuOverlay);
+        mainMenu.classList.remove('hidden');
+        mainMenu.classList.add('active');
+    });
+
 
     //Add to DOM
     gameWrap.appendChild(menuWrap);
@@ -60,12 +73,24 @@ function initGame() {
     movesInfo.appendChild(numberMovesCount);
 
     field.appendChild(createNewGame());
+    field.appendChild(menuOverlay);
+
+    menuOverlay.appendChild(createMainMenu());
+
     document.body.appendChild(gameWrap);
 };
 
 function createNewGame() {
+    console.log('function createNewGame');
+
+    const numbers = [...Array(16).keys()]
+        .sort(() => Math.random() - 0.5);
+    console.log(numbers);
+
+    numberMovesCount.innerText = movesCount;
 
     const fragment = document.createDocumentFragment();
+    movesCount = 0;
 
     for (let i = 0; i <= 15; i++) {
         if (numbers[i] === 0) {
@@ -99,18 +124,51 @@ function createNewGame() {
 
             cell.addEventListener('click', () => {
                 move(i);
-            })
+            });
         }
-
-
-
     }
 
     return fragment;
 };
 
+function createMainMenu() {
+    console.log('function createMainMenu');
+    const fragment = document.createDocumentFragment();
+
+    const newGame = document.createElement('button');
+    const saveGame = document.createElement('button');
+    const settingGame = document.createElement('button');
+
+    newGame.innerHTML = "New Game";
+    saveGame.innerHTML = "Saved Game";
+
+
+    mainMenu.classList.add('menu_container', 'active');
+    newGame.classList.add('main_menu_button');
+    saveGame.classList.add('main_menu_button');
+
+
+    fragment.appendChild(mainMenu);
+    mainMenu.appendChild(newGame);
+    mainMenu.appendChild(saveGame);
+
+    newGame.addEventListener('click', () => {
+        mainMenu.classList.add('hidden');
+        mainMenu.classList.remove('active');
+        cells.length = 0;
+        movesCount = 0;
+        clearCell();
+        field.appendChild(createNewGame());
+    });
+
+
+    return fragment;
+};
+
 function move(index) {
+    console.log('function move');
     const cell = cells[index];
+
 
     //proverka vozmognosti peremesheniya
     const leftDiff = Math.abs(empty.left - cell.left);
@@ -138,7 +196,9 @@ function move(index) {
     // console.log(' cell.left : ' + cell.left);
     // console.log('(cell.top * 4 + cell.left) : ' + (cell.top * 4 + cell.left));
     // console.log('(cell.top * 4 + cell.left) +1 : ' + ((cell.top * 4 + cell.left) + 1));
-
+    movesCount += 1;
+    // console.log('movesCount: ' + movesCount)
+    numberMovesCount.innerText = movesCount;
     const isFinished = cells.every(cell => {
         return cell.value === (cell.top * 4 + cell.left) + 1;
 
@@ -147,6 +207,17 @@ function move(index) {
     if (isFinished) {
         alert('You won');
     }
-}
+};
+
+function clearCell() {
+    console.log('function clearCell');
+
+    const cellContainer = document.querySelector(".field");
+
+    while (cellContainer.firstChild) {
+        cellContainer.removeChild(cellContainer.firstChild);
+    }
+};
 
 initGame();
+// createMainMenu();
