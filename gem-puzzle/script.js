@@ -4,7 +4,7 @@ const gameWrap = document.createElement('div');
 //create menu header
 const menuWrap = document.createElement('div');
 const timeInfo = document.createElement('div');
-const timer = document.createElement('span');
+const timerText = document.createElement('span');
 const timeValue = document.createElement('span');
 const movesInfo = document.createElement('div');
 const numberMoves = document.createElement('span');
@@ -25,11 +25,14 @@ const empty = {
     left: 0,
 };
 const timeCount = {
-    min: '00',
-    sec: '00',
+    min: 0,
+    sec: 0,
 };
 let movesCount = 0;
 const cells = [];
+let timerId = 0;
+let numbers = [];
+
 
 function initGame() {
     console.log('function initGame');
@@ -45,18 +48,15 @@ function initGame() {
     field.classList.add('field');
     menuOverlay.classList.add('overlay', 'visible');
 
-    timer.innerHTML = "Time ";
-    timeValue.innerHTML = `${timeCount.min}:${timeCount.sec}`;
+    timerText.innerHTML = "Time ";
+    timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
     numberMoves.innerHTML = "Moves ";
     numberMovesCount.innerText = movesCount;
     pauseButton.innerHTML = "Pause game";
 
     pauseButton.addEventListener('click', () => {
-        field.appendChild(menuOverlay);
-        mainMenu.classList.remove('hidden');
-        mainMenu.classList.add('active');
+        pausedGame();
     });
-
 
     //Add to DOM
     gameWrap.appendChild(menuWrap);
@@ -66,7 +66,7 @@ function initGame() {
     menuWrap.appendChild(movesInfo);
     menuWrap.appendChild(pauseButton);
 
-    timeInfo.appendChild(timer);
+    timeInfo.appendChild(timerText);
     timeInfo.appendChild(timeValue);
 
     movesInfo.appendChild(numberMoves);
@@ -80,12 +80,23 @@ function initGame() {
     document.body.appendChild(gameWrap);
 };
 
+function createArrayNumbers() {
+    numbers = [...Array(16).keys()]
+        .sort(() => Math.random() - 0.5);
+    console.log(numbers);
+
+    const resultHaveSolution = haveSolution();
+
+    if (resultHaveSolution === false) {
+        createArrayNumbers();
+    }
+
+};
+
 function createNewGame() {
     console.log('function createNewGame');
 
-    const numbers = [...Array(16).keys()]
-        .sort(() => Math.random() - 0.5);
-    console.log(numbers);
+    createArrayNumbers();
 
     numberMovesCount.innerText = movesCount;
 
@@ -135,12 +146,15 @@ function createMainMenu() {
     console.log('function createMainMenu');
     const fragment = document.createDocumentFragment();
 
+    // const continueGame = document.createElement('button');
     const newGame = document.createElement('button');
     const saveGame = document.createElement('button');
     const settingGame = document.createElement('button');
 
+    // continueGame.innerHTML = "Continue Game";
     newGame.innerHTML = "New Game";
     saveGame.innerHTML = "Saved Game";
+
 
 
     mainMenu.classList.add('menu_container', 'active');
@@ -153,17 +167,43 @@ function createMainMenu() {
     mainMenu.appendChild(saveGame);
 
     newGame.addEventListener('click', () => {
-        mainMenu.classList.add('hidden');
-        mainMenu.classList.remove('active');
-        cells.length = 0;
-        movesCount = 0;
-        clearCell();
-        field.appendChild(createNewGame());
+        newGameStart();
     });
 
 
     return fragment;
 };
+
+function newGameStart() {
+    // mainMenu.classList.add('hidden');
+    mainMenu.classList.add('visually-hidden');
+    mainMenu.classList.remove('active');
+    pauseButton.classList.remove('active');
+    cells.length = 0;
+    numbers.length = 0;
+    movesCount = 0;
+    clearCell();
+    clearTimer();
+    field.appendChild(createNewGame());
+    timerId = window.setInterval(startTimer, 1000);
+};
+
+function pausedGame() {
+    pauseButton.classList.toggle('active');
+    if (pauseButton.classList.contains('active')) {
+        field.appendChild(menuOverlay);
+        stopTimer();
+        // mainMenu.classList.remove('hidden');
+        mainMenu.classList.remove('visually-hidden');
+        mainMenu.classList.add('active');
+    } else {
+        mainMenu.classList.add('visually-hidden');
+        mainMenu.classList.remove('active');
+        field.removeChild(menuOverlay);
+        timerId = window.setInterval(startTimer, 1000);
+    }
+
+}
 
 function move(index) {
     console.log('function move');
@@ -209,6 +249,30 @@ function move(index) {
     }
 };
 
+function startTimer() {
+    timeCount.sec += 1;
+    if (timeCount.sec === 60) {
+        timeCount.sec = 0;
+        timeCount.min += 1;
+    }
+
+    timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+};
+
+function stopTimer() {
+    window.clearInterval(timerId);
+};
+
+function clearTimer() {
+    timeCount.sec = 0;
+    timeCount.min = 0;
+    timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+}
+
+function addZero(n) {
+    return (parseInt(n, 10) < 10 ? '0' : '') + n;
+}
+
 function clearCell() {
     console.log('function clearCell');
 
@@ -217,6 +281,28 @@ function clearCell() {
     while (cellContainer.firstChild) {
         cellContainer.removeChild(cellContainer.firstChild);
     }
+};
+
+function haveSolution() {
+    let count = 0;
+
+    for (let i = 0; i < numbers.length; i++) {
+        const elemNumber = i;
+        let j = i;
+        // console.log('array[elemNumber] ' + numbers[elemNumber]);
+        while (j < numbers.length) {
+
+            if (numbers[elemNumber] > numbers[j]) {
+                count += 1;
+            }
+            // console.log(numbers[elemNumber] + '  ' + numbers[j] + ' ' + count);
+            j++;
+        }
+    }
+
+    console.log('count: ' + count);
+    return count % 2 === 0 ? true : false;
+
 };
 
 initGame();

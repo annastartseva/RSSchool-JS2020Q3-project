@@ -88,10 +88,19 @@ input {
     margin: 8% auto 0px;
 }
 
-.menu_container.hidden {
+
+/* .menu_container.hidden {
     display: none;
     position: absolute;
     right: -100%;
+} */
+
+.menu_container.visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
 }
 
 .main_menu_button {
