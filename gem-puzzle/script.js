@@ -13,25 +13,55 @@ const numbers = [...Array(16).keys()]
     .sort(() => Math.random() - 0.5);
 console.log(numbers);
 
-//create main elements
-const gameWrap = document.createElement('div');
-const menuWrap = document.createElement('div');
-const field = document.createElement('div');
+function initGame() {
+    //create main elements
+    const gameWrap = document.createElement('div');
+    //create menu
+    const menuWrap = document.createElement('div');
+    const timeInfo = document.createElement('div');
+    const timer = document.createElement('span');
+    const timeValue = document.createElement('span');
+    const movesInfo = document.createElement('div');
+    const numberMoves = document.createElement('span');
+    const numberMovesCount = document.createElement('span');
+    const pauseButton = document.createElement('button');
 
-//setup properties for main elements
-gameWrap.classList.add('game_wrapper');
-menuWrap.classList.add('menu_wrapper');
-field.classList.add('field');
-menuWrap.innerHTML = "Menu";
-//field.innerHTML = "Game";
+    // create game's field
+    const field = document.createElement('div');
 
-//Add to DOM
-gameWrap.appendChild(menuWrap);
-gameWrap.appendChild(field);
-field.appendChild(createNewGame());
-document.body.appendChild(gameWrap);
+    //setup properties for main elements
+    gameWrap.classList.add('game_wrapper');
+    menuWrap.classList.add('menu_wrapper');
 
+    timer.classList.add('menu_timer');
+    pauseButton.classList.add('menu_button');
+    field.classList.add('field');
+    timer.innerHTML = "Time ";
+    timeValue.innerHTML = "00:00";
+    numberMoves.innerHTML = "Moves ";
+    numberMovesCount.innerHTML = "0";
 
+    pauseButton.innerHTML = "Pause game"
+        // movesInfo.innerHTML = "Moves";
+        // timeInfo.innerHTML = "Time";
+
+    //Add to DOM
+    gameWrap.appendChild(menuWrap);
+    gameWrap.appendChild(field);
+
+    menuWrap.appendChild(timeInfo);
+    menuWrap.appendChild(movesInfo);
+    menuWrap.appendChild(pauseButton);
+
+    timeInfo.appendChild(timer);
+    timeInfo.appendChild(timeValue);
+
+    movesInfo.appendChild(numberMoves);
+    movesInfo.appendChild(numberMovesCount);
+
+    field.appendChild(createNewGame());
+    document.body.appendChild(gameWrap);
+};
 
 function createNewGame() {
 
@@ -118,3 +148,5 @@ function move(index) {
         alert('You won');
     }
 }
+
+initGame();
