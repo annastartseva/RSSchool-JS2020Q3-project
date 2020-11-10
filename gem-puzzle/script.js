@@ -245,7 +245,8 @@ function move(index) {
     });
 
     if (isFinished) {
-        alert('You won');
+        stopTimer();
+        alert(`Hooray!!! You won!!! Your result time: ${addZero(timeCount.min)}:${addZero(timeCount.sec)} and ${movesCount} moves`);
     }
 };
 
@@ -290,13 +291,19 @@ function haveSolution() {
         const elemNumber = i;
         let j = i;
         // console.log('array[elemNumber] ' + numbers[elemNumber]);
-        while (j < numbers.length) {
+        if (numbers[elemNumber] === 0) {
+            const rowZero = (elemNumber - elemNumber % 4) / 4;
+            count += rowZero + 1;
+            // console.log('count: ' + count);
+        } else {
+            while (j < numbers.length) {
 
-            if (numbers[elemNumber] > numbers[j]) {
-                count += 1;
+                if (numbers[elemNumber] > numbers[j] && numbers[j] !== 0) {
+                    count += 1;
+                }
+                // console.log(numbers[elemNumber] + '  ' + numbers[j] + ' ' + count);
+                j++;
             }
-            // console.log(numbers[elemNumber] + '  ' + numbers[j] + ' ' + count);
-            j++;
         }
     }
 
