@@ -23,6 +23,7 @@ const empty = {
     value: 0,
     top: 0,
     left: 0,
+    element: null, //!
 };
 const timeCount = {
     min: 0,
@@ -105,13 +106,22 @@ function createNewGame() {
 
     for (let i = 0; i <= 15; i++) {
         if (numbers[i] === 0) {
-            empty.value = 16;
+            const cell = document.createElement('div');
+            cell.classList.add('empty');
+
+            empty.value = 16; //позиция завершения игры
 
             const left = i % 4;
             const top = (i - left) / 4;
             empty.left = left;
             empty.top = top;
+            empty.element = cell;
             cells.push(empty);
+
+            cell.style.left = `${left * cellSize}px`;
+            cell.style.top = `${top * cellSize}px`;
+
+            fragment.appendChild(cell);
         } else {
             const cell = document.createElement('div');
             cell.classList.add('cell');
@@ -136,9 +146,14 @@ function createNewGame() {
             cell.addEventListener('click', () => {
                 move(i);
             });
+
+            // obrabotka drag and drop mishki
+            cell.addEventListener('mousedown', (event) => {
+                dragDrop(i, event);
+            });
         }
     }
-
+    // console.log(cells);
     return fragment;
 };
 
@@ -209,12 +224,12 @@ function move(index) {
     console.log('function move');
     const cell = cells[index];
 
-
     //proverka vozmognosti peremesheniya
     const leftDiff = Math.abs(empty.left - cell.left);
     const topDiff = Math.abs(empty.top - cell.top);
 
     if (leftDiff + topDiff > 1) {
+        cell.element.removeAttribute('draggable');
         return;
     }
 
@@ -226,6 +241,9 @@ function move(index) {
 
     empty.left = cell.left;
     empty.top = cell.top;
+
+    empty.element.style.left = `${empty.left * cellSize}px`;
+    empty.element.style.top = `${empty.top * cellSize}px`;
 
     cell.left = emptyLeft;
     cell.top = emptyTop;
@@ -239,6 +257,9 @@ function move(index) {
     movesCount += 1;
     // console.log('movesCount: ' + movesCount)
     numberMovesCount.innerText = movesCount;
+
+    cell.element.removeAttribute('draggable');
+
     const isFinished = cells.every(cell => {
         return cell.value === (cell.top * 4 + cell.left) + 1;
 
@@ -248,6 +269,52 @@ function move(index) {
         stopTimer();
         alert(`Hooray!!! You won!!! Your result time: ${addZero(timeCount.min)}:${addZero(timeCount.sec)} and ${movesCount} moves`);
     }
+};
+
+function dragDrop(index) {
+    console.log('function dragDrop');
+    const cell = cells[index];
+    cell.element.setAttribute('draggable', true);
+
+    document.addEventListener("dragstart", function(event) {
+        // делаем объект невидимым
+        event.target.style.opacity = 0;
+    }, false);
+
+    document.addEventListener("dragend", function(event) {
+        event.target.style.opacity = "";
+        cell.element.style.transition = "";
+    }, false);
+
+    /* отключение стандартного запрета на перемещение на другой объект */
+    document.addEventListener("dragover", function(event) {
+        event.preventDefault();
+    }, false);
+
+    document.addEventListener("dragenter", function(event) {
+        // highlight potential drop target when the draggable element enters it
+        if (event.target.className === "empty") {
+            event.target.style.background = "rgb(219, 199, 201)";
+        }
+    }, false);
+
+    document.addEventListener("dragleave", function(event) {
+        // reset background of potential drop target when the draggable element leaves it
+        if (event.target.className == "empty") {
+            event.target.style.background = "";
+        }
+    }, false);
+
+    document.addEventListener("drop", function(event) {
+        // prevent default action (open as link for some elements)
+        event.preventDefault();
+        // move dragged elem to the selected drop target
+        if (event.target.className === "empty" && cell.element.hasAttribute('draggable')) {
+            move(index);
+            event.target.style.background = "";
+            cell.element.style.transition = "none";
+        }
+    }, false);
 };
 
 function startTimer() {
@@ -311,6 +378,8 @@ function haveSolution() {
     return count % 2 === 0 ? true : false;
 
 };
+
+
 
 initGame();
 // createMainMenu();

@@ -138,5 +138,16 @@ input {
     /* background-color: rgb(115, 114, 109); */
     position: absolute;
     transition: all 0.3s;
+}
+
+.cell:hover {
     cursor: pointer;
+    background: rgb(211, 179, 162);
+}
+
+.empty {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 10px;
 }
