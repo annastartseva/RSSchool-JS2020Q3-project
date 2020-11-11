@@ -68,6 +68,43 @@ input {
     position: relative;
 }
 
+.cell {
+    /* box-sizing: border-box; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100px;
+    height: 100px; */
+    width: 25%;
+    height: 25%;
+    /* border: 1px solid rgb(85, 84, 80); */
+    /* border: 1px solid rgb(115, 114, 109); */
+    border: 1px solid rgb(116, 116, 108);
+    border-radius: 10px;
+    font-size: 35px;
+    font-family: 'Cousine', monospace;
+    font-weight: 700;
+    color: rgb(237, 237, 237);
+    background-color: rgb(193, 160, 141);
+    /* background-color: rgb(148, 133, 114); */
+    /* background-color: rgb(183, 154, 138); */
+    /* background-color: rgb(115, 114, 109); */
+    position: absolute;
+    transition: all 0.3s;
+}
+
+.cell:hover {
+    cursor: pointer;
+    background: rgb(211, 179, 162);
+}
+
+.empty {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 10px;
+}
+
 .overlay.visible {
     display: flex;
     justify-content: space-around;
@@ -104,13 +141,18 @@ input {
     display: none;
 }
 
-.menu_container.visually-hidden {
+.menu_container.active {
+    display: flex;
+}
+
+
+/* .menu_container.visually-hidden {
     position: absolute;
     clip: rect(0 0 0 0);
     width: 1px;
     height: 1px;
     margin: -1px;
-}
+} */
 
 .main_menu_button {
     /* width: 200px; */
@@ -176,6 +218,10 @@ input {
     display: none;
 }
 
+.popup_won-container.active {
+    display: flex;
+}
+
 .popup_won-header {
     font-family: 'Cousine', monospace;
     font-size: 25px;
@@ -195,50 +241,99 @@ input {
     font-family: 'Cousine', monospace;
     color: rgb(116, 116, 108);
     background-color: rgb(237, 223, 223);
+    box-shadow: 2px 2px 5px rgb(56, 50, 43, 0.8);
 }
 
 .popup_won-OK-button:hover {
     cursor: pointer;
     background-color: rgb(204, 187, 175);
+    box-shadow: 2px 2px 5px rgb(37, 33, 28);
 }
 
-.active {
+.popup_won-OK-button:active,
+.popup_won-OK-button:focus {
+    outline: 0;
+}
+
+.saved_game-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    display: none;
+}
+
+.saved_game-container.active {
     display: flex;
 }
 
-.cell {
-    /* box-sizing: border-box; */
+.saved_game-header {
+    font-family: 'Cousine', monospace;
+    font-size: 25px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
+    color: rgb(227, 208, 210);
+    margin: 10px;
+}
+
+.saved_game-data {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* width: 100px;
-    height: 100px; */
-    width: 25%;
-    height: 25%;
-    /* border: 1px solid rgb(85, 84, 80); */
-    /* border: 1px solid rgb(115, 114, 109); */
+}
+
+.saved_game-text {
+    font-family: 'Cousine', monospace;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgb(227, 208, 210);
+    margin: 10px;
+}
+
+.saved_game-button-load {
+    font-family: 'Cousine', monospace;
+    font-size: 25px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
+    color: rgb(227, 208, 210);
+    margin: 10px;
+    background: transparent;
+    border: none;
+}
+
+.saved_game-button-load:hover {
+    color: rgb(204, 187, 175);
+    text-shadow: 2px 2px 5px rgb(26, 23, 20);
+    cursor: pointer;
+}
+
+.saved_game-button-load:active,
+.saved_game-button-load:focus {
+    outline: 0;
+}
+
+.saved_game-button-back {
+    margin: 30px 10px 10px;
+    padding: 5px 20px;
+    cursor: pointer;
     border: 1px solid rgb(116, 116, 108);
     border-radius: 10px;
-    font-size: 35px;
+    font-size: 15px;
     font-family: 'Cousine', monospace;
-    font-weight: 700;
-    color: rgb(237, 237, 237);
-    background-color: rgb(193, 160, 141);
-    /* background-color: rgb(148, 133, 114); */
-    /* background-color: rgb(183, 154, 138); */
-    /* background-color: rgb(115, 114, 109); */
-    position: absolute;
-    transition: all 0.3s;
+    color: rgb(116, 116, 108);
+    background-color: rgb(237, 223, 223);
+    box-shadow: 2px 2px 5px rgb(56, 50, 43, 0.8);
 }
 
-.cell:hover {
+.saved_game-button-back:hover {
     cursor: pointer;
-    background: rgb(211, 179, 162);
+    background-color: rgb(204, 187, 175);
+    box-shadow: 2px 2px 5px rgb(37, 33, 28);
 }
 
-.empty {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    border-radius: 10px;
+.saved_game-button-back:active,
+.saved_game-button-back:focus {
+    outline: 0;
 }

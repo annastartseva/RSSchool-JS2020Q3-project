@@ -17,6 +17,7 @@ const menuOverlay = document.createElement('span');
 const saveGame = document.createElement('div');
 const mainMenu = document.createElement('div');
 const popupWonWrapper = document.createElement('div');
+const savedGameWrapper = document.createElement('div');
 //create popup won 
 const wonSpanResultTime = document.createElement('span');
 const wonSpanResultMove = document.createElement('span');
@@ -88,6 +89,8 @@ function initGame() {
 
     menuOverlay.appendChild(createMainMenu());
     menuOverlay.appendChild(popupWonGame());
+    menuOverlay.appendChild(savedGameView());
+
 
     document.body.appendChild(gameWrap);
 };
@@ -195,7 +198,6 @@ function createMainMenu() {
     savedGame.classList.add('main_menu_button');
     MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
-
     fragment.appendChild(mainMenu);
 
     saveGame.appendChild(saveGameText);
@@ -205,13 +207,13 @@ function createMainMenu() {
     mainMenu.appendChild(savedGame);
     mainMenu.appendChild(MuteOnOff);
 
-
     newGame.addEventListener('click', () => {
         newGameStart();
     });
 
     savedGame.addEventListener('click', () => {
-        savedGameView();
+        mainMenu.classList.remove('active');
+        savedGameWrapper.classList.add('active');
     });
 
     MuteOnOff.addEventListener('click', () => {
@@ -256,13 +258,64 @@ function popupWonGame() {
     popupWonWrapper.appendChild(wonSpanResultMove);
     popupWonWrapper.appendChild(closePopup);
 
+    closePopup.addEventListener('click', () => {
+        popupWonWrapper.classList.remove('active');
+        mainMenu.classList.add('active');
+
+    });
+
+
+    return fragment;
+};
+
+function savedGameView() {
+    console.log('function savedGameView');
+
+    const fragment = document.createDocumentFragment();
+
+    const savedGameHeader = document.createElement('span');
+    const savedGameData = document.createElement('div');
+    const savedGameTime = document.createElement('span');
+    const savedGameMoves = document.createElement('span');
+
+    const savedGameLoad = document.createElement('button');
+    const savedGameBack = document.createElement('button');
+
+    savedGameWrapper.classList.add('saved_game-container');
+    savedGameHeader.classList.add('saved_game-header');
+    savedGameData.classList.add('saved_game-data');
+    savedGameTime.classList.add('saved_game-text');
+    savedGameMoves.classList.add('saved_game-text');
+
+    savedGameLoad.classList.add('saved_game-button-load');
+    savedGameBack.classList.add('saved_game-button-back');
+
+    savedGameHeader.innerHTML = "No Saved Game";
+    savedGameTime.innerHTML = `Time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+    savedGameMoves.innerHTML = `Moves ${movesCount}`;
+    savedGameLoad.innerHTML = "LOAD GAME";
+    savedGameBack.innerHTML = "BACK";
+
+    //для проверки отображения
+    // mainMenu.classList.remove('active');
+    // savedGameWrapper.classList.add('active');
+    // popupWonWrapper.classList.remove('active');
+
+    fragment.appendChild(savedGameWrapper);
+    savedGameWrapper.appendChild(savedGameHeader);
+    savedGameWrapper.appendChild(savedGameData);
+    savedGameData.appendChild(savedGameTime);
+    savedGameData.appendChild(savedGameMoves);
+    savedGameData.appendChild(savedGameLoad);
+    savedGameWrapper.appendChild(savedGameBack);
+
     //     closePopup.addEventListener('click', () => {
     //         newGameStart();
     //     });
 
 
     return fragment;
-};
+}
 
 function newGameStart() {
     // mainMenu.classList.add('hidden');
@@ -286,10 +339,10 @@ function pausedGame() {
         menuOverlay.appendChild(saveGame);
         stopTimer();
         // mainMenu.classList.remove('hidden');
-        mainMenu.classList.remove('visually-hidden');
+        // mainMenu.classList.remove('visually-hidden');
         mainMenu.classList.add('active');
     } else {
-        mainMenu.classList.add('visually-hidden');
+        // mainMenu.classList.add('visually-hidden');
         mainMenu.classList.remove('active');
         field.removeChild(menuOverlay);
         timerId = window.setInterval(startTimer, 1000);
