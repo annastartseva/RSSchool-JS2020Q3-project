@@ -79,13 +79,14 @@ input {
 }
 
 .menu_container {
-    position: relative;
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 80%;
     margin: 8% auto 0px;
+    display: none;
 }
 
 
@@ -104,7 +105,7 @@ input {
 }
 
 .main_menu_button {
-    width: 150px;
+    /* width: 200px; */
     margin: 10px;
     padding: 0;
     background: transparent;
@@ -115,6 +116,39 @@ input {
     font-weight: 600;
     text-shadow: 2px 2px 5px rgb(56, 50, 43);
     cursor: pointer;
+}
+
+.popup_won-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.popup_won-header {
+    font-family: 'Cousine', monospace;
+    font-size: 25px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
+    color: rgb(227, 208, 210);
+    margin: 10px;
+}
+
+.popup_won-OK-button {
+    margin: 30px 10px 10px;
+    padding: 5px 20px;
+    cursor: pointer;
+    border: 1px solid rgb(116, 116, 108);
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: 'Cousine', monospace;
+    color: rgb(116, 116, 108);
+    background-color: rgb(237, 223, 223);
+}
+
+.active {
+    display: flex;
 }
 
 .cell {

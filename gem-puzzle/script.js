@@ -15,6 +15,10 @@ const field = document.createElement('div');
 //create main menu 
 const menuOverlay = document.createElement('span');
 const mainMenu = document.createElement('div');
+const popupWonWrapper = document.createElement('div');
+//create popup won 
+const wonSpanResultTime = document.createElement('span');
+const wonSpanResultMove = document.createElement('span');
 
 //CREATE GLOBAL VAR
 const cellSize = 100;
@@ -77,6 +81,7 @@ function initGame() {
     field.appendChild(menuOverlay);
 
     menuOverlay.appendChild(createMainMenu());
+    menuOverlay.appendChild(popupWonGame());
 
     document.body.appendChild(gameWrap);
 };
@@ -189,6 +194,49 @@ function createMainMenu() {
     return fragment;
 };
 
+function popupWonGame() {
+    console.log('function popupWonGame');
+
+    const fragment = document.createDocumentFragment();
+
+    const wonSpanHeader = document.createElement('span');
+    const wonSpanResult = document.createElement('span');
+
+    const closePopup = document.createElement('button');
+
+    wonSpanHeader.classList.add('popup_won-header');
+    wonSpanResult.classList.add('popup_won-header');
+    wonSpanResultTime.classList.add('popup_won-header');
+    wonSpanResultMove.classList.add('popup_won-header');
+    popupWonWrapper.classList.add('popup_won-container');
+    closePopup.classList.add('popup_won-OK-button');
+
+    wonSpanHeader.innerHTML = "Hooray! You won!";
+    wonSpanResult.innerHTML = "Your result:";
+    wonSpanResultTime.innerHTML = `time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+    wonSpanResultMove.innerHTML = `moves ${movesCount}`;
+    closePopup.innerHTML = "OK";
+
+    //для проверки отображения
+    // mainMenu.classList.remove('active');
+    // popupWonWrapper.classList.add('active');
+    // popupWonWrapper.classList.remove('active');
+
+    fragment.appendChild(popupWonWrapper);
+    popupWonWrapper.appendChild(wonSpanHeader);
+    popupWonWrapper.appendChild(wonSpanResult);
+    popupWonWrapper.appendChild(wonSpanResultTime);
+    popupWonWrapper.appendChild(wonSpanResultMove);
+    popupWonWrapper.appendChild(closePopup);
+
+    //     closePopup.addEventListener('click', () => {
+    //         newGameStart();
+    //     });
+
+
+    return fragment;
+};
+
 function newGameStart() {
     // mainMenu.classList.add('hidden');
     mainMenu.classList.add('visually-hidden');
@@ -204,6 +252,7 @@ function newGameStart() {
 };
 
 function pausedGame() {
+    console.log('function pausedGame');
     pauseButton.classList.toggle('active');
     if (pauseButton.classList.contains('active')) {
         field.appendChild(menuOverlay);
@@ -264,11 +313,27 @@ function move(index) {
         return cell.value === (cell.top * 4 + cell.left) + 1;
 
     });
+    console.log('empty ' + empty.left + ' ' + empty.element.style.left);
+    console.log('cell.top : ' + cell.top);
 
     if (isFinished) {
+        //&& empty.left === empty.element.style.left && empty.top === empty.element.style.top
         stopTimer();
-        alert(`Hooray!!! You won!!! Your result time: ${addZero(timeCount.min)}:${addZero(timeCount.sec)} and ${movesCount} moves`);
+        setTimeout(wonAlert, 400);
     }
+};
+
+function wonAlert() {
+    console.log('function wonAlert');
+
+    field.appendChild(menuOverlay);
+    stopTimer();
+    popupWonWrapper.classList.add('active');
+    wonSpanResultTime.innerHTML = `time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+    wonSpanResultMove.innerHTML = `moves ${movesCount}`;
+
+    // alert(`Hooray!!! You won!!! Your result time: ${addZero(timeCount.min)}:${addZero(timeCount.sec)} and ${movesCount} moves`);
+
 };
 
 function dragDrop(index) {
