@@ -14,12 +14,17 @@ const pauseButton = document.createElement('button');
 const field = document.createElement('div');
 //create main menu 
 const menuOverlay = document.createElement('span');
+const saveGame = document.createElement('div');
 const mainMenu = document.createElement('div');
 const popupWonWrapper = document.createElement('div');
 //create popup won 
 const wonSpanResultTime = document.createElement('span');
 const wonSpanResultMove = document.createElement('span');
-
+//create sounde for cell
+const MuteOnOff = document.createElement('button'); //mute button in main menu
+const soundElement = document.createElement('div');
+soundElement.classList.add('audio', 'hidden');
+soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
 //CREATE GLOBAL VAR
 const cellSize = 100;
 //empty cell
@@ -66,6 +71,7 @@ function initGame() {
     //Add to DOM
     gameWrap.appendChild(menuWrap);
     gameWrap.appendChild(field);
+    gameWrap.appendChild(soundElement);
 
     menuWrap.appendChild(timeInfo);
     menuWrap.appendChild(movesInfo);
@@ -166,30 +172,51 @@ function createMainMenu() {
     console.log('function createMainMenu');
     const fragment = document.createDocumentFragment();
 
+    const saveGameText = document.createElement('span');
+    const saveGameButton = document.createElement('button');
     // const continueGame = document.createElement('button');
     const newGame = document.createElement('button');
-    const saveGame = document.createElement('button');
+    const savedGame = document.createElement('button');
+
     const settingGame = document.createElement('button');
 
     // continueGame.innerHTML = "Continue Game";
+    saveGameText.innerHTML = "Game paused, whant to save it?"
+    saveGameButton.innerHTML = "save game"
     newGame.innerHTML = "New Game";
-    saveGame.innerHTML = "Saved Game";
-
-
+    savedGame.innerHTML = "Saved Game";
+    MuteOnOff.innerHTML = `<i class="material-icons">volume_up</i>`;
 
     mainMenu.classList.add('menu_container', 'active');
+    saveGame.classList.add('save_game_container');
+    saveGameText.classList.add('save_game_text');
+    saveGameButton.classList.add('save_game_button');
     newGame.classList.add('main_menu_button');
-    saveGame.classList.add('main_menu_button');
+    savedGame.classList.add('main_menu_button');
+    MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
 
     fragment.appendChild(mainMenu);
+
+    saveGame.appendChild(saveGameText);
+    saveGame.appendChild(saveGameButton);
+
     mainMenu.appendChild(newGame);
-    mainMenu.appendChild(saveGame);
+    mainMenu.appendChild(savedGame);
+    mainMenu.appendChild(MuteOnOff);
+
 
     newGame.addEventListener('click', () => {
         newGameStart();
     });
 
+    savedGame.addEventListener('click', () => {
+        savedGameView();
+    });
+
+    MuteOnOff.addEventListener('click', () => {
+        muteToggle();
+    });
 
     return fragment;
 };
@@ -256,6 +283,7 @@ function pausedGame() {
     pauseButton.classList.toggle('active');
     if (pauseButton.classList.contains('active')) {
         field.appendChild(menuOverlay);
+        menuOverlay.appendChild(saveGame);
         stopTimer();
         // mainMenu.classList.remove('hidden');
         mainMenu.classList.remove('visually-hidden');
@@ -267,7 +295,7 @@ function pausedGame() {
         timerId = window.setInterval(startTimer, 1000);
     }
 
-}
+};
 
 function move(index) {
     console.log('function move');
@@ -306,15 +334,17 @@ function move(index) {
     movesCount += 1;
     // console.log('movesCount: ' + movesCount)
     numberMovesCount.innerText = movesCount;
-
+    if (MuteOnOff.classList.contains('mute_on')) {
+        playAudio();
+    };
     cell.element.removeAttribute('draggable');
 
     const isFinished = cells.every(cell => {
         return cell.value === (cell.top * 4 + cell.left) + 1;
 
     });
-    console.log('empty ' + empty.left + ' ' + empty.element.style.left);
-    console.log('cell.top : ' + cell.top);
+    // console.log('empty ' + empty.left + ' ' + empty.element.style.left);
+    // console.log('cell.top : ' + cell.top);
 
     if (isFinished) {
         //&& empty.left === empty.element.style.left && empty.top === empty.element.style.top
@@ -444,6 +474,21 @@ function haveSolution() {
 
 };
 
+function muteToggle() {
+    console.log("function muteToggle");
+    MuteOnOff.classList.toggle('mute_on');
+
+    MuteOnOff.innerHTML = MuteOnOff.classList.contains('mute_on') ? `<span class="material-icons">volume_up</span>` : `<span class="material-icons">volume_off</span>`;
+};
+
+function playAudio() {
+    console.log("function playAudio");
+    const audio = document.querySelector('audio');
+    if (audio) {
+        audio.currentTime = 0;
+        audio.play();
+    }
+};
 
 
 initGame();
