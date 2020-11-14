@@ -35,6 +35,7 @@ soundElement.classList.add('audio', 'hidden');
 soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
 //CREATE GLOBAL VAR
 const cellSize = 100;
+let cellNumber = 4;
 //empty cell
 const empty = {
     value: 0,
@@ -54,15 +55,6 @@ let numbers = [];
 let savedGameCount = {};
 
 let gameSaveFlag = false;
-
-// let savedGameCount = {
-//     name: "1",
-//     size: 4,
-//     timeMin: 00,
-//     timeSec: 10,
-//     move: 7,
-//     arrayValue: [1, 2, 5, 3, 4, 12, 0, 13, 9, 8, 7, 15, 6, 10, 11, 14]
-// };
 
 
 function initGame() {
@@ -289,6 +281,7 @@ function popupWonGame() {
 
     closePopup.addEventListener('click', () => {
         popupWonWrapper.classList.remove('active');
+        saveGame.classList.remove('active');
         mainMenu.classList.add('active');
     });
 
@@ -332,6 +325,7 @@ function savedGameCreate() {
     savedGameWrapper.appendChild(savedGameBack);
 
     savedGameLoad.addEventListener('click', () => {
+        savedGameGetFromLS();
         field.appendChild(savedGameLoadFunc());
     });
 
@@ -367,13 +361,62 @@ function savedGameRecord() {
     savedGameCount.timeSec = timeCount.sec;
     savedGameCount.move = movesCount;
     savedGameCount.arrayValue = [...cells];
+    //    for (let i=0; i< cellNumber*cellNumber-1;i++){
+    //     savedGameCount.arrayValue
+    //    }
     savedGameCount.arrayEmptyValue = empty.value;
     savedGameCount.arrayEmptyTop = empty.top;
     savedGameCount.arrayEmptyLeft = empty.left;
     savedGameCount.arrayEmptyElement = empty.element;
     saveGame.classList.remove('active');
     console.log('savedGameCount.arrayValue ' + savedGameCount.arrayValue);
+    // localStorage.setItem('saved game', savedGameCount);
+    sessionStorage.game = JSON.stringify(savedGameCount);
+    // sessionStorage.gameEl = JSON.stringify(savedGameCount.arrayEmptyElement);
+};
 
+function savedGameGetFromLS() {
+    console.log('function savedGameLoadFunc');
+    // console.log("localStorage.getItem('saved game') " + localStorage.getItem('saved game'));
+    // if (localStorage.getItem('saved game') !== null && localStorage.getItem('saved game') !== '') {
+    //     savedGameCount = localStorage.getItem('saved game');
+    console.log("sessionStorage.game " + sessionStorage.game);
+    if (sessionStorage.game !== null && sessionStorage.game !== '' && sessionStorage.game !== undefined) {
+        savedGameCount = JSON.parse(sessionStorage.game);
+        // console.log("savedGameGetFromLS if");
+        // console.log("savedGameCount.name " + savedGameCount.name);
+        // console.log("savedGameCount.size " + savedGameCount.size);
+        // console.log("savedGameCount.timeMin " + savedGameCount.timeMin);
+        // console.log("savedGameCount.move " + savedGameCount.move);
+
+        for (let i = 0; i <= 15; i++) {
+            const cell = document.createElement('div');
+            if (savedGameCount.arrayValue[i].value === 16) {
+
+                cell.classList.add('empty');
+                cell.innerHTML = '';
+                cell.style.left = `${savedGameCount.arrayValue[i].left * cellSize}px`;
+                cell.style.top = `${savedGameCount.arrayValue[i].top * cellSize}px`;
+                savedGameCount.arrayValue[i].element = cell;
+                savedGameCount.arrayEmptyElement = cell;
+            } else {
+
+                cell.classList.add('cell');
+                cell.innerHTML = savedGameCount.arrayValue[i].value;
+                cell.style.left = `${savedGameCount.arrayValue[i].left * cellSize}px`;
+                cell.style.top = `${savedGameCount.arrayValue[i].top * cellSize}px`;
+                savedGameCount.arrayValue[i].element = cell;
+            };
+            cell.addEventListener('click', () => {
+                move(i);
+            });
+
+            // obrabotka drag and drop mishki
+            cell.addEventListener('mousedown', (event) => {
+                dragDrop(i, event);
+            });
+        };
+    };
 };
 
 function savedGameLoadFunc() {
@@ -383,7 +426,6 @@ function savedGameLoadFunc() {
     mainMenu.classList.add('visually-hidden');
     mainMenu.classList.remove('active');
     pauseButton.classList.remove('active');
-    // savedGameLoad.classList.remove('active');
     savedGameWrapper.classList.remove('active');
     field.removeChild(menuOverlay);
 
@@ -404,6 +446,7 @@ function savedGameLoadFunc() {
 
         cells[i] = savedGameCount.arrayValue[i];
         console.log('cells[i].value ' + cells[i].value);
+        // console.log('savedGameCount.arrayValueEmpty.cell ' + savedGameCount.arrayValueEmpty.cell);
         if (cells[i].value === 16) {
 
             // console.log('savedGameCount.arrayValueEmpty ' + savedGameCount.arrayValueEmpty);
@@ -415,11 +458,13 @@ function savedGameLoadFunc() {
             empty.left = savedGameCount.arrayEmptyLeft;
             empty.top = savedGameCount.arrayEmptyTop;
             empty.element = savedGameCount.arrayEmptyElement;
-            console.log(' empty.value ' + empty.value);
-            console.log(' empty.left ' + empty.left);
-            console.log(' empty.top ' + empty.top);
-        }
+            cells[i] = empty;
+            // console.log(' empty.value ' + empty.value);
+            // console.log(' empty.left ' + empty.left);
 
+        }
+        console.log(' cells[i] ' + cells[i]);
+        console.log('cells[i].value ' + cells[i].value);
         fragment.appendChild(cells[i].element);
     }
 
@@ -444,6 +489,7 @@ function newGameStart() {
 function pausedGame() {
     console.log('function pausedGame');
     pauseButton.classList.toggle('active');
+    popupWonWrapper.classList.remove('active');
     if (pauseButton.classList.contains('active')) {
         field.appendChild(menuOverlay);
 
@@ -514,10 +560,19 @@ function move(index) {
     };
     cell.element.removeAttribute('draggable');
 
+    // console.log('cells : ' + cells);
+    // for (let i = 0; i < 15; i++) {
+    //     console.log('cell.value : ' + cells[i].value);
+    //     console.log('(cell.top * 4 + cell.left) + 1 : ' + ((cells[i].top * 4 + cells[i].left) + 1));
+    // };
+
+
     const isFinished = cells.every(cell => {
         return cell.value === (cell.top * 4 + cell.left) + 1;
-
     });
+
+    console.log('isFinished : ' + isFinished);
+
     // console.log('empty ' + empty.left + ' ' + empty.element.style.left);
     // console.log('cell.top : ' + cell.top);
 
@@ -532,6 +587,7 @@ function wonAlert() {
     console.log('function wonAlert');
 
     field.appendChild(menuOverlay);
+    saveGame.classList.remove('active');
     stopTimer();
     popupWonWrapper.classList.add('active');
     wonSpanResultTime.innerHTML = `time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
@@ -668,4 +724,5 @@ function playAudio() {
 
 
 initGame();
+savedGameGetFromLS();
 // createMainMenu();
