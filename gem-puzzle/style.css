@@ -183,6 +183,11 @@ input {
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    display: none;
+}
+
+.save_game_container.active {
+    display: flex;
 }
 
 .save_game_text {
@@ -287,7 +292,7 @@ input {
 .saved_game-text {
     font-family: 'Cousine', monospace;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 800;
     color: rgb(227, 208, 210);
     margin: 10px;
 }
@@ -301,6 +306,11 @@ input {
     margin: 10px;
     background: transparent;
     border: none;
+    display: none;
+}
+
+.saved_game-button-load.active {
+    display: contents;
 }
 
 .saved_game-button-load:hover {

@@ -21,6 +21,13 @@ const savedGameWrapper = document.createElement('div');
 //create popup won 
 const wonSpanResultTime = document.createElement('span');
 const wonSpanResultMove = document.createElement('span');
+//create saved games block
+const savedGameHeader = document.createElement('span');
+const savedGameData = document.createElement('div');
+const savedGameSize = document.createElement('span');
+const savedGameTime = document.createElement('span');
+const savedGameMoves = document.createElement('span');
+const savedGameLoad = document.createElement('button');
 //create sounde for cell
 const MuteOnOff = document.createElement('button'); //mute button in main menu
 const soundElement = document.createElement('div');
@@ -33,7 +40,7 @@ const empty = {
     value: 0,
     top: 0,
     left: 0,
-    element: null, //!
+    element: null,
 };
 const timeCount = {
     min: 0,
@@ -43,6 +50,19 @@ let movesCount = 0;
 const cells = [];
 let timerId = 0;
 let numbers = [];
+
+let savedGameCount = {};
+
+let gameSaveFlag = false;
+
+// let savedGameCount = {
+//     name: "1",
+//     size: 4,
+//     timeMin: 00,
+//     timeSec: 10,
+//     move: 7,
+//     arrayValue: [1, 2, 5, 3, 4, 12, 0, 13, 9, 8, 7, 15, 6, 10, 11, 14]
+// };
 
 
 function initGame() {
@@ -89,7 +109,8 @@ function initGame() {
 
     menuOverlay.appendChild(createMainMenu());
     menuOverlay.appendChild(popupWonGame());
-    menuOverlay.appendChild(savedGameView());
+    menuOverlay.appendChild(savedGameCreate());
+
 
 
     document.body.appendChild(gameWrap);
@@ -184,7 +205,7 @@ function createMainMenu() {
     const settingGame = document.createElement('button');
 
     // continueGame.innerHTML = "Continue Game";
-    saveGameText.innerHTML = "Game paused, whant to save it?"
+    saveGameText.innerHTML = "Game pause, want to save the game?"
     saveGameButton.innerHTML = "save game"
     newGame.innerHTML = "New Game";
     savedGame.innerHTML = "Saved Game";
@@ -199,6 +220,7 @@ function createMainMenu() {
     MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
     fragment.appendChild(mainMenu);
+    fragment.appendChild(saveGame);
 
     saveGame.appendChild(saveGameText);
     saveGame.appendChild(saveGameButton);
@@ -209,17 +231,24 @@ function createMainMenu() {
 
     newGame.addEventListener('click', () => {
         newGameStart();
+        gameSaveFlag = true;
     });
 
     savedGame.addEventListener('click', () => {
         mainMenu.classList.remove('active');
+        saveGame.classList.remove('active');
         savedGameWrapper.classList.add('active');
+        savedGameView();
     });
 
     MuteOnOff.addEventListener('click', () => {
         muteToggle();
     });
 
+    saveGameButton.addEventListener('click', () => {
+        savedGameRecord();
+        gameSaveFlag = false;
+    })
     return fragment;
 };
 
@@ -261,29 +290,23 @@ function popupWonGame() {
     closePopup.addEventListener('click', () => {
         popupWonWrapper.classList.remove('active');
         mainMenu.classList.add('active');
-
     });
-
 
     return fragment;
 };
 
-function savedGameView() {
-    console.log('function savedGameView');
+function savedGameCreate() {
+    console.log('function savedGameCreate');
 
     const fragment = document.createDocumentFragment();
 
-    const savedGameHeader = document.createElement('span');
-    const savedGameData = document.createElement('div');
-    const savedGameTime = document.createElement('span');
-    const savedGameMoves = document.createElement('span');
 
-    const savedGameLoad = document.createElement('button');
     const savedGameBack = document.createElement('button');
 
     savedGameWrapper.classList.add('saved_game-container');
     savedGameHeader.classList.add('saved_game-header');
     savedGameData.classList.add('saved_game-data');
+    savedGameSize.classList.add('saved_game-text');
     savedGameTime.classList.add('saved_game-text');
     savedGameMoves.classList.add('saved_game-text');
 
@@ -291,9 +314,7 @@ function savedGameView() {
     savedGameBack.classList.add('saved_game-button-back');
 
     savedGameHeader.innerHTML = "No Saved Game";
-    savedGameTime.innerHTML = `Time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
-    savedGameMoves.innerHTML = `Moves ${movesCount}`;
-    savedGameLoad.innerHTML = "LOAD GAME";
+    savedGameLoad.innerHTML = "Load Game";
     savedGameBack.innerHTML = "BACK";
 
     //для проверки отображения
@@ -304,21 +325,110 @@ function savedGameView() {
     fragment.appendChild(savedGameWrapper);
     savedGameWrapper.appendChild(savedGameHeader);
     savedGameWrapper.appendChild(savedGameData);
+    savedGameData.appendChild(savedGameSize);
     savedGameData.appendChild(savedGameTime);
     savedGameData.appendChild(savedGameMoves);
     savedGameData.appendChild(savedGameLoad);
     savedGameWrapper.appendChild(savedGameBack);
 
-    //     closePopup.addEventListener('click', () => {
-    //         newGameStart();
-    //     });
+    savedGameLoad.addEventListener('click', () => {
+        field.appendChild(savedGameLoadFunc());
+    });
+
+    savedGameBack.addEventListener('click', () => {
+        savedGameWrapper.classList.remove('active');
+        mainMenu.classList.add('active');
+        if (gameSaveFlag) {
+            saveGame.classList.add('active');
+        };
+    });
 
 
     return fragment;
-}
+};
+
+function savedGameView() {
+    if ("name" in savedGameCount) {
+        savedGameHeader.innerHTML = "Saved Game";
+        savedGameSize.innerHTML = `Size ${savedGameCount.size}x${savedGameCount.size}`
+        savedGameTime.innerHTML = `Time ${addZero(savedGameCount.timeMin)}:${addZero(savedGameCount.timeSec)}`;
+        savedGameMoves.innerHTML = `Moves ${savedGameCount.move}`;
+        savedGameLoad.classList.add('active');
+    } else {
+        savedGameHeader.innerHTML = "No Saved Game";
+    }
+};
+
+function savedGameRecord() {
+    console.log('function savedGameRecord');
+    savedGameCount.name = "1";
+    savedGameCount.size = 4;
+    savedGameCount.timeMin = timeCount.min;
+    savedGameCount.timeSec = timeCount.sec;
+    savedGameCount.move = movesCount;
+    savedGameCount.arrayValue = [...cells];
+    savedGameCount.arrayEmptyValue = empty.value;
+    savedGameCount.arrayEmptyTop = empty.top;
+    savedGameCount.arrayEmptyLeft = empty.left;
+    savedGameCount.arrayEmptyElement = empty.element;
+    saveGame.classList.remove('active');
+    console.log('savedGameCount.arrayValue ' + savedGameCount.arrayValue);
+
+};
+
+function savedGameLoadFunc() {
+    console.log('function savedGameLoadFunc');
+
+    //скрываем меню
+    mainMenu.classList.add('visually-hidden');
+    mainMenu.classList.remove('active');
+    pauseButton.classList.remove('active');
+    // savedGameLoad.classList.remove('active');
+    savedGameWrapper.classList.remove('active');
+    field.removeChild(menuOverlay);
+
+    //очищаем поле игры и массив хранящий значения ячеек
+    clearCell();
+    cells.length = 0;
+    clearTimer();
+
+    movesCount = savedGameCount.move;
+    timeCount.min = savedGameCount.timeMin;
+    timeCount.sec = savedGameCount.timeSec;
+
+    numberMovesCount.innerText = movesCount;
+    timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+    //
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i <= 15; i++) {
+
+        cells[i] = savedGameCount.arrayValue[i];
+        console.log('cells[i].value ' + cells[i].value);
+        if (cells[i].value === 16) {
+
+            // console.log('savedGameCount.arrayValueEmpty ' + savedGameCount.arrayValueEmpty);
+            // console.log('savedGameCount.arrayValueEmpty.value ' + savedGameCount.arrayValueEmpty.value);
+            // console.log('savedGameCount.arrayValueEmpty.value.top ' + savedGameCount.arrayValueEmpty.top);
+            // console.log('savedGameCount.arrayValueEmpty.value.cell ' + savedGameCount.arrayValueEmpty.cell);
+
+            empty.value = savedGameCount.arrayEmptyValue;
+            empty.left = savedGameCount.arrayEmptyLeft;
+            empty.top = savedGameCount.arrayEmptyTop;
+            empty.element = savedGameCount.arrayEmptyElement;
+            console.log(' empty.value ' + empty.value);
+            console.log(' empty.left ' + empty.left);
+            console.log(' empty.top ' + empty.top);
+        }
+
+        fragment.appendChild(cells[i].element);
+    }
+
+    timerId = window.setInterval(startTimer, 1000);
+    return fragment;
+};
 
 function newGameStart() {
-    // mainMenu.classList.add('hidden');
+    console.log('function newGameStart');
     mainMenu.classList.add('visually-hidden');
     mainMenu.classList.remove('active');
     pauseButton.classList.remove('active');
@@ -336,16 +446,28 @@ function pausedGame() {
     pauseButton.classList.toggle('active');
     if (pauseButton.classList.contains('active')) {
         field.appendChild(menuOverlay);
-        menuOverlay.appendChild(saveGame);
+
         stopTimer();
         // mainMenu.classList.remove('hidden');
         // mainMenu.classList.remove('visually-hidden');
         mainMenu.classList.add('active');
+        saveGame.classList.add('active');
+        // console.log('cells array ' + cells);
+        // console.log('cells[0] array ' + cells[0].value);
+        // console.log('cells[1] array ' + cells[1].value);
+        // console.log('cells[1] array ' + cells[2].value);
+        // console.log('cells[1] array ' + cells[3].value);
+        // console.log('cells[1] array ' + cells[4].value);
+        // console.log('cells[1] array ' + cells[5].value);
+        // console.log('cells[1] array ' + cells[6].value);
+        // console.log('cells[1] array ' + cells[7].value);
     } else {
         // mainMenu.classList.add('visually-hidden');
         mainMenu.classList.remove('active');
+        saveGame.classList.remove('active');
         field.removeChild(menuOverlay);
         timerId = window.setInterval(startTimer, 1000);
+        gameSaveFlag = true;
     }
 
 };
@@ -414,6 +536,7 @@ function wonAlert() {
     popupWonWrapper.classList.add('active');
     wonSpanResultTime.innerHTML = `time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
     wonSpanResultMove.innerHTML = `moves ${movesCount}`;
+    gameSaveFlag = false;
 
     // alert(`Hooray!!! You won!!! Your result time: ${addZero(timeCount.min)}:${addZero(timeCount.sec)} and ${movesCount} moves`);
 
