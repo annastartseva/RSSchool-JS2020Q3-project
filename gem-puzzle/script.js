@@ -35,7 +35,6 @@ const bestScoreData = document.createElement('div');
 const bestScoreData1 = document.createElement('div');
 const bestScoreData2 = document.createElement('div');
 const bestScoreData3 = document.createElement('div');
-
 //create sounde for cell
 const MuteOnOff = document.createElement('button'); //mute button in main menu
 const soundElement = document.createElement('div');
@@ -43,7 +42,10 @@ soundElement.classList.add('audio', 'hidden');
 soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
 //CREATE GLOBAL VAR
 const cellSize = 100;
-let cellNumber = 4;
+//current number cell & field size
+const CellNumberArray = [3, 4, 5, 6, 7, 8];
+let cellNumberCurrent = 4;
+let allCellNumberField = null; //всего количество ячеек на поле
 //empty cell
 const empty = {
     value: 0,
@@ -123,7 +125,13 @@ function initGame() {
 };
 
 function createArrayNumbers() {
-    numbers = [...Array(16).keys()]
+    console.log('function createArrayNumbers');
+
+
+    allCellNumberField = cellNumberCurrent * cellNumberCurrent;
+    console.log('allCellNumberField ' + allCellNumberField);
+
+    numbers = [...Array(allCellNumberField).keys()]
         .sort(() => Math.random() - 0.5);
     console.log(numbers);
 
@@ -222,7 +230,11 @@ function createMainMenu() {
     const newGame = document.createElement('button');
     const savedGame = document.createElement('button');
     const bestScore = document.createElement('button');
-    const settingGame = document.createElement('button');
+    const fieldSize = document.createElement('form');
+    const fieldSizeText = document.createElement('label');
+    // const fieldSizeСhoice = document.createElement('form');
+    const fieldSizeСhoiceUl = document.createElement('select');
+
 
     // continueGame.innerHTML = "Continue Game";
     saveGameText.innerHTML = "Game pause, want to save the game?"
@@ -230,6 +242,7 @@ function createMainMenu() {
     newGame.innerHTML = "New Game";
     savedGame.innerHTML = "Saved Game";
     bestScore.innerHTML = "Best Scores";
+    fieldSizeText.innerHTML = "Field Size";
     MuteOnOff.innerHTML = `<i class="material-icons">volume_up</i>`;
 
     mainMenu.classList.add('menu_container', 'active');
@@ -239,6 +252,9 @@ function createMainMenu() {
     newGame.classList.add('main_menu_button');
     savedGame.classList.add('main_menu_button');
     bestScore.classList.add('main_menu_button');
+    fieldSize.classList.add('main_menu_field-size');
+    fieldSizeText.classList.add('main_menu_field-label');
+    fieldSizeСhoiceUl.classList.add('main_menu_field-select');
     MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
     fragment.appendChild(mainMenu);
@@ -250,7 +266,24 @@ function createMainMenu() {
     mainMenu.appendChild(newGame);
     mainMenu.appendChild(savedGame);
     mainMenu.appendChild(bestScore);
+    mainMenu.appendChild(fieldSize);
     mainMenu.appendChild(MuteOnOff);
+
+    fieldSize.appendChild(fieldSizeText);
+    fieldSize.appendChild(fieldSizeСhoiceUl);
+    // fieldSize.appendChild(fieldSizeСhoice);
+    // fieldSizeСhoice.appendChild(fieldSizeСhoiceUl);
+
+    for (let i = 0; i < CellNumberArray.length; i++) {
+        const fieldSizeСhoiceLi = document.createElement('option');
+        fieldSizeСhoiceLi.setAttribute('value', `${CellNumberArray[i]}`);
+        if (CellNumberArray[i] === 4) {
+            fieldSizeСhoiceLi.setAttribute('selected', "selected");
+        }
+        fieldSizeСhoiceLi.classList.add('main_menu_field-text');
+        fieldSizeСhoiceLi.innerHTML = `${CellNumberArray[i]}x${CellNumberArray[i]}`;;
+        fieldSizeСhoiceUl.appendChild(fieldSizeСhoiceLi);
+    }
 
     newGame.addEventListener('click', () => {
         newGameStart();
@@ -270,6 +303,13 @@ function createMainMenu() {
         bestScoreWrapper.classList.add('active');
         bestScoreView();
     });
+
+    fieldSizeСhoiceUl.addEventListener('click', () => {
+        cellNumberCurrent = fieldSizeСhoiceUl.value;
+        console.log('cellNumberCurrent ' + cellNumberCurrent);
+        // console.log('fieldSizeСhoiceUl.value ' + fieldSizeСhoiceUl.value);
+    });
+
 
     MuteOnOff.addEventListener('click', () => {
         muteToggle();
@@ -296,6 +336,8 @@ function pausedGame() {
         // mainMenu.classList.add('visually-hidden');
         mainMenu.classList.remove('active');
         saveGame.classList.remove('active');
+        bestScoreWrapper.classList.remove('active');
+
         field.removeChild(menuOverlay);
         timerId = window.setInterval(startTimer, 1000);
         gameSaveFlag = true;
@@ -663,7 +705,7 @@ function bestScoresRecord() {
         bestScoresCount.push({
             moves: movesCount,
             time: `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`,
-            size: `${cellNumber}x${cellNumber}`
+            size: `${cellNumberCurrent}x${cellNumberCurrent}`
         });
 
     } else {
@@ -671,7 +713,7 @@ function bestScoresRecord() {
         if (movesCount < bestScoresCount[lastBest].moves) {
             bestScoresCount[lastBest].moves = movesCount;
             bestScoresCount[lastBest].time = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
-            bestScoresCount[lastBest].size = `${cellNumber}x${cellNumber}`;
+            bestScoresCount[lastBest].size = `${cellNumberCurrent}x${cellNumberCurrent}`;
         }
     }
     bestScoresCount.sort(function(a, b) {
