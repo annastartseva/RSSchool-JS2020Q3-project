@@ -41,6 +41,8 @@ const MuteOnOff = document.createElement('button'); //mute button in main menu
 const soundElement = document.createElement('div');
 soundElement.classList.add('audio', 'hidden');
 soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
+// on/off image on cell
+const cellWithImage = document.createElement('button');
 //CREATE GLOBAL VAR
 const fieldSizePx = 400;
 let cellSize = 100;
@@ -74,6 +76,7 @@ let bestScoresCount = [{
 }]; //для сохранения лучших результатов
 let gameSaveFlag = false;
 
+let imageFlag = false;
 
 function initGame() {
     console.log('function initGame');
@@ -93,7 +96,7 @@ function initGame() {
     timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
     numberMoves.innerHTML = "Moves ";
     numberMovesCount.innerText = movesCount;
-    pauseButton.innerHTML = "Pause game";
+    pauseButton.innerHTML = "Pause/Menu";
 
     pauseButton.addEventListener('click', () => {
         pausedGame();
@@ -148,8 +151,14 @@ function createArrayNumbers() {
 
 function createNewGame() {
     console.log('function createNewGame');
-
+    randomImg = `assets/${Math.floor(Math.random()*20 + 1)}.jpg`;
     createArrayNumbers();
+    if (imageFlag) {
+        field.style.backgroundImage = `url(${randomImg})`;
+        field.style.backgroundSize = "100%";
+    } else {
+        field.style.backgroundImage = '';
+    }
 
     numberMovesCount.innerText = movesCount;
     cellSize = fieldSizePx / cellNumberCurrent;
@@ -193,7 +202,16 @@ function createNewGame() {
             // const top = (i - left) / 4;
             const left = i % cellNumberCurrent;
             const top = (i - left) / cellNumberCurrent;
-
+            if (imageFlag) {
+                const posLeft = (numbers[i] - 1) % cellNumberCurrent;
+                const posTop = (numbers[i] - 1 - posLeft) / cellNumberCurrent;
+                console.log('numbers[i] ' + numbers[i]);
+                console.log('posLeft ' + posLeft);
+                console.log('posTop ' + posTop);
+                cell.style.backgroundImage = `url(${randomImg})`;
+                cell.style.backgroundSize = `${cellNumberCurrent*100}%`;
+                cell.style.backgroundPosition = `-${posLeft*100}% -${posTop*100}%`;
+            }
             cells.push({
                 value: value,
                 left: left,
@@ -254,6 +272,7 @@ function createMainMenu() {
     const fieldSizeСhoiceUl = document.createElement('select');
 
 
+
     // continueGame.innerHTML = "Continue Game";
     saveGameText.innerHTML = "Game pause, want to save the game?"
     saveGameButton.innerHTML = "save game"
@@ -261,6 +280,7 @@ function createMainMenu() {
     savedGame.innerHTML = "Saved Game";
     bestScore.innerHTML = "Best Scores";
     fieldSizeText.innerHTML = "Field Size";
+    cellWithImage.innerHTML = "Display Image";
     MuteOnOff.innerHTML = `<i class="material-icons">volume_up</i>`;
 
     mainMenu.classList.add('menu_container', 'active');
@@ -273,6 +293,7 @@ function createMainMenu() {
     fieldSize.classList.add('main_menu_field-size');
     fieldSizeText.classList.add('main_menu_field-label');
     fieldSizeСhoiceUl.classList.add('main_menu_field-select');
+    cellWithImage.classList.add('main_menu_button');
     MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
     fragment.appendChild(mainMenu);
@@ -285,6 +306,7 @@ function createMainMenu() {
     mainMenu.appendChild(savedGame);
     mainMenu.appendChild(bestScore);
     mainMenu.appendChild(fieldSize);
+    mainMenu.appendChild(cellWithImage);
     mainMenu.appendChild(MuteOnOff);
 
     fieldSize.appendChild(fieldSizeText);
@@ -328,6 +350,16 @@ function createMainMenu() {
         // console.log('fieldSizeСhoiceUl.value ' + fieldSizeСhoiceUl.value);
     });
 
+    cellWithImage.addEventListener('click', () => {
+
+        if (imageFlag) {
+            imageFlag = false;
+            cellWithImage.innerHTML = "Display Image";
+        } else {
+            imageFlag = true;
+            cellWithImage.innerHTML = "Hide Image";
+        }
+    });
 
     MuteOnOff.addEventListener('click', () => {
         muteToggle();
