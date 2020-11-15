@@ -20,6 +20,7 @@ const popupWonWrapper = document.createElement('div');
 const savedGameWrapper = document.createElement('div');
 const bestScoreWrapper = document.createElement('div');
 //create popup won 
+const wonSpanResultSize = document.createElement('span');
 const wonSpanResultTime = document.createElement('span');
 const wonSpanResultMove = document.createElement('span');
 //create saved games block
@@ -41,7 +42,8 @@ const soundElement = document.createElement('div');
 soundElement.classList.add('audio', 'hidden');
 soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
 //CREATE GLOBAL VAR
-const cellSize = 100;
+const fieldSizePx = 400;
+let cellSize = 100;
 //current number cell & field size
 const CellNumberArray = [3, 4, 5, 6, 7, 8];
 let cellNumberCurrent = 4;
@@ -51,6 +53,7 @@ const empty = {
     value: 0,
     top: 0,
     left: 0,
+    size: null,
     element: null,
 };
 const timeCount = {
@@ -149,26 +152,35 @@ function createNewGame() {
     createArrayNumbers();
 
     numberMovesCount.innerText = movesCount;
-
+    cellSize = fieldSizePx / cellNumberCurrent;
     const fragment = document.createDocumentFragment();
     movesCount = 0;
 
-    for (let i = 0; i <= 15; i++) {
+    // for (let i = 0; i <= 15; i++) {
+    for (let i = 0; i <= allCellNumberField - 1; i++) {
+
         if (numbers[i] === 0) {
             const cell = document.createElement('div');
             cell.classList.add('empty');
 
-            empty.value = 16; //позиция завершения игры
+            // empty.value = 16; //позиция завершения игры
+            empty.value = allCellNumberField; //позиция завершения игры
 
-            const left = i % 4;
-            const top = (i - left) / 4;
+            // const left = i % 4;
+            // const top = (i - left) / 4;
+            const left = i % cellNumberCurrent;
+            const top = (i - left) / cellNumberCurrent;
             empty.left = left;
             empty.top = top;
+            empty.size = fieldSizePx / cellNumberCurrent;
             empty.element = cell;
             cells.push(empty);
 
             cell.style.left = `${left * cellSize}px`;
             cell.style.top = `${top * cellSize}px`;
+
+            cell.style.width = `${fieldSizePx / cellNumberCurrent}px`;
+            cell.style.height = `${fieldSizePx / cellNumberCurrent}px`;
 
             fragment.appendChild(cell);
         } else {
@@ -177,18 +189,24 @@ function createNewGame() {
             const value = numbers[i];
             cell.innerHTML = value;
 
-            const left = i % 4;
-            const top = (i - left) / 4;
+            // const left = i % 4;
+            // const top = (i - left) / 4;
+            const left = i % cellNumberCurrent;
+            const top = (i - left) / cellNumberCurrent;
 
             cells.push({
                 value: value,
                 left: left,
                 top: top,
+                size: fieldSizePx / cellNumberCurrent,
                 element: cell
             });
 
             cell.style.left = `${left * cellSize}px`;
             cell.style.top = `${top * cellSize}px`;
+
+            cell.style.width = `${fieldSizePx / cellNumberCurrent}px`;
+            cell.style.height = `${fieldSizePx / cellNumberCurrent}px`;
 
             fragment.appendChild(cell);
 
@@ -393,8 +411,11 @@ function move(index) {
     // };
 
 
+    // const isFinished = cells.every(cell => {
+    //     return cell.value === (cell.top * 4 + cell.left) + 1;
+    // });
     const isFinished = cells.every(cell => {
-        return cell.value === (cell.top * 4 + cell.left) + 1;
+        return cell.value === (cell.top * cellNumberCurrent + cell.left) + 1;
     });
 
     console.log('isFinished : ' + isFinished);
@@ -421,6 +442,7 @@ function popupWonGame() {
 
     wonSpanHeader.classList.add('popup_won-header');
     wonSpanResult.classList.add('popup_won-header');
+    wonSpanResultSize.classList.add('popup_won-header');
     wonSpanResultTime.classList.add('popup_won-header');
     wonSpanResultMove.classList.add('popup_won-header');
     popupWonWrapper.classList.add('popup_won-container');
@@ -428,8 +450,9 @@ function popupWonGame() {
 
     wonSpanHeader.innerHTML = "Hooray! You won!";
     wonSpanResult.innerHTML = "Your result:";
-    wonSpanResultTime.innerHTML = `time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
-    wonSpanResultMove.innerHTML = `moves ${movesCount}`;
+    // wonSpanResultSize.innerHTML = `Size ${cellNumberCurrent}:${cellNumberCurrent}`;
+    // wonSpanResultTime.innerHTML = `Time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+    // wonSpanResultMove.innerHTML = `Moves ${movesCount}`;
     closePopup.innerHTML = "OK";
 
     //для проверки отображения
@@ -440,6 +463,7 @@ function popupWonGame() {
     fragment.appendChild(popupWonWrapper);
     popupWonWrapper.appendChild(wonSpanHeader);
     popupWonWrapper.appendChild(wonSpanResult);
+    popupWonWrapper.appendChild(wonSpanResultSize);
     popupWonWrapper.appendChild(wonSpanResultTime);
     popupWonWrapper.appendChild(wonSpanResultMove);
     popupWonWrapper.appendChild(closePopup);
@@ -458,7 +482,6 @@ function savedGameCreate() {
     console.log('function savedGameCreate');
 
     const fragment = document.createDocumentFragment();
-
 
     const savedGameBack = document.createElement('button');
 
@@ -522,7 +545,7 @@ function savedGameView() {
 function savedGameRecord() {
     console.log('function savedGameRecord');
     savedGameCount.name = "1";
-    savedGameCount.size = 4;
+    savedGameCount.size = cellNumberCurrent;
     savedGameCount.timeMin = timeCount.min;
     savedGameCount.timeSec = timeCount.sec;
     savedGameCount.move = movesCount;
@@ -531,6 +554,8 @@ function savedGameRecord() {
     savedGameCount.arrayEmptyValue = empty.value;
     savedGameCount.arrayEmptyTop = empty.top;
     savedGameCount.arrayEmptyLeft = empty.left;
+    savedGameCount.arrayEmptySize = empty.size;
+
     savedGameCount.arrayEmptyElement = empty.element;
     saveGame.classList.remove('active');
     console.log('savedGameCount.arrayValue ' + savedGameCount.arrayValue);
@@ -553,22 +578,29 @@ function savedGameGetFromLS() {
         // console.log("savedGameCount.timeMin " + savedGameCount.timeMin);
         // console.log("savedGameCount.move " + savedGameCount.move);
 
-        for (let i = 0; i <= 15; i++) {
+        // for (let i = 0; i <= 15; i++) {
+        const sizeFieldSave = savedGameCount.size * savedGameCount.size;
+        for (let i = 0; i <= sizeFieldSave - 1; i++) {
             const cell = document.createElement('div');
-            if (savedGameCount.arrayValue[i].value === 16) {
+            // if (savedGameCount.arrayValue[i].value === 16) {
+            if (savedGameCount.arrayValue[i].value === sizeFieldSave) {
 
                 cell.classList.add('empty');
                 cell.innerHTML = '';
-                cell.style.left = `${savedGameCount.arrayValue[i].left * cellSize}px`;
-                cell.style.top = `${savedGameCount.arrayValue[i].top * cellSize}px`;
+                cell.style.left = `${savedGameCount.arrayValue[i].left * (fieldSizePx / savedGameCount.size)}px`;
+                cell.style.top = `${savedGameCount.arrayValue[i].top *  (fieldSizePx / savedGameCount.size)}px`;
+                cell.style.width = `${fieldSizePx / savedGameCount.size}px`;
+                cell.style.height = `${fieldSizePx / savedGameCount.size}px`;
                 savedGameCount.arrayValue[i].element = cell;
                 savedGameCount.arrayEmptyElement = cell;
             } else {
 
                 cell.classList.add('cell');
                 cell.innerHTML = savedGameCount.arrayValue[i].value;
-                cell.style.left = `${savedGameCount.arrayValue[i].left * cellSize}px`;
-                cell.style.top = `${savedGameCount.arrayValue[i].top * cellSize}px`;
+                cell.style.left = `${savedGameCount.arrayValue[i].left *  (fieldSizePx / savedGameCount.size)}px`;
+                cell.style.top = `${savedGameCount.arrayValue[i].top *  (fieldSizePx / savedGameCount.size)}px`;
+                cell.style.width = `${fieldSizePx / savedGameCount.size}px`;
+                cell.style.height = `${fieldSizePx / savedGameCount.size}px`;
                 savedGameCount.arrayValue[i].element = cell;
             };
             cell.addEventListener('click', () => {
@@ -598,6 +630,8 @@ function savedGameLoadFunc() {
     cells.length = 0;
     clearTimer();
 
+    cellSize = savedGameCount.arrayEmptySize;
+    cellNumberCurrent = savedGameCount.size;
     movesCount = savedGameCount.move;
     timeCount.min = savedGameCount.timeMin;
     timeCount.sec = savedGameCount.timeSec;
@@ -606,13 +640,14 @@ function savedGameLoadFunc() {
     timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
     //
     const fragment = document.createDocumentFragment();
-    for (let i = 0; i <= 15; i++) {
-
+    // for (let i = 0; i <= 15; i++) {
+    const sizeFieldSave = savedGameCount.size * savedGameCount.size;
+    for (let i = 0; i <= sizeFieldSave - 1; i++) {
         cells[i] = savedGameCount.arrayValue[i];
         // console.log('cells[i].value ' + cells[i].value);
         // console.log('savedGameCount.arrayValueEmpty.cell ' + savedGameCount.arrayValueEmpty.cell);
-        if (cells[i].value === 16) {
-
+        // if (cells[i].value === 16) {
+        if (cells[i].value === sizeFieldSave) {
             // console.log('savedGameCount.arrayValueEmpty ' + savedGameCount.arrayValueEmpty);
             // console.log('savedGameCount.arrayValueEmpty.value ' + savedGameCount.arrayValueEmpty.value);
             // console.log('savedGameCount.arrayValueEmpty.value.top ' + savedGameCount.arrayValueEmpty.top);
@@ -621,6 +656,7 @@ function savedGameLoadFunc() {
             empty.value = savedGameCount.arrayEmptyValue;
             empty.left = savedGameCount.arrayEmptyLeft;
             empty.top = savedGameCount.arrayEmptyTop;
+            empty.size = savedGameCount.arrayEmptySize;
             empty.element = savedGameCount.arrayEmptyElement;
             cells[i] = empty;
             // console.log(' empty.value ' + empty.value);
@@ -684,6 +720,7 @@ function wonAlert() {
     saveGame.classList.remove('active');
     stopTimer();
     popupWonWrapper.classList.add('active');
+    wonSpanResultSize.innerHTML = `Size ${cellNumberCurrent}x${cellNumberCurrent}`;
     wonSpanResultTime.innerHTML = `time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
     wonSpanResultMove.innerHTML = `moves ${movesCount}`;
     gameSaveFlag = false;
@@ -824,16 +861,34 @@ function clearCell() {
 
 function haveSolution() {
     let count = 0;
+    if (cellNumberCurrent % 2 === 0) {
+        for (let i = 0; i < numbers.length; i++) {
+            const elemNumber = i;
+            let j = i;
+            // console.log('array[elemNumber] ' + numbers[elemNumber]);
+            if (numbers[elemNumber] === 0) {
+                // const rowZero = (elemNumber - elemNumber % 4) / 4;
+                const rowZero = (elemNumber - elemNumber % cellNumberCurrent) / cellNumberCurrent;
+                count += rowZero + 1;
+                // console.log('count: ' + count);
+            } else {
+                while (j < numbers.length) {
 
-    for (let i = 0; i < numbers.length; i++) {
-        const elemNumber = i;
-        let j = i;
-        // console.log('array[elemNumber] ' + numbers[elemNumber]);
-        if (numbers[elemNumber] === 0) {
-            const rowZero = (elemNumber - elemNumber % 4) / 4;
-            count += rowZero + 1;
-            // console.log('count: ' + count);
-        } else {
+                    if (numbers[elemNumber] > numbers[j] && numbers[j] !== 0) {
+                        count += 1;
+                    }
+                    // console.log(numbers[elemNumber] + '  ' + numbers[j] + ' ' + count);
+                    j++;
+                }
+            }
+        }
+        console.log('count: ' + count);
+        return count % 2 === 0 ? true : false;
+    } else {
+        for (let i = 0; i < numbers.length; i++) {
+            const elemNumber = i;
+            let j = i;
+            // console.log('array[elemNumber] ' + numbers[elemNumber]);
             while (j < numbers.length) {
 
                 if (numbers[elemNumber] > numbers[j] && numbers[j] !== 0) {
@@ -843,11 +898,9 @@ function haveSolution() {
                 j++;
             }
         }
+        console.log('count: ' + count);
+        return count % 2 === 0 ? true : false;
     }
-
-    console.log('count: ' + count);
-    return count % 2 === 0 ? true : false;
-
 };
 
 function muteToggle() {
