@@ -485,9 +485,7 @@ function savedGameRecord() {
     savedGameCount.timeSec = timeCount.sec;
     savedGameCount.move = movesCount;
     savedGameCount.arrayValue = [...cells];
-    //    for (let i=0; i< cellNumber*cellNumber-1;i++){
-    //     savedGameCount.arrayValue
-    //    }
+
     savedGameCount.arrayEmptyValue = empty.value;
     savedGameCount.arrayEmptyTop = empty.top;
     savedGameCount.arrayEmptyLeft = empty.left;
@@ -656,21 +654,38 @@ function wonAlert() {
 function bestScoresRecord() {
     console.log('function bestScoresRecord()');
 
-    bestScoresCount.push({
-        moves: movesCount,
-        time: `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`,
-        size: `${cellNumber}x${cellNumber}`
+    if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
+        console.log('function bestScoreView() if');
+        bestScoresCount = JSON.parse(localStorage.score);
+    }
+
+    if (bestScoresCount.length < 11) {
+        bestScoresCount.push({
+            moves: movesCount,
+            time: `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`,
+            size: `${cellNumber}x${cellNumber}`
+        });
+
+    } else {
+        const lastBest = bestScoresCount.length - 1;
+        if (movesCount < bestScoresCount[lastBest].moves) {
+            bestScoresCount[lastBest].moves = movesCount;
+            bestScoresCount[lastBest].time = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
+            bestScoresCount[lastBest].size = `${cellNumber}x${cellNumber}`;
+        }
+    }
+    bestScoresCount.sort(function(a, b) {
+        return a.moves - b.moves;
     });
 
-    bestScoresCount.sort();
     localStorage.score = JSON.stringify(bestScoresCount);
-
 }
 
 function bestScoreView() {
     console.log('function bestScoreView()');
 
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
+        console.log('function bestScoreView() if');
         bestScoresCount = JSON.parse(localStorage.score);
     }
 
@@ -679,13 +694,10 @@ function bestScoreView() {
     bestScoreData3.innerHTML = bestScoresCount[0].size + '<br>';
 
     for (let i = 1; i < bestScoresCount.length; i++) {
-
-        // bestScoreData.innerHTML += `\n${bestScoresCount[i]}`;
         bestScoreData1.innerHTML += `<br>${bestScoresCount[i].moves}`;
         bestScoreData2.innerHTML += `<br>${bestScoresCount[i].time}`;
         bestScoreData3.innerHTML += `<br>${bestScoresCount[i].size}`;
     }
-
 }
 
 function dragDrop(index) {
