@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    outline: 0;
 }
 
 body {
@@ -50,11 +51,6 @@ input {
     color: rgb(77, 77, 70);
     text-shadow: 1px 1px 5px rgb(94, 84, 75);
     cursor: pointer;
-}
-
-.menu_button:active,
-.menu_button:focus {
-    outline: 0;
 }
 
 .field {
@@ -115,17 +111,11 @@ input {
 }
 
 .overlay {
-    /* box-sizing: border-box; */
-    color: #87ff8e;
     position: absolute;
     z-index: 99;
     background: rgba(116, 116, 108, 0.8);
     border: 2px solid rgb(115, 114, 109);
     border-radius: 10px;
-    /* right: 0;
-    bottom: 0;
-    left: 0%;
-    top: 0%; */
     width: 100%;
     height: 100%;
 }
@@ -173,9 +163,38 @@ input {
     cursor: pointer;
 }
 
-.main_menu_button:active,
-.main_menu_button:focus {
-    outline: 0;
+.main_menu_field-size {
+    margin: 10px;
+}
+
+.main_menu_field-label {
+    color: rgb(227, 208, 210);
+    font-family: 'Cousine', monospace;
+    font-size: 25px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
+    margin-right: 15px;
+}
+
+.main_menu_field-select {
+    width: 100px;
+    color: rgb(227, 208, 210);
+    font-family: 'Cousine', monospace;
+    font-size: 25px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
+    /* background-color: transparent; */
+    /* background: transparent; */
+    background: rgba(116, 116, 108, 0.6);
+    border: 1px solid rgb(115, 114, 109);
+    border-radius: 10px;
+}
+
+.main_menu_field-text {
+    /* background: rgba(132, 125, 114, 0.6); */
+    background: rgba(123, 120, 111);
+    color: rgb(227, 208, 210);
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
 }
 
 .save_game_container {
@@ -183,6 +202,11 @@ input {
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
+    display: none;
+}
+
+.save_game_container.active {
+    display: flex;
 }
 
 .save_game_text {
@@ -250,11 +274,6 @@ input {
     box-shadow: 2px 2px 5px rgb(37, 33, 28);
 }
 
-.popup_won-OK-button:active,
-.popup_won-OK-button:focus {
-    outline: 0;
-}
-
 .saved_game-container {
     height: 100%;
     display: flex;
@@ -287,7 +306,7 @@ input {
 .saved_game-text {
     font-family: 'Cousine', monospace;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 800;
     color: rgb(227, 208, 210);
     margin: 10px;
 }
@@ -301,6 +320,11 @@ input {
     margin: 10px;
     background: transparent;
     border: none;
+    display: none;
+}
+
+.saved_game-button-load.active {
+    display: contents;
 }
 
 .saved_game-button-load:hover {
@@ -309,12 +333,46 @@ input {
     cursor: pointer;
 }
 
-.saved_game-button-load:active,
-.saved_game-button-load:focus {
-    outline: 0;
+.best_game-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    display: none;
 }
 
-.saved_game-button-back {
+.best_game-container.active {
+    display: flex;
+}
+
+.best_game-header {
+    font-family: 'Cousine', monospace;
+    font-size: 25px;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgb(56, 50, 43);
+    color: rgb(227, 208, 210);
+    margin: 10px;
+}
+
+.best_game-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.best_game-text {
+    font-family: 'Cousine', monospace;
+    font-size: 20px;
+    font-weight: 800;
+    color: rgb(227, 208, 210);
+    margin: 0 15px;
+    text-align: center;
+}
+
+.button-back {
     margin: 30px 10px 10px;
     padding: 5px 20px;
     cursor: pointer;
@@ -327,13 +385,8 @@ input {
     box-shadow: 2px 2px 5px rgb(56, 50, 43, 0.8);
 }
 
-.saved_game-button-back:hover {
+.button-back:hover {
     cursor: pointer;
     background-color: rgb(204, 187, 175);
     box-shadow: 2px 2px 5px rgb(37, 33, 28);
-}
-
-.saved_game-button-back:active,
-.saved_game-button-back:focus {
-    outline: 0;
 }
