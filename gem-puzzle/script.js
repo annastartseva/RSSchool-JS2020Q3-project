@@ -41,6 +41,8 @@ const MuteOnOff = document.createElement('button'); //mute button in main menu
 const soundElement = document.createElement('div');
 soundElement.classList.add('audio', 'hidden');
 soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
+//choice field size
+const fieldSizeСhoiceUl = document.createElement('select');
 // on/off image on cell
 const cellWithImage = document.createElement('button');
 //CREATE GLOBAL VAR
@@ -248,6 +250,7 @@ function newGameStart() {
     cells.length = 0;
     numbers.length = 0;
     movesCount = 0;
+    cellNumberCurrent = fieldSizeСhoiceUl.value;
     clearCell();
     clearTimer();
     field.appendChild(createNewGame());
@@ -267,9 +270,6 @@ function createMainMenu() {
     const fieldSize = document.createElement('form');
     const fieldSizeText = document.createElement('label');
     // const fieldSizeСhoice = document.createElement('form');
-    const fieldSizeСhoiceUl = document.createElement('select');
-
-
 
     // continueGame.innerHTML = "Continue Game";
     saveGameText.innerHTML = "Game pause, want to save the game?"
@@ -279,7 +279,7 @@ function createMainMenu() {
     bestScore.innerHTML = "Best Scores";
     fieldSizeText.innerHTML = "Field Size";
     cellWithImage.innerHTML = "Display Image";
-    MuteOnOff.innerHTML = `<i class="material-icons">volume_up</i>`;
+    MuteOnOff.innerHTML = `<i class="material-icons">volume_off</i>`;
 
     mainMenu.classList.add('menu_container', 'active');
     saveGame.classList.add('save_game_container');
@@ -292,7 +292,8 @@ function createMainMenu() {
     fieldSizeText.classList.add('main_menu_field-label');
     fieldSizeСhoiceUl.classList.add('main_menu_field-select');
     cellWithImage.classList.add('main_menu_button');
-    MuteOnOff.classList.add('main_menu_button', 'mute_on');
+    MuteOnOff.classList.add('main_menu_button');
+    // MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
     fragment.appendChild(mainMenu);
     fragment.appendChild(saveGame);
@@ -398,7 +399,7 @@ function imageToggle() {
         field.style.backgroundSize = "100%";
         for (let i = 0; i < cells.length; i++) {
             const cell = cells[i];
-            if (cells[i].value !== 16) {
+            if (cells[i].value !== cellNumberCurrent * cellNumberCurrent) {
                 const posLeft = (cells[i].value - 1) % cellNumberCurrent;
                 const posTop = (cells[i].value - 1 - posLeft) / cellNumberCurrent;
                 cell.element.style.backgroundImage = `url(${randomImg})`;
@@ -410,7 +411,7 @@ function imageToggle() {
         field.style.backgroundImage = '';
         for (let i = 0; i < cells.length; i++) {
             const cell = cells[i];
-            if (cells[i].value !== 16) {
+            if (cells[i].value !== cellNumberCurrent * cellNumberCurrent) {
                 cell.element.style.backgroundImage = "";
             }
         }
@@ -620,7 +621,7 @@ function savedGameRecord() {
 };
 
 function savedGameGetFromLS() {
-    console.log('function savedGameLoadFunc');
+    console.log('function savedGameGetFromLS');
     // console.log("localStorage.game " + localStorage.game);
     if (localStorage.game !== null && localStorage.game !== '' && localStorage.game !== undefined) {
         savedGameCount = JSON.parse(localStorage.game);
@@ -643,8 +644,10 @@ function savedGameGetFromLS() {
                 cell.style.top = `${savedGameCount.arrayValue[i].top *  (fieldSizePx / savedGameCount.size)}px`;
                 cell.style.width = `${fieldSizePx / savedGameCount.size}px`;
                 cell.style.height = `${fieldSizePx / savedGameCount.size}px`;
+
                 savedGameCount.arrayValue[i].element = cell;
                 savedGameCount.arrayEmptyElement = cell;
+
             } else {
 
                 cell.classList.add('cell');
@@ -682,8 +685,8 @@ function savedGameLoadFunc() {
     cells.length = 0;
     clearTimer();
 
-    // cellSize = savedGameCount.arrayEmptySize;
-    // cellNumberCurrent = savedGameCount.size;
+    cellSize = savedGameCount.arrayEmptySize;
+    cellNumberCurrent = savedGameCount.size;
     movesCount = savedGameCount.move;
     timeCount.min = savedGameCount.timeMin;
     timeCount.sec = savedGameCount.timeSec;
@@ -696,24 +699,15 @@ function savedGameLoadFunc() {
     const sizeFieldSave = savedGameCount.size * savedGameCount.size;
     for (let i = 0; i <= sizeFieldSave - 1; i++) {
         cells[i] = savedGameCount.arrayValue[i];
-        // console.log('cells[i].value ' + cells[i].value);
-        // console.log('savedGameCount.arrayValueEmpty.cell ' + savedGameCount.arrayValueEmpty.cell);
+
         // if (cells[i].value === 16) {
         if (cells[i].value === sizeFieldSave) {
-            // console.log('savedGameCount.arrayValueEmpty ' + savedGameCount.arrayValueEmpty);
-            // console.log('savedGameCount.arrayValueEmpty.value ' + savedGameCount.arrayValueEmpty.value);
-            // console.log('savedGameCount.arrayValueEmpty.value.top ' + savedGameCount.arrayValueEmpty.top);
-            // console.log('savedGameCount.arrayValueEmpty.value.cell ' + savedGameCount.arrayValueEmpty.cell);
-
             empty.value = savedGameCount.arrayEmptyValue;
             empty.left = savedGameCount.arrayEmptyLeft;
             empty.top = savedGameCount.arrayEmptyTop;
             empty.size = savedGameCount.arrayEmptySize;
             empty.element = savedGameCount.arrayEmptyElement;
             cells[i] = empty;
-            // console.log(' empty.value ' + empty.value);
-            // console.log(' empty.left ' + empty.left);
-
         }
         // console.log(' cells[i] ' + cells[i]);
         // console.log('cells[i].value ' + cells[i].value);
