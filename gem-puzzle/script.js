@@ -80,9 +80,12 @@ let gameSaveFlag = false; // флаг доступности игры к сох�
 
 let imageFlag = false; // включено/выключено отображение картинки
 let randomImg = null; //выбор случайной картинки из папки
+// function manhDstMatrix() {
+
+// };
 
 function initGame() {
-    console.log('function initGame');
+    // console.log('function initGame');
 
     //setup properties for main elements
     gameWrap.classList.add('game_wrapper');
@@ -134,15 +137,15 @@ function initGame() {
 };
 
 function createArrayNumbers() {
-    console.log('function createArrayNumbers');
+    // console.log('function createArrayNumbers');
 
 
     allCellNumberField = cellNumberCurrent * cellNumberCurrent;
-    console.log('allCellNumberField ' + allCellNumberField);
+    // console.log('allCellNumberField ' + allCellNumberField);
 
     numbers = [...Array(allCellNumberField).keys()]
         .sort(() => Math.random() - 0.5);
-    console.log(numbers);
+    // console.log(numbers);
 
     const resultHaveSolution = haveSolution();
 
@@ -153,16 +156,16 @@ function createArrayNumbers() {
 };
 
 function createNewGame() {
-    console.log('function createNewGame');
+    // console.log('function createNewGame');
     randomImg = `assets/${Math.floor(Math.random()*40 + 1)}.jpg`;
     createArrayNumbers();
-    if (imageFlag) {
-        field.style.backgroundImage = `url(${randomImg})`;
-        field.style.backgroundSize = "100%";
-    } else {
-        field.style.backgroundImage = '';
-    }
-
+    // if (imageFlag) {
+    //     field.style.backgroundImage = `url(${randomImg})`;
+    //     field.style.backgroundSize = "100%";
+    // } else {
+    //     field.style.backgroundImage = '';
+    // }
+    field.style.backgroundImage = '';
     numberMovesCount.innerText = movesCount;
     cellSize = fieldSizePx / cellNumberCurrent;
     const fragment = document.createDocumentFragment();
@@ -243,7 +246,7 @@ function createNewGame() {
 };
 
 function newGameStart() {
-    console.log('function newGameStart');
+    // console.log('function newGameStart');
     // mainMenu.classList.add('visually-hidden');
     mainMenu.classList.remove('active');
     pauseButton.classList.remove('active');
@@ -258,7 +261,7 @@ function newGameStart() {
 };
 
 function createMainMenu() {
-    console.log('function createMainMenu');
+    // console.log('function createMainMenu');
     const fragment = document.createDocumentFragment();
 
     const saveGameText = document.createElement('span');
@@ -344,7 +347,7 @@ function createMainMenu() {
 
     fieldSizeСhoiceUl.addEventListener('click', () => {
         cellNumberCurrent = fieldSizeСhoiceUl.value;
-        console.log('cellNumberCurrent ' + cellNumberCurrent);
+        // console.log('cellNumberCurrent ' + cellNumberCurrent);
         // console.log('fieldSizeСhoiceUl.value ' + fieldSizeСhoiceUl.value);
     });
 
@@ -372,7 +375,7 @@ function createMainMenu() {
 };
 
 function pausedGame() {
-    console.log('function pausedGame');
+    // console.log('function pausedGame');
     pauseButton.classList.toggle('active');
     popupWonWrapper.classList.remove('active');
     if (pauseButton.classList.contains('active')) {
@@ -395,8 +398,8 @@ function pausedGame() {
 
 function imageToggle() {
     if (imageFlag) {
-        field.style.backgroundImage = `url(${randomImg})`;
-        field.style.backgroundSize = "100%";
+        // field.style.backgroundImage = `url(${randomImg})`;
+        // field.style.backgroundSize = "100%";
         for (let i = 0; i < cells.length; i++) {
             const cell = cells[i];
             if (cells[i].value !== cellNumberCurrent * cellNumberCurrent) {
@@ -419,7 +422,7 @@ function imageToggle() {
 };
 
 function move(index) {
-    console.log('function move');
+    // console.log('function move');
     const cell = cells[index];
 
     //proverka vozmognosti peremesheniya
@@ -474,20 +477,26 @@ function move(index) {
         return cell.value === (cell.top * cellNumberCurrent + cell.left) + 1;
     });
 
-    console.log('isFinished : ' + isFinished);
+    // console.log('isFinished : ' + isFinished);
 
     // console.log('empty ' + empty.left + ' ' + empty.element.style.left);
     // console.log('cell.top : ' + cell.top);
 
     if (isFinished) {
         //&& empty.left === empty.element.style.left && empty.top === empty.element.style.top
+        if (imageFlag) {
+            field.style.backgroundImage = `url(${randomImg})`;
+            field.style.backgroundSize = "100%";
+        } else {
+            field.style.backgroundImage = '';
+        }
         stopTimer();
         setTimeout(wonAlert, 400);
     }
 };
 
 function popupWonGame() {
-    console.log('function popupWonGame');
+    // console.log('function popupWonGame');
 
     const fragment = document.createDocumentFragment();
 
@@ -529,13 +538,14 @@ function popupWonGame() {
         popupWonWrapper.classList.remove('active');
         saveGame.classList.remove('active');
         mainMenu.classList.add('active');
+
     });
 
     return fragment;
 };
 
 function savedGameCreate() {
-    console.log('function savedGameCreate');
+    // console.log('function savedGameCreate');
 
     const fragment = document.createDocumentFragment();
 
@@ -599,7 +609,7 @@ function savedGameView() {
 };
 
 function savedGameRecord() {
-    console.log('function savedGameRecord');
+    // console.log('function savedGameRecord');
     savedGameCount.name = "1";
     savedGameCount.size = cellNumberCurrent;
     savedGameCount.timeMin = timeCount.min;
@@ -614,14 +624,14 @@ function savedGameRecord() {
 
     savedGameCount.arrayEmptyElement = empty.element;
     saveGame.classList.remove('active');
-    console.log('savedGameCount.arrayValue ' + savedGameCount.arrayValue);
+    // console.log('savedGameCount.arrayValue ' + savedGameCount.arrayValue);
     // localStorage.setItem('saved game', savedGameCount);
     localStorage.game = JSON.stringify(savedGameCount);
     // sessionStorage.gameEl = JSON.stringify(savedGameCount.arrayEmptyElement);
 };
 
 function savedGameGetFromLS() {
-    console.log('function savedGameGetFromLS');
+    // console.log('function savedGameGetFromLS');
     // console.log("localStorage.game " + localStorage.game);
     if (localStorage.game !== null && localStorage.game !== '' && localStorage.game !== undefined) {
         savedGameCount = JSON.parse(localStorage.game);
@@ -671,7 +681,7 @@ function savedGameGetFromLS() {
 };
 
 function savedGameLoadFunc() {
-    console.log('function savedGameLoadFunc');
+    // console.log('function savedGameLoadFunc');
 
     //скрываем меню
     // mainMenu.classList.add('visually-hidden');
@@ -709,8 +719,6 @@ function savedGameLoadFunc() {
             empty.element = savedGameCount.arrayEmptyElement;
             cells[i] = empty;
         }
-        // console.log(' cells[i] ' + cells[i]);
-        // console.log('cells[i].value ' + cells[i].value);
         fragment.appendChild(cells[i].element);
     }
     imageToggle();
@@ -719,7 +727,7 @@ function savedGameLoadFunc() {
 };
 
 function bestScoreCreate() {
-    console.log('function bestScoreCreate');
+    // console.log('function bestScoreCreate');
 
     const fragment = document.createDocumentFragment();
     const bestScoreBack = document.createElement('button');
@@ -760,7 +768,7 @@ function bestScoreCreate() {
 };
 
 function wonAlert() {
-    console.log('function wonAlert');
+    // console.log('function wonAlert');
 
     field.appendChild(menuOverlay);
     saveGame.classList.remove('active');
@@ -777,7 +785,7 @@ function wonAlert() {
 };
 
 function bestScoresRecord() {
-    console.log('function bestScoresRecord()');
+    // console.log('function bestScoresRecord()');
 
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
         // console.log('function bestScoreView() if');
@@ -807,7 +815,7 @@ function bestScoresRecord() {
 }
 
 function bestScoreView() {
-    console.log('function bestScoreView()');
+    // console.log('function bestScoreView()');
 
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
         // console.log('function bestScoreView() if');
@@ -826,7 +834,7 @@ function bestScoreView() {
 }
 
 function dragDrop(index) {
-    console.log('function dragDrop');
+    // console.log('function dragDrop');
     const cell = cells[index];
     cell.element.setAttribute('draggable', true);
 
@@ -896,7 +904,7 @@ function addZero(n) {
 }
 
 function clearCell() {
-    console.log('function clearCell');
+    // console.log('function clearCell');
 
     const cellContainer = document.querySelector(".field");
 
@@ -950,13 +958,13 @@ function haveSolution() {
 };
 
 function muteToggle() {
-    console.log("function muteToggle");
+    // console.log("function muteToggle");
     MuteOnOff.classList.toggle('mute_on');
     MuteOnOff.innerHTML = MuteOnOff.classList.contains('mute_on') ? `<span class="material-icons">volume_up</span>` : `<span class="material-icons">volume_off</span>`;
 };
 
 function playAudio() {
-    console.log("function playAudio");
+    // console.log("function playAudio");
     const audio = document.querySelector('audio');
     if (audio) {
         audio.currentTime = 0;
