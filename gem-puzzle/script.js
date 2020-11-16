@@ -41,12 +41,14 @@ const MuteOnOff = document.createElement('button'); //mute button in main menu
 const soundElement = document.createElement('div');
 soundElement.classList.add('audio', 'hidden');
 soundElement.innerHTML = `<audio class="audio_file" src="assets/mute.wav"></audio>`;
+// on/off image on cell
+const cellWithImage = document.createElement('button');
 //CREATE GLOBAL VAR
-const fieldSizePx = 400;
-let cellSize = 100;
+const fieldSizePx = 400; //размер игрового поля
+let cellSize = 100; // размер одной фишки
 //current number cell & field size
-const CellNumberArray = [3, 4, 5, 6, 7, 8];
-let cellNumberCurrent = 4;
+const CellNumberArray = [3, 4, 5, 6, 7, 8]; //все доступные размеры поля 
+let cellNumberCurrent = 4; // текущий размер поля
 let allCellNumberField = null; //всего количество ячеек на поле
 //empty cell
 const empty = {
@@ -55,16 +57,16 @@ const empty = {
     left: 0,
     size: null,
     element: null,
-};
+}; // параметры пустой ячейки на поле
 const timeCount = {
     min: 0,
     sec: 0,
 };
-let timerId = 0;
-let movesCount = 0;
+let timerId = 0; // идентификатор запущенного таймера игры
+let movesCount = 0; //счетчик ходов
 const cells = [];
 
-let numbers = [];
+let numbers = []; // массив рандомно созданных чисел для создания новой игры
 
 let savedGameCount = {}; //объект для сохранения игры
 let bestScoresCount = [{
@@ -72,8 +74,10 @@ let bestScoresCount = [{
     time: "Times",
     size: "Size"
 }]; //для сохранения лучших результатов
-let gameSaveFlag = false;
+let gameSaveFlag = false; // флаг доступности игры к сохранению
 
+let imageFlag = false; // включено/выключено отображение картинки
+let randomImg = null; //выбор случайной картинки из папки
 
 function initGame() {
     console.log('function initGame');
@@ -93,7 +97,7 @@ function initGame() {
     timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
     numberMoves.innerHTML = "Moves ";
     numberMovesCount.innerText = movesCount;
-    pauseButton.innerHTML = "Pause game";
+    pauseButton.innerHTML = "Pause/Menu";
 
     pauseButton.addEventListener('click', () => {
         pausedGame();
@@ -148,8 +152,14 @@ function createArrayNumbers() {
 
 function createNewGame() {
     console.log('function createNewGame');
-
+    randomImg = `assets/${Math.floor(Math.random()*40 + 1)}.jpg`;
     createArrayNumbers();
+    if (imageFlag) {
+        field.style.backgroundImage = `url(${randomImg})`;
+        field.style.backgroundSize = "100%";
+    } else {
+        field.style.backgroundImage = '';
+    }
 
     numberMovesCount.innerText = movesCount;
     cellSize = fieldSizePx / cellNumberCurrent;
@@ -193,7 +203,13 @@ function createNewGame() {
             // const top = (i - left) / 4;
             const left = i % cellNumberCurrent;
             const top = (i - left) / cellNumberCurrent;
-
+            if (imageFlag) {
+                const posLeft = (numbers[i] - 1) % cellNumberCurrent;
+                const posTop = (numbers[i] - 1 - posLeft) / cellNumberCurrent;
+                cell.style.backgroundImage = `url(${randomImg})`;
+                cell.style.backgroundSize = `${cellNumberCurrent*100}%`;
+                cell.style.backgroundPosition = `-${posLeft*100}% -${posTop*100}%`;
+            }
             cells.push({
                 value: value,
                 left: left,
@@ -201,10 +217,10 @@ function createNewGame() {
                 size: fieldSizePx / cellNumberCurrent,
                 element: cell
             });
-
+            //pologenie cell v igrovom pole
             cell.style.left = `${left * cellSize}px`;
             cell.style.top = `${top * cellSize}px`;
-
+            // razmer cell
             cell.style.width = `${fieldSizePx / cellNumberCurrent}px`;
             cell.style.height = `${fieldSizePx / cellNumberCurrent}px`;
 
@@ -254,6 +270,7 @@ function createMainMenu() {
     const fieldSizeСhoiceUl = document.createElement('select');
 
 
+
     // continueGame.innerHTML = "Continue Game";
     saveGameText.innerHTML = "Game pause, want to save the game?"
     saveGameButton.innerHTML = "save game"
@@ -261,6 +278,7 @@ function createMainMenu() {
     savedGame.innerHTML = "Saved Game";
     bestScore.innerHTML = "Best Scores";
     fieldSizeText.innerHTML = "Field Size";
+    cellWithImage.innerHTML = "Display Image";
     MuteOnOff.innerHTML = `<i class="material-icons">volume_up</i>`;
 
     mainMenu.classList.add('menu_container', 'active');
@@ -273,6 +291,7 @@ function createMainMenu() {
     fieldSize.classList.add('main_menu_field-size');
     fieldSizeText.classList.add('main_menu_field-label');
     fieldSizeСhoiceUl.classList.add('main_menu_field-select');
+    cellWithImage.classList.add('main_menu_button');
     MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
     fragment.appendChild(mainMenu);
@@ -285,13 +304,13 @@ function createMainMenu() {
     mainMenu.appendChild(savedGame);
     mainMenu.appendChild(bestScore);
     mainMenu.appendChild(fieldSize);
+    mainMenu.appendChild(cellWithImage);
     mainMenu.appendChild(MuteOnOff);
 
     fieldSize.appendChild(fieldSizeText);
     fieldSize.appendChild(fieldSizeСhoiceUl);
-    // fieldSize.appendChild(fieldSizeСhoice);
-    // fieldSizeСhoice.appendChild(fieldSizeСhoiceUl);
 
+    // создание DOM элементов списка доступных размеров полей
     for (let i = 0; i < CellNumberArray.length; i++) {
         const fieldSizeСhoiceLi = document.createElement('option');
         fieldSizeСhoiceLi.setAttribute('value', `${CellNumberArray[i]}`);
@@ -328,6 +347,17 @@ function createMainMenu() {
         // console.log('fieldSizeСhoiceUl.value ' + fieldSizeСhoiceUl.value);
     });
 
+    cellWithImage.addEventListener('click', () => {
+
+        if (imageFlag) {
+            imageFlag = false;
+            cellWithImage.innerHTML = "Display Image";
+        } else {
+            imageFlag = true;
+            cellWithImage.innerHTML = "Hide Image";
+        }
+        imageToggle();
+    });
 
     MuteOnOff.addEventListener('click', () => {
         muteToggle();
@@ -359,6 +389,31 @@ function pausedGame() {
         field.removeChild(menuOverlay);
         timerId = window.setInterval(startTimer, 1000);
         gameSaveFlag = true;
+    }
+};
+
+function imageToggle() {
+    if (imageFlag) {
+        field.style.backgroundImage = `url(${randomImg})`;
+        field.style.backgroundSize = "100%";
+        for (let i = 0; i < cells.length; i++) {
+            const cell = cells[i];
+            if (cells[i].value !== 16) {
+                const posLeft = (cells[i].value - 1) % cellNumberCurrent;
+                const posTop = (cells[i].value - 1 - posLeft) / cellNumberCurrent;
+                cell.element.style.backgroundImage = `url(${randomImg})`;
+                cell.element.style.backgroundSize = `${cellNumberCurrent*100}%`;
+                cell.element.style.backgroundPosition = `-${posLeft*100}% -${posTop*100}%`;
+            }
+        }
+    } else {
+        field.style.backgroundImage = '';
+        for (let i = 0; i < cells.length; i++) {
+            const cell = cells[i];
+            if (cells[i].value !== 16) {
+                cell.element.style.backgroundImage = "";
+            }
+        }
     }
 };
 
@@ -566,10 +621,7 @@ function savedGameRecord() {
 
 function savedGameGetFromLS() {
     console.log('function savedGameLoadFunc');
-    // console.log("localStorage.getItem('saved game') " + localStorage.getItem('saved game'));
-    // if (localStorage.getItem('saved game') !== null && localStorage.getItem('saved game') !== '') {
-    //     savedGameCount = localStorage.getItem('saved game');
-    console.log("localStorage.game " + localStorage.game);
+    // console.log("localStorage.game " + localStorage.game);
     if (localStorage.game !== null && localStorage.game !== '' && localStorage.game !== undefined) {
         savedGameCount = JSON.parse(localStorage.game);
         // console.log("savedGameGetFromLS if");
@@ -630,8 +682,8 @@ function savedGameLoadFunc() {
     cells.length = 0;
     clearTimer();
 
-    cellSize = savedGameCount.arrayEmptySize;
-    cellNumberCurrent = savedGameCount.size;
+    // cellSize = savedGameCount.arrayEmptySize;
+    // cellNumberCurrent = savedGameCount.size;
     movesCount = savedGameCount.move;
     timeCount.min = savedGameCount.timeMin;
     timeCount.sec = savedGameCount.timeSec;
@@ -667,7 +719,7 @@ function savedGameLoadFunc() {
         // console.log('cells[i].value ' + cells[i].value);
         fragment.appendChild(cells[i].element);
     }
-
+    imageToggle();
     timerId = window.setInterval(startTimer, 1000);
     return fragment;
 };
@@ -734,7 +786,7 @@ function bestScoresRecord() {
     console.log('function bestScoresRecord()');
 
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
-        console.log('function bestScoreView() if');
+        // console.log('function bestScoreView() if');
         bestScoresCount = JSON.parse(localStorage.score);
     }
 
@@ -764,7 +816,7 @@ function bestScoreView() {
     console.log('function bestScoreView()');
 
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
-        console.log('function bestScoreView() if');
+        // console.log('function bestScoreView() if');
         bestScoresCount = JSON.parse(localStorage.score);
     }
 
@@ -882,7 +934,7 @@ function haveSolution() {
                 }
             }
         }
-        console.log('count: ' + count);
+        // console.log('count: ' + count);
         return count % 2 === 0 ? true : false;
     } else {
         for (let i = 0; i < numbers.length; i++) {
@@ -898,7 +950,7 @@ function haveSolution() {
                 j++;
             }
         }
-        console.log('count: ' + count);
+        // console.log('count: ' + count);
         return count % 2 === 0 ? true : false;
     }
 };
@@ -906,7 +958,6 @@ function haveSolution() {
 function muteToggle() {
     console.log("function muteToggle");
     MuteOnOff.classList.toggle('mute_on');
-
     MuteOnOff.innerHTML = MuteOnOff.classList.contains('mute_on') ? `<span class="material-icons">volume_up</span>` : `<span class="material-icons">volume_off</span>`;
 };
 
