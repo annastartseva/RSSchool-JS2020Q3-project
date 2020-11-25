@@ -80,13 +80,9 @@ let gameSaveFlag = false; // флаг доступности игры к сох�
 
 let imageFlag = false; // включено/выключено отображение картинки
 let randomImg = null; //выбор случайной картинки из папки
-// function manhDstMatrix() {
 
-// };
 
 function initGame() {
-    // console.log('function initGame');
-
     //setup properties for main elements
     gameWrap.classList.add('game_wrapper');
     menuWrap.classList.add('menu_wrapper');
@@ -131,21 +127,14 @@ function initGame() {
     menuOverlay.appendChild(savedGameCreate());
     menuOverlay.appendChild(bestScoreCreate());
 
-
-
     document.body.appendChild(gameWrap);
 };
 
 function createArrayNumbers() {
-    // console.log('function createArrayNumbers');
-
-
     allCellNumberField = cellNumberCurrent * cellNumberCurrent;
-    // console.log('allCellNumberField ' + allCellNumberField);
 
     numbers = [...Array(allCellNumberField).keys()]
         .sort(() => Math.random() - 0.5);
-    // console.log(numbers);
 
     const resultHaveSolution = haveSolution();
 
@@ -156,33 +145,23 @@ function createArrayNumbers() {
 };
 
 function createNewGame() {
-    // console.log('function createNewGame');
-    randomImg = `assets/${Math.floor(Math.random()*40 + 1)}.jpg`;
+    const imageNumber = 40;
+    randomImg = `assets/${Math.floor(Math.random()*imageNumber + 1)}.jpg`;
     createArrayNumbers();
-    // if (imageFlag) {
-    //     field.style.backgroundImage = `url(${randomImg})`;
-    //     field.style.backgroundSize = "100%";
-    // } else {
-    //     field.style.backgroundImage = '';
-    // }
     field.style.backgroundImage = '';
     numberMovesCount.innerText = movesCount;
     cellSize = fieldSizePx / cellNumberCurrent;
     const fragment = document.createDocumentFragment();
     movesCount = 0;
 
-    // for (let i = 0; i <= 15; i++) {
     for (let i = 0; i <= allCellNumberField - 1; i++) {
 
         if (numbers[i] === 0) {
             const cell = document.createElement('div');
             cell.classList.add('empty');
 
-            // empty.value = 16; //позиция завершения игры
             empty.value = allCellNumberField; //позиция завершения игры
 
-            // const left = i % 4;
-            // const top = (i - left) / 4;
             const left = i % cellNumberCurrent;
             const top = (i - left) / cellNumberCurrent;
             empty.left = left;
@@ -204,8 +183,6 @@ function createNewGame() {
             const value = numbers[i];
             cell.innerHTML = value;
 
-            // const left = i % 4;
-            // const top = (i - left) / 4;
             const left = i % cellNumberCurrent;
             const top = (i - left) / cellNumberCurrent;
             if (imageFlag) {
@@ -241,13 +218,10 @@ function createNewGame() {
             });
         }
     }
-    // console.log(cells);
     return fragment;
 };
 
 function newGameStart() {
-    // console.log('function newGameStart');
-    // mainMenu.classList.add('visually-hidden');
     mainMenu.classList.remove('active');
     pauseButton.classList.remove('active');
     cells.length = 0;
@@ -261,7 +235,6 @@ function newGameStart() {
 };
 
 function createMainMenu() {
-    // console.log('function createMainMenu');
     const fragment = document.createDocumentFragment();
 
     const saveGameText = document.createElement('span');
@@ -272,9 +245,7 @@ function createMainMenu() {
     const bestScore = document.createElement('button');
     const fieldSize = document.createElement('form');
     const fieldSizeText = document.createElement('label');
-    // const fieldSizeСhoice = document.createElement('form');
 
-    // continueGame.innerHTML = "Continue Game";
     saveGameText.innerHTML = "Game pause, want to save the game?"
     saveGameButton.innerHTML = "save game"
     newGame.innerHTML = "New Game";
@@ -296,7 +267,6 @@ function createMainMenu() {
     fieldSizeСhoiceUl.classList.add('main_menu_field-select');
     cellWithImage.classList.add('main_menu_button');
     MuteOnOff.classList.add('main_menu_button');
-    // MuteOnOff.classList.add('main_menu_button', 'mute_on');
 
     fragment.appendChild(mainMenu);
     fragment.appendChild(saveGame);
@@ -315,10 +285,11 @@ function createMainMenu() {
     fieldSize.appendChild(fieldSizeСhoiceUl);
 
     // создание DOM элементов списка доступных размеров полей
+    const gameLoadFieldSize = 4;
     for (let i = 0; i < CellNumberArray.length; i++) {
         const fieldSizeСhoiceLi = document.createElement('option');
         fieldSizeСhoiceLi.setAttribute('value', `${CellNumberArray[i]}`);
-        if (CellNumberArray[i] === 4) {
+        if (CellNumberArray[i] === gameLoadFieldSize) {
             fieldSizeСhoiceLi.setAttribute('selected', "selected");
         }
         fieldSizeСhoiceLi.classList.add('main_menu_field-text');
@@ -347,12 +318,9 @@ function createMainMenu() {
 
     fieldSizeСhoiceUl.addEventListener('click', () => {
         cellNumberCurrent = fieldSizeСhoiceUl.value;
-        // console.log('cellNumberCurrent ' + cellNumberCurrent);
-        // console.log('fieldSizeСhoiceUl.value ' + fieldSizeСhoiceUl.value);
     });
 
     cellWithImage.addEventListener('click', () => {
-
         if (imageFlag) {
             imageFlag = false;
             cellWithImage.innerHTML = "Display Image";
@@ -375,17 +343,14 @@ function createMainMenu() {
 };
 
 function pausedGame() {
-    // console.log('function pausedGame');
     pauseButton.classList.toggle('active');
     popupWonWrapper.classList.remove('active');
     if (pauseButton.classList.contains('active')) {
         field.appendChild(menuOverlay);
         stopTimer();
-        // mainMenu.classList.remove('visually-hidden');
         mainMenu.classList.add('active');
         saveGame.classList.add('active');
     } else {
-        // mainMenu.classList.add('visually-hidden');
         mainMenu.classList.remove('active');
         saveGame.classList.remove('active');
         bestScoreWrapper.classList.remove('active');
@@ -398,8 +363,6 @@ function pausedGame() {
 
 function imageToggle() {
     if (imageFlag) {
-        // field.style.backgroundImage = `url(${randomImg})`;
-        // field.style.backgroundSize = "100%";
         for (let i = 0; i < cells.length; i++) {
             const cell = cells[i];
             if (cells[i].value !== cellNumberCurrent * cellNumberCurrent) {
@@ -422,7 +385,6 @@ function imageToggle() {
 };
 
 function move(index) {
-    // console.log('function move');
     const cell = cells[index];
 
     //proverka vozmognosti peremesheniya
@@ -449,41 +411,18 @@ function move(index) {
     cell.left = emptyLeft;
     cell.top = emptyTop;
 
-    // console.log('cell.value ' + cell.value);
-    // console.log('cell.top : ' + cell.top);
-    // console.log('cell.top * 4 : ' + cell.top * 4);
-    // console.log(' cell.left : ' + cell.left);
-    // console.log('(cell.top * 4 + cell.left) : ' + (cell.top * 4 + cell.left));
-    // console.log('(cell.top * 4 + cell.left) +1 : ' + ((cell.top * 4 + cell.left) + 1));
     movesCount += 1;
-    // console.log('movesCount: ' + movesCount)
     numberMovesCount.innerText = movesCount;
     if (MuteOnOff.classList.contains('mute_on')) {
         playAudio();
     };
     cell.element.removeAttribute('draggable');
 
-    // console.log('cells : ' + cells);
-    // for (let i = 0; i < 15; i++) {
-    //     console.log('cell.value : ' + cells[i].value);
-    //     console.log('(cell.top * 4 + cell.left) + 1 : ' + ((cells[i].top * 4 + cells[i].left) + 1));
-    // };
-
-
-    // const isFinished = cells.every(cell => {
-    //     return cell.value === (cell.top * 4 + cell.left) + 1;
-    // });
     const isFinished = cells.every(cell => {
         return cell.value === (cell.top * cellNumberCurrent + cell.left) + 1;
     });
 
-    // console.log('isFinished : ' + isFinished);
-
-    // console.log('empty ' + empty.left + ' ' + empty.element.style.left);
-    // console.log('cell.top : ' + cell.top);
-
     if (isFinished) {
-        //&& empty.left === empty.element.style.left && empty.top === empty.element.style.top
         if (imageFlag) {
             field.style.backgroundImage = `url(${randomImg})`;
             field.style.backgroundSize = "100%";
@@ -496,8 +435,6 @@ function move(index) {
 };
 
 function popupWonGame() {
-    // console.log('function popupWonGame');
-
     const fragment = document.createDocumentFragment();
 
     const wonSpanHeader = document.createElement('span');
@@ -515,15 +452,7 @@ function popupWonGame() {
 
     wonSpanHeader.innerHTML = "Hooray! You won!";
     wonSpanResult.innerHTML = "Your result:";
-    // wonSpanResultSize.innerHTML = `Size ${cellNumberCurrent}:${cellNumberCurrent}`;
-    // wonSpanResultTime.innerHTML = `Time ${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
-    // wonSpanResultMove.innerHTML = `Moves ${movesCount}`;
     closePopup.innerHTML = "OK";
-
-    //для проверки отображения
-    // mainMenu.classList.remove('active');
-    // popupWonWrapper.classList.add('active');
-    // popupWonWrapper.classList.remove('active');
 
     fragment.appendChild(popupWonWrapper);
     popupWonWrapper.appendChild(wonSpanHeader);
@@ -533,20 +462,16 @@ function popupWonGame() {
     popupWonWrapper.appendChild(wonSpanResultMove);
     popupWonWrapper.appendChild(closePopup);
 
-
     closePopup.addEventListener('click', () => {
         popupWonWrapper.classList.remove('active');
         saveGame.classList.remove('active');
         mainMenu.classList.add('active');
-
     });
 
     return fragment;
 };
 
 function savedGameCreate() {
-    // console.log('function savedGameCreate');
-
     const fragment = document.createDocumentFragment();
 
     const savedGameBack = document.createElement('button');
@@ -557,18 +482,12 @@ function savedGameCreate() {
     savedGameSize.classList.add('saved_game-text');
     savedGameTime.classList.add('saved_game-text');
     savedGameMoves.classList.add('saved_game-text');
-
     savedGameLoad.classList.add('saved_game-button-load');
     savedGameBack.classList.add('button-back');
 
     savedGameHeader.innerHTML = "No Saved Game";
     savedGameLoad.innerHTML = "Load Game";
     savedGameBack.innerHTML = "BACK";
-
-    //для проверки отображения
-    // mainMenu.classList.remove('active');
-    // savedGameWrapper.classList.add('active');
-    // popupWonWrapper.classList.remove('active');
 
     fragment.appendChild(savedGameWrapper);
     savedGameWrapper.appendChild(savedGameHeader);
@@ -592,7 +511,6 @@ function savedGameCreate() {
         };
     });
 
-
     return fragment;
 };
 
@@ -609,7 +527,6 @@ function savedGameView() {
 };
 
 function savedGameRecord() {
-    // console.log('function savedGameRecord');
     savedGameCount.name = "1";
     savedGameCount.size = cellNumberCurrent;
     savedGameCount.timeMin = timeCount.min;
@@ -624,30 +541,19 @@ function savedGameRecord() {
 
     savedGameCount.arrayEmptyElement = empty.element;
     saveGame.classList.remove('active');
-    // console.log('savedGameCount.arrayValue ' + savedGameCount.arrayValue);
-    // localStorage.setItem('saved game', savedGameCount);
     localStorage.game = JSON.stringify(savedGameCount);
-    // sessionStorage.gameEl = JSON.stringify(savedGameCount.arrayEmptyElement);
 };
 
 function savedGameGetFromLS() {
-    // console.log('function savedGameGetFromLS');
-    // console.log("localStorage.game " + localStorage.game);
     if (localStorage.game !== null && localStorage.game !== '' && localStorage.game !== undefined) {
         savedGameCount = JSON.parse(localStorage.game);
-        // console.log("savedGameGetFromLS if");
-        // console.log("savedGameCount.name " + savedGameCount.name);
-        // console.log("savedGameCount.size " + savedGameCount.size);
-        // console.log("savedGameCount.timeMin " + savedGameCount.timeMin);
-        // console.log("savedGameCount.move " + savedGameCount.move);
 
-        // for (let i = 0; i <= 15; i++) {
         const sizeFieldSave = savedGameCount.size * savedGameCount.size;
+
         for (let i = 0; i <= sizeFieldSave - 1; i++) {
             const cell = document.createElement('div');
-            // if (savedGameCount.arrayValue[i].value === 16) {
-            if (savedGameCount.arrayValue[i].value === sizeFieldSave) {
 
+            if (savedGameCount.arrayValue[i].value === sizeFieldSave) {
                 cell.classList.add('empty');
                 cell.innerHTML = '';
                 cell.style.left = `${savedGameCount.arrayValue[i].left * (fieldSizePx / savedGameCount.size)}px`;
@@ -657,9 +563,7 @@ function savedGameGetFromLS() {
 
                 savedGameCount.arrayValue[i].element = cell;
                 savedGameCount.arrayEmptyElement = cell;
-
             } else {
-
                 cell.classList.add('cell');
                 cell.innerHTML = savedGameCount.arrayValue[i].value;
                 cell.style.left = `${savedGameCount.arrayValue[i].left *  (fieldSizePx / savedGameCount.size)}px`;
@@ -681,10 +585,7 @@ function savedGameGetFromLS() {
 };
 
 function savedGameLoadFunc() {
-    // console.log('function savedGameLoadFunc');
-
     //скрываем меню
-    // mainMenu.classList.add('visually-hidden');
     mainMenu.classList.remove('active');
     pauseButton.classList.remove('active');
     savedGameWrapper.classList.remove('active');
@@ -703,14 +604,12 @@ function savedGameLoadFunc() {
 
     numberMovesCount.innerText = movesCount;
     timeValue.innerHTML = `${addZero(timeCount.min)}:${addZero(timeCount.sec)}`;
-    //
     const fragment = document.createDocumentFragment();
-    // for (let i = 0; i <= 15; i++) {
+
     const sizeFieldSave = savedGameCount.size * savedGameCount.size;
     for (let i = 0; i <= sizeFieldSave - 1; i++) {
         cells[i] = savedGameCount.arrayValue[i];
 
-        // if (cells[i].value === 16) {
         if (cells[i].value === sizeFieldSave) {
             empty.value = savedGameCount.arrayEmptyValue;
             empty.left = savedGameCount.arrayEmptyLeft;
@@ -727,8 +626,6 @@ function savedGameLoadFunc() {
 };
 
 function bestScoreCreate() {
-    // console.log('function bestScoreCreate');
-
     const fragment = document.createDocumentFragment();
     const bestScoreBack = document.createElement('button');
 
@@ -742,10 +639,6 @@ function bestScoreCreate() {
 
     bestScoreHeader.innerHTML = "Best Scores";
     bestScoreBack.innerHTML = "BACK";
-
-    //для проверки отображения
-    // mainMenu.classList.remove('active');
-    // bestScoreWrapper.classList.add('active');
 
     fragment.appendChild(bestScoreWrapper);
     bestScoreWrapper.appendChild(bestScoreHeader);
@@ -768,8 +661,6 @@ function bestScoreCreate() {
 };
 
 function wonAlert() {
-    // console.log('function wonAlert');
-
     field.appendChild(menuOverlay);
     saveGame.classList.remove('active');
     stopTimer();
@@ -780,15 +671,10 @@ function wonAlert() {
     gameSaveFlag = false;
 
     bestScoresRecord();
-    // alert(`Hooray!!! You won!!! Your result time: ${addZero(timeCount.min)}:${addZero(timeCount.sec)} and ${movesCount} moves`);
-
 };
 
 function bestScoresRecord() {
-    // console.log('function bestScoresRecord()');
-
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
-        // console.log('function bestScoreView() if');
         bestScoresCount = JSON.parse(localStorage.score);
     }
 
@@ -815,10 +701,7 @@ function bestScoresRecord() {
 }
 
 function bestScoreView() {
-    // console.log('function bestScoreView()');
-
     if (localStorage.score !== null && localStorage.score !== '' && localStorage.score !== undefined) {
-        // console.log('function bestScoreView() if');
         bestScoresCount = JSON.parse(localStorage.score);
     }
 
@@ -834,7 +717,6 @@ function bestScoreView() {
 }
 
 function dragDrop(index) {
-    // console.log('function dragDrop');
     const cell = cells[index];
     cell.element.setAttribute('draggable', true);
 
@@ -904,8 +786,6 @@ function addZero(n) {
 }
 
 function clearCell() {
-    // console.log('function clearCell');
-
     const cellContainer = document.querySelector(".field");
 
     while (cellContainer.firstChild) {
@@ -919,52 +799,45 @@ function haveSolution() {
         for (let i = 0; i < numbers.length; i++) {
             const elemNumber = i;
             let j = i;
-            // console.log('array[elemNumber] ' + numbers[elemNumber]);
+
             if (numbers[elemNumber] === 0) {
-                // const rowZero = (elemNumber - elemNumber % 4) / 4;
                 const rowZero = (elemNumber - elemNumber % cellNumberCurrent) / cellNumberCurrent;
                 count += rowZero + 1;
-                // console.log('count: ' + count);
             } else {
                 while (j < numbers.length) {
 
                     if (numbers[elemNumber] > numbers[j] && numbers[j] !== 0) {
                         count += 1;
                     }
-                    // console.log(numbers[elemNumber] + '  ' + numbers[j] + ' ' + count);
                     j++;
                 }
             }
         }
-        // console.log('count: ' + count);
         return count % 2 === 0 ? true : false;
     } else {
         for (let i = 0; i < numbers.length; i++) {
             const elemNumber = i;
             let j = i;
-            // console.log('array[elemNumber] ' + numbers[elemNumber]);
+
             while (j < numbers.length) {
 
                 if (numbers[elemNumber] > numbers[j] && numbers[j] !== 0) {
                     count += 1;
                 }
-                // console.log(numbers[elemNumber] + '  ' + numbers[j] + ' ' + count);
                 j++;
             }
         }
-        // console.log('count: ' + count);
+
         return count % 2 === 0 ? true : false;
     }
 };
 
 function muteToggle() {
-    // console.log("function muteToggle");
     MuteOnOff.classList.toggle('mute_on');
     MuteOnOff.innerHTML = MuteOnOff.classList.contains('mute_on') ? `<span class="material-icons">volume_up</span>` : `<span class="material-icons">volume_off</span>`;
 };
 
 function playAudio() {
-    // console.log("function playAudio");
     const audio = document.querySelector('audio');
     if (audio) {
         audio.currentTime = 0;
