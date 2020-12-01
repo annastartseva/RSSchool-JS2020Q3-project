@@ -7,8 +7,9 @@
     <title>English for kids</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
 </head>
 
@@ -21,22 +22,31 @@
                 <div class="burger__item"></div>
                 <div class="burger__item"></div>
             </nav>
-            <div class="header__title">
-                <div class="__title">Funny English</div>
-            </div>
+            <!-- <ul class="menu show"> -->
+            <ul class="menu">
+                <li class="menu__item" number="0">Action</li>
+                <li class="menu__item" number="1">Action</li>
+            </ul>
+            <div class="header__title">Funny English</div>
             <div class="header__switch">
                 <input type="checkbox" class="switch" id="switch__id">
                 <label for="switch__id" class="switch__label">
-    <span class="switch__toggle"></span>
-    <span class="switch__train">Train</span>
-    <span class="switch__play">Play</span>
-</label>
+                    <span class="switch__toggle"></span>
+                    <span class="switch__train">Train</span>
+                    <span class="switch__play">Play</span>
+                </label>
             </div>
         </div>
 
     </header>
     <main class="main">
-        <div class="cards__wrapper" id="cards_container">
+        <div class="cards__wrapper all_categories " id="categories_container">
+            <!-- <div class="cards__category">
+                <div class="cards__image" style="background-image: url(assets/img/animal1.jpg);"> </div>
+                <div class="cards__mode train"></div>
+                <div class="cards__mode play"></div>
+                <div class="cards__category-title">Animal</div>
+            </div> -->
             <!-- <div class="cards__category">
                 <div class="cards__image-wrapper">
                     <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
@@ -44,64 +54,40 @@
                 <div class="cards__category-title">
                     Animal
                 </div>
+            </div> -->
+        </div>
+        <div class="cards__wrapper single_categories none " id="cards_container">
+            <!-- <div class="cards__theme">
+                <div class="cards__theme-front">
+                    <div class="front-image" style="background-image: url(assets/img/animal1.jpg);"> </div>
+                    <div class="front-footer">
+                        <div class="front-sound">
+                            <i class="material-icons">volume_up</i>
+                        </div>
+
+                        <div class="front-title">Animal</div>
+                        <div class="front-roll-button">
+                            <img src="assets/img/turn.svg" alt="turn" class="front-arrow">
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
+            <div class="cards__theme">
+                <div class="cards__theme-back">
+                    <div class="back-image" style="background-image: url(assets/img/animal1.jpg);"> </div>
+                    <div class="back-footer">
+
+
+                        <div class="back-title">Animal</div>
+
+                    </div>
+
                 </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
-                </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
-                </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
-                </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
-                </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
-                </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-            <div class="cards__category">
-                <div class="cards__image-wrapper">
-                    <img class="cards__image" src="assets/img/animal1.jpg" alt="cat_img">
-                </div>
-                <div class="cards__category-title">
-                    Animal
-                </div>
-            </div>
-        </div> -->
+
+            </div> -->
+        </div>
     </main>
     <footer class="footer">
         <div class="footer__wrapper">
@@ -123,6 +109,7 @@
     </footer>
     <script src="cards.js" type="module"></script>
     <script src="index.js" type="module"></script>
+    <script src="createDom.js" type="module"></script>
 </body>
 
 </html>

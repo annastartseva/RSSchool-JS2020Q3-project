@@ -1,6 +1,6 @@
 const cards = [
     ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Colors', 'Food'],
-    ['action.jpg', 'action1.jpg', 'animal2.jpg', 'animal1.jpg', 'clothes.jpg', 'emotions.jpg', 'colors1.jpg', 'food1.jpg'],
+    ['action.jpg', 'action1.jpg', 'animal2.jpg', 'animal1.jpg', 'clothes.jpg', 'emotions.jpg', 'colors.jpg', 'food1.jpg'],
     [{
             word: 'cry',
             translation: 'плакать',
@@ -88,7 +88,7 @@ const cards = [
         },
         {
             word: 'skip',
-            translation: 'пропускать, прыгать',
+            translation: 'прыгать',
             image: 'img/skip.jpg',
             audioSrc: 'audio/skip.mp3'
         },
@@ -200,49 +200,49 @@ const cards = [
     [{
             word: 'skirt',
             translation: 'юбка',
-            image: 'img/skirt.jpg',
+            image: 'img/cl_scirt.jpg',
             audioSrc: 'audio/skirt.mp3'
         },
         {
             word: 'pants',
             translation: 'брюки',
-            image: 'img/pants.jpg',
+            image: 'img/cl_pants.jpg',
             audioSrc: 'audio/pants.mp3'
         },
         {
             word: 'blouse',
             translation: 'блузка',
-            image: 'img/blouse.jpg',
+            image: 'img/cl_blouse.jpg',
             audioSrc: 'audio/blouse.mp3'
         },
         {
             word: 'dress',
             translation: 'платье',
-            image: 'img/dress.jpg',
+            image: 'img/cl_dress.jpg',
             audioSrc: 'audio/dress.mp3'
         },
         {
             word: 'boot',
             translation: 'ботинок',
-            image: 'img/boot.jpg',
+            image: 'img/cl_boot.jpg',
             audioSrc: 'audio/boot.mp3'
         },
         {
             word: 'shirt',
             translation: 'рубашка',
-            image: 'img/shirt.jpg',
+            image: 'img/cl_shirt.jpg',
             audioSrc: 'audio/shirt.mp3'
         },
         {
             word: 'coat',
             translation: 'пальто',
-            image: 'img/coat.jpg',
+            image: 'img/cl_coat.jpg',
             audioSrc: 'audio/coat.mp3'
         },
         {
             word: 'shoe',
             translation: 'туфли',
-            image: 'img/shoe.jpg',
+            image: 'img/cl_shoe.jpg',
             audioSrc: 'audio/shoe.mp3'
         }
     ],
@@ -294,14 +294,56 @@ const cards = [
             image: 'img/laugh.jpg',
             audioSrc: 'audio/laugh.mp3'
         }
+    ],
+    [{
+            word: 'yellow',
+            translation: 'желтый',
+            image: 'img/col_yellow.jpg',
+            audioSrc: 'audio/sad.mp3'
+        },
+        {
+            word: 'red',
+            translation: 'красный',
+            image: 'img/col_red.jpg',
+            audioSrc: 'audio/angry.mp3'
+        },
+        {
+            word: 'green',
+            translation: 'зеленый',
+            image: 'img/col_green.jpg',
+            audioSrc: 'audio/happy.mp3'
+        },
+        {
+            word: 'blue',
+            translation: 'синий',
+            image: 'img/col_blue.jpg',
+            audioSrc: 'audio/tired.mp3'
+        },
+        {
+            word: 'gold',
+            translation: 'золотой',
+            image: 'img/col_gold.jpg',
+            audioSrc: 'audio/surprised.mp3'
+        },
+        {
+            word: 'grey',
+            translation: 'серый',
+            image: 'img/col_grey.jpg',
+            audioSrc: 'audio/scared.mp3'
+        },
+        {
+            word: 'pink',
+            translation: 'розовый',
+            image: 'img/col_pink.jpg',
+            audioSrc: 'audio/smile.mp3'
+        },
+        {
+            word: 'orange',
+            translation: 'оранжевый',
+            image: 'img/col_orange.jpg',
+            audioSrc: 'audio/laugh.mp3'
+        }
     ]
 ];
 
-function example() {
-    console.log('cards[0] ' + cards[0]);
-}
-
-
-
 export default cards;
-export { example };
