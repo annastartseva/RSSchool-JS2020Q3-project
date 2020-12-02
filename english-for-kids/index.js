@@ -59,6 +59,8 @@ function setMainPage() {
         categoriesContainer.classList.remove('none');
 
         cardsContainer.classList.add('none');
+        state.currentPage = 'main';
+
         while (cardsContainer.firstChild) {
             cardsContainer.removeChild(cardsContainer.firstChild);
         }

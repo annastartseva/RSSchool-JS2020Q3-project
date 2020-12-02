@@ -1,35 +1,35 @@
 const cards = [
-    ['Action (set A)', 'Action (set B)', 'Animal (set A)', 'Animal (set B)', 'Clothes', 'Emotions', 'Colors', 'Food'],
-    ['action.jpg', 'action1.jpg', 'animal2.jpg', 'animal1.jpg', 'clothes.jpg', 'emotions.jpg', 'colors.jpg', 'food1.jpg'],
+    ['Action', 'Nature', 'Pets', 'Wild animals', 'Clothes', 'Emotions', 'Colors', 'Food'],
+    ['action.jpg', 'nature.jpg', 'pets.jpg', 'animal.jpg', 'clothes.jpg', 'emotions.jpg', 'colors.jpg', 'food1.jpg'],
     [{
             word: 'cry',
             translation: 'плакать',
-            image: 'img/cry.jpg',
+            image: 'img/act_cry.jpg',
             audioSrc: 'audio/cry.mp3'
         },
         {
             word: 'dance',
             translation: 'танцевать',
-            image: 'img/dance.jpg',
+            image: 'img/act_dance.jpg',
             audioSrc: 'audio/dance.mp3'
         },
         {
             word: 'dive',
             translation: 'нырять',
-            image: 'img/dive.jpg',
+            image: 'img/act_dive.jpg',
             audioSrc: 'audio/dive.mp3'
         },
         {
-            word: 'draw',
-            translation: 'рисовать',
-            image: 'img/draw.jpg',
-            audioSrc: 'audio/draw.mp3'
+            word: 'run',
+            translation: 'бежать',
+            image: 'img/act_run.jpg',
+            audioSrc: 'audio/run.mp3'
         },
         {
-            word: 'fish',
-            translation: 'ловить рыбу',
-            image: 'img/fish.jpg',
-            audioSrc: 'audio/fish.mp3'
+            word: 'read',
+            translation: 'читать',
+            image: 'img/act_read.jpg',
+            audioSrc: 'audio/read.mp3'
         },
         {
             word: 'fly',
@@ -46,155 +46,155 @@ const cards = [
         {
             word: 'jump',
             translation: 'прыгать',
-            image: 'img/jump.jpg',
+            image: 'img/act_jump.jpg',
             audioSrc: 'audio/jump.mp3'
         }
     ],
     [{
-            word: 'open',
-            translation: 'открывать',
-            image: 'img/open.jpg',
-            audioSrc: 'audio/open.mp3'
+            word: 'grass',
+            translation: 'трава',
+            image: 'img/nat_grass.jpg',
+            audioSrc: 'audio/grass.mp3'
         },
         {
-            word: 'play',
-            translation: 'играть',
-            image: 'img/play.jpg',
-            audioSrc: 'audio/play.mp3'
+            word: 'tree',
+            translation: 'дерево',
+            image: 'img/nat_tree.jpg',
+            audioSrc: 'audio/tree.mp3'
         },
         {
-            word: 'point',
-            translation: 'указывать',
-            image: 'img/point.jpg',
-            audioSrc: 'audio/point.mp3'
+            word: 'rainbow',
+            translation: 'радуга',
+            image: 'img/nat_rainbow.jpg',
+            audioSrc: 'audio/rainbow.mp3'
         },
         {
-            word: 'ride',
-            translation: 'ездить',
-            image: 'img/ride.jpg',
-            audioSrc: 'audio/ride.mp3'
+            word: 'pond',
+            translation: 'пруд',
+            image: 'img/nat_pond.jpg',
+            audioSrc: 'audio/pond.mp3'
         },
         {
-            word: 'run',
-            translation: 'бегать',
-            image: 'img/run.jpg',
-            audioSrc: 'audio/run.mp3'
+            word: 'leaf',
+            translation: 'листик',
+            image: 'img/nat_leaf.jpg',
+            audioSrc: 'audio/leaf.mp3'
         },
         {
-            word: 'sing',
-            translation: 'петь',
-            image: 'img/sing.jpg',
-            audioSrc: 'audio/sing.mp3'
+            word: 'flower',
+            translation: 'цветок',
+            image: 'img/nat_flower.jpg',
+            audioSrc: 'audio/flower.mp3'
         },
         {
-            word: 'skip',
-            translation: 'прыгать',
-            image: 'img/skip.jpg',
-            audioSrc: 'audio/skip.mp3'
+            word: 'sun',
+            translation: 'солнце',
+            image: 'img/nat_sun.jpg',
+            audioSrc: 'audio/sun.mp3'
         },
         {
-            word: 'swim',
-            translation: 'плавать',
-            image: 'img/swim.jpg',
-            audioSrc: 'audio/swim.mp3'
+            word: 'island',
+            translation: 'остров',
+            image: 'img/nat_island.jpg',
+            audioSrc: 'audio/island.mp3'
         }
     ],
     [{
             word: 'cat',
             translation: 'кот',
-            image: 'img/cat.jpg',
+            image: 'img/an_cat.jpg',
             audioSrc: 'audio/cat.mp3'
         },
         {
             word: 'chick',
             translation: 'цыплёнок',
-            image: 'img/chick.jpg',
+            image: 'img/an_chick.jpg',
             audioSrc: 'audio/chick.mp3'
         },
         {
             word: 'chicken',
             translation: 'курица',
-            image: 'img/chicken.jpg',
+            image: 'img/an_chicken.jpg',
             audioSrc: 'audio/chicken.mp3'
         },
         {
             word: 'dog',
             translation: 'собака',
-            image: 'img/dog.jpg',
+            image: 'img/an_dog.jpg',
             audioSrc: 'audio/dog.mp3'
         },
         {
             word: 'horse',
             translation: 'лошадь',
-            image: 'img/horse.jpg',
+            image: 'img/an_horse.jpg',
             audioSrc: 'audio/horse.mp3'
         },
         {
             word: 'pig',
             translation: 'свинья',
-            image: 'img/pig.jpg',
+            image: 'img/an_pig.jpg',
             audioSrc: 'audio/pig.mp3'
         },
         {
             word: 'rabbit',
             translation: 'кролик',
-            image: 'img/rabbit.jpg',
+            image: 'img/an_rabbit.jpg',
             audioSrc: 'audio/rabbit.mp3'
         },
         {
             word: 'sheep',
             translation: 'овца',
-            image: 'img/sheep.jpg',
+            image: 'img/an_sheep.jpg',
             audioSrc: 'audio/sheep.mp3'
         }
     ],
     [{
-            word: 'bird',
-            translation: 'птица',
-            image: 'img/bird.jpg',
-            audioSrc: 'audio/bird.mp3'
-        },
-        {
-            word: 'fish',
-            translation: 'рыба',
-            image: 'img/fish1.jpg',
-            audioSrc: 'audio/fish.mp3'
-        },
-        {
-            word: 'frog',
-            translation: 'жаба',
-            image: 'img/frog.jpg',
-            audioSrc: 'audio/frog.mp3'
-        },
-        {
-            word: 'giraffe',
-            translation: 'жираф',
-            image: 'img/giraffe.jpg',
-            audioSrc: 'audio/giraffe.mp3'
+            word: 'bear',
+            translation: 'медведь',
+            image: 'img/an_bear.jpg',
+            audioSrc: 'audio/bear.mp3'
         },
         {
             word: 'lion',
             translation: 'лев',
-            image: 'img/lion.jpg',
+            image: 'img/an_lion.jpg',
             audioSrc: 'audio/lion.mp3'
         },
         {
-            word: 'mouse',
-            translation: 'мышь',
-            image: 'img/mouse.jpg',
-            audioSrc: 'audio/mouse.mp3'
+            word: 'elephant',
+            translation: 'слон',
+            image: 'img/an_elephant.jpg',
+            audioSrc: 'audio/elephant.mp3'
         },
         {
-            word: 'turtle',
-            translation: 'черепаха',
-            image: 'img/turtle.jpg',
-            audioSrc: 'audio/turtle.mp3'
+            word: 'tiger',
+            translation: 'тигр',
+            image: 'img/an_tiger.jpg',
+            audioSrc: 'audio/tiger.mp3'
         },
         {
-            word: 'dolphin',
-            translation: 'дельфин',
-            image: 'img/dolphin.jpg',
-            audioSrc: 'audio/dolphin.mp3'
+            word: 'fox',
+            translation: 'лиса',
+            image: 'img/an_fox.jpg',
+            audioSrc: 'audio/fox.mp3'
+        },
+        {
+            word: 'raccoon',
+            translation: 'енот',
+            image: 'img/an_raccoon.jpg',
+            audioSrc: 'audio/raccoon.mp3'
+        },
+        {
+            word: 'deer',
+            translation: 'олень',
+            image: 'img/an_deer.jpg',
+            audioSrc: 'audio/deer.mp3'
+        },
+        {
+            word: 'hippo',
+            translation: 'бегемот',
+            image: 'img/an_hippo.jpg',
+            audioSrc: 'audio/hippo.mp3'
         }
     ],
     [{
@@ -249,49 +249,49 @@ const cards = [
     [{
             word: 'sad',
             translation: 'грустный',
-            image: 'img/sad.jpg',
+            image: 'img/em_sad.jpg',
             audioSrc: 'audio/sad.mp3'
         },
         {
             word: 'angry',
             translation: 'сердитый',
-            image: 'img/angry.jpg',
+            image: 'img/em_angry.jpg',
             audioSrc: 'audio/angry.mp3'
         },
         {
-            word: 'happy',
-            translation: 'счастливый',
-            image: 'img/happy.jpg',
-            audioSrc: 'audio/happy.mp3'
+            word: 'confused',
+            translation: 'смущенный',
+            image: 'img/em_confused.jpg',
+            audioSrc: 'audio/confused.mp3'
         },
         {
-            word: 'tired',
-            translation: 'уставший',
-            image: 'img/tired.jpg',
-            audioSrc: 'audio/tired.mp3'
+            word: 'annoyanced',
+            translation: 'раздраженный',
+            image: 'img/em_annoyanced.jpg',
+            audioSrc: 'audio/annoyanced.mp3'
         },
         {
             word: 'surprised',
             translation: 'удивлённый',
-            image: 'img/surprised.jpg',
+            image: 'img/em_surprised.jpg',
             audioSrc: 'audio/surprised.mp3'
         },
         {
-            word: 'scared',
-            translation: 'испуганный',
-            image: 'img/scared.jpg',
-            audioSrc: 'audio/scared.mp3'
+            word: 'glad',
+            translation: 'довольный',
+            image: 'img/em_glad.jpg',
+            audioSrc: 'audio/glad.mp3'
         },
         {
-            word: 'smile',
-            translation: 'улыбка',
-            image: 'img/smile.jpg',
-            audioSrc: 'audio/smile.mp3'
+            word: 'abashed',
+            translation: 'смущенный',
+            image: 'img/em_abashed.jpg',
+            audioSrc: 'audio/abashed.mp3'
         },
         {
             word: 'laugh',
             translation: 'смех',
-            image: 'img/laugh.jpg',
+            image: 'img/em_laugh.jpg',
             audioSrc: 'audio/laugh.mp3'
         }
     ],
@@ -299,49 +299,98 @@ const cards = [
             word: 'yellow',
             translation: 'желтый',
             image: 'img/col_yellow.jpg',
-            audioSrc: 'audio/sad.mp3'
+            audioSrc: 'audio/yellow.mp3'
         },
         {
             word: 'red',
             translation: 'красный',
             image: 'img/col_red.jpg',
-            audioSrc: 'audio/angry.mp3'
+            audioSrc: 'audio/red.mp3'
         },
         {
             word: 'green',
             translation: 'зеленый',
             image: 'img/col_green.jpg',
-            audioSrc: 'audio/happy.mp3'
+            audioSrc: 'audio/green.mp3'
         },
         {
             word: 'blue',
             translation: 'синий',
             image: 'img/col_blue.jpg',
-            audioSrc: 'audio/tired.mp3'
+            audioSrc: 'audio/blue.mp3'
         },
         {
             word: 'gold',
             translation: 'золотой',
             image: 'img/col_gold.jpg',
-            audioSrc: 'audio/surprised.mp3'
+            audioSrc: 'audio/gold.mp3'
         },
         {
             word: 'grey',
             translation: 'серый',
             image: 'img/col_grey.jpg',
-            audioSrc: 'audio/scared.mp3'
+            audioSrc: 'audio/grey.mp3'
         },
         {
             word: 'pink',
             translation: 'розовый',
             image: 'img/col_pink.jpg',
-            audioSrc: 'audio/smile.mp3'
+            audioSrc: 'audio/pink.mp3'
         },
         {
             word: 'orange',
             translation: 'оранжевый',
             image: 'img/col_orange.jpg',
-            audioSrc: 'audio/laugh.mp3'
+            audioSrc: 'audio/orange.mp3'
+        }
+    ],
+    [{
+            word: 'banana',
+            translation: 'банан',
+            image: 'img/f_banana.jpg',
+            audioSrc: 'audio/banana.mp3'
+        },
+        {
+            word: 'bread',
+            translation: 'хлеб',
+            image: 'img/f_bread.jpg',
+            audioSrc: 'audio/bread.mp3'
+        },
+        {
+            word: 'cheese',
+            translation: 'сыр',
+            image: 'img/f_cheese.jpg',
+            audioSrc: 'audio/cheese.mp3'
+        },
+        {
+            word: 'egg',
+            translation: 'яйцо',
+            image: 'img/f_egg.jpg',
+            audioSrc: 'audio/egg.mp3'
+        },
+        {
+            word: 'jam',
+            translation: 'варенье',
+            image: 'img/f_jam.jpg',
+            audioSrc: 'audio/jam.mp3'
+        },
+        {
+            word: 'milk',
+            translation: 'молоко',
+            image: 'img/f_milk.jpg',
+            audioSrc: 'audio/milk.mp3'
+        },
+        {
+            word: 'tomato',
+            translation: 'помидор',
+            image: 'img/f_tomato.jpg',
+            audioSrc: 'audio/tomato.mp3'
+        },
+        {
+            word: 'water',
+            translation: 'вода',
+            image: 'img/f_water.jpg',
+            audioSrc: 'audio/water.mp3'
         }
     ]
 ];

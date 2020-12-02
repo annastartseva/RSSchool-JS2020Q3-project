@@ -122,6 +122,11 @@ function createCardsSingleCategories(categories, state) {
             cardFront.classList.remove('front-rotate');
             cardBack.classList.remove('back-rotate');
         })
+
+        soundCardFront.addEventListener('click', () => {
+            const myAudio = new Audio(`assets/${categories[i].audioSrc}`);
+            myAudio.play();
+        })
     }
     return fragment;
 }
