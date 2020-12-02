@@ -1,4 +1,5 @@
-import { openCardsSingleCategories } from './index.js';
+import { openCardsSingleCategories, setMainPage, closeMenu } from './index.js';
+
 
 function createCategoriesCard(categories, imageCategoriesName, state) {
 
@@ -51,11 +52,12 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
 
 }
 
-function createCardsSingleCategories(categories, state) {
+function createCardsSingleCategories(categories, state, arrayRandomNumber) {
     const fragment = document.createDocumentFragment();
     console.log('categories ' + categories);
     console.log('categories.length ' + categories.length);
     for (let i = 0; i < categories.length; i++) {
+        const idCard = arrayRandomNumber[i];
 
         const card = document.createElement('div');
         const cardFront = document.createElement('div');
@@ -75,12 +77,17 @@ function createCardsSingleCategories(categories, state) {
         rollButtonCardFront.classList.add('front-roll-button');
         imageArrowCardFront.classList.add('front-arrow');
 
-        imageCardFront.setAttribute("style", `background-image: url(assets/${categories[i].image});`);
+        if (state.train === false) {
+            imageCardFront.classList.add('size100');
+            footerCardFront.classList.add('none');
+        }
+
+        imageCardFront.setAttribute("style", `background-image: url(assets/${categories[idCard].image});`);
         imageArrowCardFront.setAttribute("src", "assets/img/turn.svg");
         imageArrowCardFront.setAttribute("alt", "turn card");
 
         soundCardFront.innerHTML = `<i class="material-icons">volume_up</i>`;
-        titleCardFront.innerHTML = `${categories[i].word}`;
+        titleCardFront.innerHTML = `${categories[idCard].word}`;
 
         card.appendChild(cardFront);
         cardFront.appendChild(imageCardFront);
@@ -102,9 +109,9 @@ function createCardsSingleCategories(categories, state) {
         footerCardBack.classList.add('back-footer');
         titleCardBack.classList.add('back-title');
 
-        imageCardBack.setAttribute("style", `background-image: url(assets/${categories[i].image});`);
+        imageCardBack.setAttribute("style", `background-image: url(assets/${categories[idCard].image});`);
 
-        titleCardBack.innerHTML = `${categories[i].translation}`;
+        titleCardBack.innerHTML = `${categories[idCard].translation}`;
 
         card.appendChild(cardBack);
         cardBack.appendChild(imageCardBack);
@@ -124,11 +131,48 @@ function createCardsSingleCategories(categories, state) {
         })
 
         soundCardFront.addEventListener('click', () => {
-            const myAudio = new Audio(`assets/${categories[i].audioSrc}`);
+            const myAudio = new Audio(`assets/${categories[idCard].audioSrc}`);
             myAudio.play();
         })
     }
     return fragment;
 }
 
-export { createCategoriesCard, createCardsSingleCategories };
+function createMenuList(categories, menu) {
+    const occupiedItemUnderMain = 1;
+    const fragment = document.createDocumentFragment();
+
+    const menuMainItem = document.createElement('li');
+    menuMainItem.classList.add('menu__item', 'active');
+    menuMainItem.setAttribute('number', '0')
+    menuMainItem.innerHTML = 'Main';
+    fragment.appendChild(menuMainItem);
+
+    menuMainItem.addEventListener('click', () => {
+        setMainPage();
+        closeMenu();
+    });
+
+    for (let i = 0; i < categories.length; i++) {
+
+        const menuItem = document.createElement('li');
+
+        menuItem.classList.add('menu__item');
+
+        menuItem.setAttribute('number', `${i+occupiedItemUnderMain}`)
+        menuItem.innerHTML = `${categories[i]}`;
+
+        fragment.appendChild(menuItem);
+
+        menuItem.addEventListener('click', () => {
+            openCardsSingleCategories(i);
+            closeMenu();
+        });
+    }
+    return fragment;
+
+
+
+}
+
+export { createCategoriesCard, createCardsSingleCategories, createMenuList };
