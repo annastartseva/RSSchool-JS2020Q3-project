@@ -1,5 +1,5 @@
 import cards from './cards.js';
-import { createCategoriesCard, createCardsSingleCategories, createMenuList } from './createDom.js';
+import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult } from './createDom.js';
 import { toggleTrainPlayMode, switchStateMenu } from './switch.js';
 
 const categoriesContainer = document.getElementById('categories_container'); //Main page container
@@ -9,12 +9,19 @@ const titleHeaderButton = document.querySelector('.header__title');
 const burgerMenuButton = document.querySelector('.header__burger');
 const body = document.querySelector('.body');
 const mainMenu = document.querySelector('.menu');
+const startGameButton = document.querySelector('.start_game');
+const playResultContainer = document.querySelector('.play__result');
+const winContainer = document.querySelector('.win');
 
 const startCountingThematicCardsInArrayCards = 2;
 const state = {
     train: true,
     currentPage: null,
-    currentCards: []
+    currentCategories: null,
+    currentCards: [],
+    currentCardsId: [],
+    currentCardsAudio: [],
+    NumberWrongAnswer: 0
 };
 
 (function createMainPage() {
@@ -41,10 +48,68 @@ function openCardsSingleCategories(index) {
     cardsContainer.classList.remove('none');
     state.currentPage = 'theme';
     const categories = cards[index + startCountingThematicCardsInArrayCards];
+    state.currentCategories = categories;
     const arrayRandomNumber = createRandomData(categories.length);
     // console.log('arrayRandomNumber ' + arrayRandomNumber);
 
     cardsContainer.appendChild(createCardsSingleCategories(categories, state, arrayRandomNumber));
+};
+
+function StartGame() {
+    if (state.currentPage === 'main') return;
+    const categories = state.currentCategories;
+    const arrayRandomNumber = createRandomData(categories.length);
+    for (let i = 0; i < categories.length; i++) {
+        const idCard = arrayRandomNumber[i];
+        state.currentCards[i] = categories[idCard].word;
+        state.currentCardsId[i] = idCard;
+        state.currentCardsAudio[i] = categories[idCard].audioSrc;
+    }
+    console.log("start game");
+    console.log('card ' + state.currentCards);
+    console.log('id ' + state.currentCardsId);
+    console.log('Audio ' + state.currentCardsAudio);
+    if (state.currentCardsAudio.length > 0) {
+        const arrayOfSound = state.currentCardsAudio;
+        const sound = arrayOfSound[arrayOfSound.length - 1];
+        console.log('sound ' + sound);
+        const currentPlaySoundWord = createAudioOnCard(sound);
+        currentPlaySoundWord.play();
+    }
+
+}
+
+function checkСorrectlyPushCard(idCard) {
+
+    if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
+        console.log('correct ');
+        playResultContainer.appendChild(createStarsForResult('star-win'));
+        state.currentCards.pop();
+        state.currentCardsId.pop();
+        state.currentCardsAudio.pop();
+        if (state.currentCardsAudio.length > 0) {
+            const currentPlaySoundWord = createAudioOnCard(state.currentCardsAudio[state.currentCardsAudio.length - 1]);
+            currentPlaySoundWord.play();
+        } else {
+            finishGame();
+        }
+    } else {
+        console.log('wrong ');
+        playResultContainer.appendChild(createStarsForResult('star'));
+        state.NumberWrongAnswer += 1;
+        // createStarsForResult('star');
+    }
+    console.log('card ' + state.currentCards);
+    console.log('id ' + state.currentCardsId);
+    console.log('Audio ' + state.currentCardsAudio);
+}
+
+function finishGame() {
+    console.log('finish ');
+    cardsContainer.classList.add('none');
+    winContainer.classList.remove('none');
+
+
 }
 
 function setMainPage() {
@@ -68,6 +133,11 @@ function createRandomData(item) {
     const numbers = [...Array(item).keys()]
         .sort(() => Math.random() - 0.5);
     return numbers;
+};
+
+function createAudioOnCard(sound) {
+    const audio = new Audio(`assets/${sound}`);
+    return audio;
 };
 
 //Event Listeners
@@ -101,9 +171,15 @@ function createRandomData(item) {
     })
 })();
 
+(function initializationStartGameButton() {
+    startGameButton.addEventListener('click', () => {
+        StartGame();
+    })
+})();
+
 
 // createMainPage();
 // getState();
 // setEventHeaderTitleButton();
 
-export { openCardsSingleCategories, setMainPage, closeMenu };
+export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard };

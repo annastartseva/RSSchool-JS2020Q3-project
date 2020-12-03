@@ -1,4 +1,4 @@
-import { openCardsSingleCategories, setMainPage, closeMenu } from './index.js';
+import { openCardsSingleCategories, setMainPage, closeMenu, createAudioOnCard, checkСorrectlyPushCard } from './index.js';
 
 
 function createCategoriesCard(categories, imageCategoriesName, state) {
@@ -120,26 +120,39 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
 
         fragment.appendChild(card);
 
+
         rollButtonCardFront.addEventListener('click', () => {
             cardFront.classList.add('front-rotate');
             cardBack.classList.add('back-rotate');
-        })
+        });
 
         card.addEventListener('mouseleave', () => {
             cardFront.classList.remove('front-rotate');
             cardBack.classList.remove('back-rotate');
+        });
+
+        card.addEventListener('click', () => {
+            if (state.train === false) {
+                console.log("id " + idCard);
+                state.playLastPushCardId = idCard;
+                checkСorrectlyPushCard(idCard);
+            }
         })
-
-        // card.addEventListener('click', () => {
-        //     if (state.train === false) {
-
-        //     }
-        // })
 
         soundCardFront.addEventListener('click', () => {
-            const myAudio = new Audio(`assets/${categories[idCard].audioSrc}`);
-            myAudio.play();
-        })
+            const cardSound = createAudioOnCard(categories[idCard].audioSrc);
+            cardSound.play();
+        });
+
+        imageCardFront.addEventListener('click', () => {
+            const cardSound = createAudioOnCard(categories[idCard].audioSrc);
+            if (state.train === true) { cardSound.play() };
+        });
+
+        titleCardFront.addEventListener('click', () => {
+            const cardSound = createAudioOnCard(categories[idCard].audioSrc);
+            cardSound.play();
+        });
 
     }
     return fragment;
@@ -177,9 +190,17 @@ function createMenuList(categories, menu) {
         });
     }
     return fragment;
+}
 
-
+function createStarsForResult(item) {
+    const star = document.createElement('div');
+    star.classList.add(item);
+    return star;
 
 }
 
-export { createCategoriesCard, createCardsSingleCategories, createMenuList };
+
+
+
+
+export { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult };
