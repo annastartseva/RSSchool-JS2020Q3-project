@@ -130,10 +130,17 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
             cardBack.classList.remove('back-rotate');
         })
 
+        // card.addEventListener('click', () => {
+        //     if (state.train === false) {
+
+        //     }
+        // })
+
         soundCardFront.addEventListener('click', () => {
             const myAudio = new Audio(`assets/${categories[idCard].audioSrc}`);
             myAudio.play();
         })
+
     }
     return fragment;
 }

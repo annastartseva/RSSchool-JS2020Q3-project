@@ -43,7 +43,6 @@ a {
     width: 55px;
     height: 45px;
     position: relative;
-    z-index: 7;
     cursor: pointer;
     transition: all 0.5s ease-in-out;
 }
@@ -106,7 +105,7 @@ a {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     z-index: 6;
     width: 40rem;
     /* height: calc(100vh + 20px); */
@@ -124,7 +123,7 @@ a {
     box-shadow: 2px 2px 5px rgb(48, 48, 48);
 }
 
-.show {
+.menu.show {
     left: 0;
     bottom: 0;
 }
@@ -260,6 +259,67 @@ a {
 }
 
 
+/* Main  */
+
+.main {
+    padding-top: 3rem;
+}
+
+
+/* game begin button */
+
+.panel_start-game {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 8;
+    width: 10rem;
+    height: 15rem;
+    padding: 9rem 0px 5rem;
+    right: -15rem;
+    top: 20rem;
+    background: rgb(188, 144, 186);
+    transition: all 0.5s ease-in-out;
+    box-shadow: -2px 2px 5px rgb(48, 48, 48);
+    border-radius: 19px 0 0 19px;
+}
+
+.panel_start-game.open {
+    right: 0;
+}
+
+
+/* Container for star */
+
+.play__result {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 2rem;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.star-win {
+    background-image: url("assets/img/star-win.png");
+}
+
+.star {
+    background-image: url("assets/img/star.png");
+}
+
+.star-win,
+.star {
+    height: 3rem;
+    width: 3rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 0.5rem;
+}
+
+
 /* Cards properties */
 
 .cards__wrapper {
@@ -269,7 +329,7 @@ a {
     align-items: center;
     column-gap: 9rem;
     row-gap: 4rem;
-    margin: 5rem 8rem;
+    margin: 2rem 8rem 3rem;
 }
 
 .cards__wrapper.all_categories.none,
@@ -459,15 +519,20 @@ a {
     transition: all 0.2s ease;
 }
 
-.footer__wrapper {
-    display: flex;
-    /* flex-direction: row; */
-    align-items: center;
-    justify-content: space-between;
+
+/* footer */
+
+.footer {
     width: 85%;
     height: 4.5rem;
     max-width: 155rem;
-    margin: 4rem auto 2rem;
+    margin: 4rem auto 1rem;
+}
+
+.footer__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .footer__link {
