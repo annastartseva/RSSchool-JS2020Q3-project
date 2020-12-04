@@ -23,8 +23,13 @@
                 <div class="burger__item"></div>
             </nav>
             <ul class="menu">
-                <!-- <li class="menu__item" number="0">Action</li> -->
+                <!-- <li class="menu__item" number="0">
+                    <i class="menu__link food">
+
+                    </i> Action
+                </li> -->
             </ul>
+            <div class="blackout"></div>
             <h1 class="header__title">Funny English</h1>
             <!-- <div class="header__title">Funny English</div> -->
             <div class="header__switch">
@@ -41,15 +46,21 @@
     <main class="main">
         <div class="panel_start-game">
             <div class="start_game"></div>
+            <div class="repeat_audio none"></div>
         </div>
         <div class="play__result">
             <!-- <div class="star-win"></div>
             <div class="star"></div> -->
         </div>
-        <div class="cards__wrapper all_categories " id="categories_container"> </div>
+        <div class="cards__wrapper all_categories" id="categories_container"> </div>
         <div class="cards__wrapper single_categories none " id="cards_container"></div>
         <div class="win none">
             <img class="win__image" src="./assets/img/win.png" alt="You WIN!">
+        </div>
+        <div class="failure none">
+            <div class="failure__title "> Oops! Try again!</div>
+            <img class="failure__image" src="./assets/img/failure.png" alt="You WIN!">
+            <div class="failure__mistake "></div>
         </div>
     </main>
     <footer class="footer">
@@ -73,6 +84,7 @@
     <script src="cards.js" type="module"></script>
     <script src="index.js" type="module"></script>
     <script src="createDom.js" type="module"></script>
+
 </body>
 
 </html>

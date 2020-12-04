@@ -1,19 +1,29 @@
 import cards from './cards.js';
 import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult } from './createDom.js';
-import { toggleTrainPlayMode, switchStateMenu } from './switch.js';
+import { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle } from './switch.js';
 
 const categoriesContainer = document.getElementById('categories_container'); //Main page container
 const cardsContainer = document.getElementById('cards_container'); //Page container
 const menu = document.querySelector('.menu');
+const menuBlackout = document.querySelector('.blackout');
 const titleHeaderButton = document.querySelector('.header__title');
 const burgerMenuButton = document.querySelector('.header__burger');
 const body = document.querySelector('.body');
 const mainMenu = document.querySelector('.menu');
 const startGameButton = document.querySelector('.start_game');
+const repeatAudioButton = document.querySelector('.repeat_audio');
 const playResultContainer = document.querySelector('.play__result');
 const winContainer = document.querySelector('.win');
+const failureContainer = document.querySelector('.failure');
+const failureMistakes = document.querySelector('.failure__mistake');
 
 const startCountingThematicCardsInArrayCards = 2;
+
+const soundCorrect = createAudioOnCard('audio/won.mp3');
+const soundFail = createAudioOnCard('audio/fail.mp3');
+const soundWon = createAudioOnCard('audio/won_game.mp3');
+const soundGameOver = createAudioOnCard('audio/game_over.mp3');
+
 const state = {
     train: true,
     currentPage: null,
@@ -21,29 +31,31 @@ const state = {
     currentCards: [],
     currentCardsId: [],
     currentCardsAudio: [],
-    NumberWrongAnswer: 0
+    NumberWrongAnswer: 0,
+    gameStart: false
 };
 
-(function createMainPage() {
-    const categories = cards[0];
-    const imageCategoriesName = cards[1];
-    console.log('categories ' + categories);
+function buildPage() {
+    createMainPage(cards[0], cards[1])
+    createMenu(cards[0]);
+    createEventListenerForObject();
+}
+
+
+const createMenu = (categories) => { menu.appendChild(createMenuList(categories, menu)) };
+
+const createMainPage = (categories, imageCategoriesName) => {
     state.currentPage = 'main';
     categoriesContainer.appendChild(createCategoriesCard(categories, imageCategoriesName, state));
-})();
-
-(function createMenu() {
-    const categories = cards[0];
-
-    menu.appendChild(createMenuList(categories, menu));
-})();
+};
 
 function openCardsSingleCategories(index) {
     if (cardsContainer.firstChild) {
         while (cardsContainer.firstChild) {
             cardsContainer.removeChild(cardsContainer.firstChild);
         }
-    }
+    };
+    stopGame();
     categoriesContainer.classList.add('none');
     cardsContainer.classList.remove('none');
     state.currentPage = 'theme';
@@ -57,14 +69,20 @@ function openCardsSingleCategories(index) {
 
 function StartGame() {
     if (state.currentPage === 'main') return;
+    state.gameStart = true;
     const categories = state.currentCategories;
     const arrayRandomNumber = createRandomData(categories.length);
-    for (let i = 0; i < categories.length; i++) {
-        const idCard = arrayRandomNumber[i];
-        state.currentCards[i] = categories[idCard].word;
-        state.currentCardsId[i] = idCard;
-        state.currentCardsAudio[i] = categories[idCard].audioSrc;
-    }
+
+    categories.forEach(function(element, index) {
+        // for (let i = 0; i < categories.length; i++) {
+        const idCard = arrayRandomNumber[index];
+        state.currentCards[index] = categories[idCard].word;
+        state.currentCardsId[index] = idCard;
+        state.currentCardsAudio[index] = categories[idCard].audioSrc;
+    });
+
+    startGameButtonToggle(startGameButton, repeatAudioButton);
+
     console.log("start game");
     console.log('card ' + state.currentCards);
     console.log('id ' + state.currentCardsId);
@@ -73,17 +91,26 @@ function StartGame() {
         const arrayOfSound = state.currentCardsAudio;
         const sound = arrayOfSound[arrayOfSound.length - 1];
         console.log('sound ' + sound);
-        const currentPlaySoundWord = createAudioOnCard(sound);
-        currentPlaySoundWord.play();
+        state.currentPlaySoundWord = createAudioOnCard(sound);
+        state.currentPlaySoundWord.play();
     }
-
 }
 
-function checkСorrectlyPushCard(idCard) {
+function stopGame() {
+    if (state.gameStart === true) {
+        startGameButtonToggle(startGameButton, repeatAudioButton);
+        state.gameStart = false;
+        clearStarsContainer();
+    };
+}
+
+function checkСorrectlyPushCard(idCard, card) {
 
     if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
         console.log('correct ');
+        card.classList.add('correct');
         playResultContainer.appendChild(createStarsForResult('star-win'));
+        soundCorrect.play();
         state.currentCards.pop();
         state.currentCardsId.pop();
         state.currentCardsAudio.pop();
@@ -97,6 +124,7 @@ function checkСorrectlyPushCard(idCard) {
         console.log('wrong ');
         playResultContainer.appendChild(createStarsForResult('star'));
         state.NumberWrongAnswer += 1;
+        soundFail.play();
         // createStarsForResult('star');
     }
     console.log('card ' + state.currentCards);
@@ -106,18 +134,37 @@ function checkСorrectlyPushCard(idCard) {
 
 function finishGame() {
     console.log('finish ');
-    cardsContainer.classList.add('none');
-    winContainer.classList.remove('none');
+    state.gameStart = false;
+    startGameButtonToggle(startGameButton, repeatAudioButton);
+    clearStarsContainer();
+    if (state.NumberWrongAnswer === 0) {
+        cardsContainer.classList.add('none');
+        winContainer.classList.remove('none');
+        soundWon.play();
 
+    } else {
+        failureMistakes.innerHTML = `You have ${state.NumberWrongAnswer} mistakes`;
+        cardsContainer.classList.add('none');
+        failureContainer.classList.remove('none');
+        soundGameOver.play();
+    }
 
-}
+    setTimeout(() => {
+        setMainPage();
+        winContainer.classList.add('none');
+        failureContainer.classList.add('none');
+    }, 3000);
 
-function setMainPage() {
+    state.NumberWrongAnswer = 0;
+};
+
+const setMainPage = () => {
     if (state.currentPage !== 'main') {
         categoriesContainer.classList.remove('none');
 
         cardsContainer.classList.add('none');
         state.currentPage = 'main';
+        stopGame();
 
         while (cardsContainer.firstChild) {
             cardsContainer.removeChild(cardsContainer.firstChild);
@@ -125,11 +172,11 @@ function setMainPage() {
     }
 };
 
-function closeMenu() {
-    switchStateMenu(body, mainMenu, burgerMenuButton);
+const closeMenu = () => {
+    switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout);
 };
 
-function createRandomData(item) {
+const createRandomData = (item) => {
     const numbers = [...Array(item).keys()]
         .sort(() => Math.random() - 0.5);
     return numbers;
@@ -140,8 +187,23 @@ function createAudioOnCard(sound) {
     return audio;
 };
 
+const clearStarsContainer = () => {
+    while (playResultContainer.firstChild) {
+        playResultContainer.removeChild(playResultContainer.firstChild);
+    }
+}
+
 //Event Listeners
-(function getState() {
+const createEventListenerForObject = () => {
+    getState();
+    setEventHeaderTitleButton();
+    setBurgerMenuProperty();
+    setMenuBlackoutProperty();
+    initializationStartGameButton();
+    initializationReloudAudioButton();
+};
+
+const getState = () => {
     const toggleSwitch = document.getElementById('switch__id');
 
     toggleSwitch.addEventListener('change', function() {
@@ -157,27 +219,40 @@ function createAudioOnCard(sound) {
         console.log('state.train ' + state.train);
         console.log('state.currentCards ' + state.currentCards);
     })
-})();
+};
 
-(function setEventHeaderTitleButton() {
+const setEventHeaderTitleButton = () => {
     titleHeaderButton.addEventListener('click', () => {
         setMainPage();
     })
-})();
+};
 
-(function setBurgerMenuProperty() {
+const setBurgerMenuProperty = () => {
     burgerMenuButton.addEventListener('click', () => {
-        switchStateMenu(body, mainMenu, burgerMenuButton);
+        switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout);
     })
-})();
+};
 
-(function initializationStartGameButton() {
+const setMenuBlackoutProperty = () => {
+    menuBlackout.addEventListener('click', () => {
+        switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout);
+    })
+};
+
+const initializationStartGameButton = () => {
     startGameButton.addEventListener('click', () => {
         StartGame();
     })
-})();
+};
 
+const initializationReloudAudioButton = () => {
+    repeatAudioButton.addEventListener('click', () => {
+        const currentPlaySoundWord = createAudioOnCard(state.currentCardsAudio[state.currentCardsAudio.length - 1]);
+        currentPlaySoundWord.play();
+    })
+};
 
+buildPage();
 // createMainPage();
 // getState();
 // setEventHeaderTitleButton();
