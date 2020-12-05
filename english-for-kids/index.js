@@ -1,15 +1,16 @@
 import cards from './cards.js';
 import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult } from './createDom.js';
-import { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle } from './switch.js';
+import { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle, changeActiveMenuItem } from './switch.js';
+
+const body = document.querySelector('.body');
+const burgerMenuButton = document.querySelector('.header__burger');
+const titleHeaderButton = document.querySelector('.header__title');
+const mainMenu = document.querySelector('.menu');
 
 const categoriesContainer = document.getElementById('categories_container'); //Main page container
 const cardsContainer = document.getElementById('cards_container'); //Page container
-const menu = document.querySelector('.menu');
+
 const menuBlackout = document.querySelector('.blackout');
-const titleHeaderButton = document.querySelector('.header__title');
-const burgerMenuButton = document.querySelector('.header__burger');
-const body = document.querySelector('.body');
-const mainMenu = document.querySelector('.menu');
 const startGameButton = document.querySelector('.start_game');
 const repeatAudioButton = document.querySelector('.repeat_audio');
 const playResultContainer = document.querySelector('.play__result');
@@ -18,6 +19,7 @@ const failureContainer = document.querySelector('.failure');
 const failureMistakes = document.querySelector('.failure__mistake');
 
 const startCountingThematicCardsInArrayCards = 2;
+const mainMenuItemId = cards[0].length;
 
 const soundCorrect = createAudioOnCard('audio/won.mp3');
 const soundFail = createAudioOnCard('audio/fail.mp3');
@@ -28,6 +30,7 @@ const state = {
     train: true,
     currentPage: null,
     currentCategories: null,
+    currentCategoriesId: null,
     currentCards: [],
     currentCardsId: [],
     currentCardsAudio: [],
@@ -42,7 +45,7 @@ function buildPage() {
 }
 
 
-const createMenu = (categories) => { menu.appendChild(createMenuList(categories, menu)) };
+const createMenu = (categories) => { mainMenu.appendChild(createMenuList(categories, state, mainMenuItemId)) };
 
 const createMainPage = (categories, imageCategoriesName) => {
     state.currentPage = 'main';
@@ -56,11 +59,13 @@ function openCardsSingleCategories(index) {
         }
     };
     stopGame();
+    changeActiveMenuItem(state, index);
     categoriesContainer.classList.add('none');
     cardsContainer.classList.remove('none');
     state.currentPage = 'theme';
     const categories = cards[index + startCountingThematicCardsInArrayCards];
     state.currentCategories = categories;
+    state.currentCategoriesId = index;
     const arrayRandomNumber = createRandomData(categories.length);
     // console.log('arrayRandomNumber ' + arrayRandomNumber);
 
@@ -150,7 +155,7 @@ function finishGame() {
     }
 
     setTimeout(() => {
-        setMainPage();
+        setMainPage(mainMenuItemId);
         winContainer.classList.add('none');
         failureContainer.classList.add('none');
     }, 3000);
@@ -158,13 +163,14 @@ function finishGame() {
     state.NumberWrongAnswer = 0;
 };
 
-const setMainPage = () => {
+const setMainPage = (index) => {
     if (state.currentPage !== 'main') {
         categoriesContainer.classList.remove('none');
 
         cardsContainer.classList.add('none');
         state.currentPage = 'main';
         stopGame();
+        changeActiveMenuItem(state, index);
 
         while (cardsContainer.firstChild) {
             cardsContainer.removeChild(cardsContainer.firstChild);
@@ -223,7 +229,9 @@ const getState = () => {
 
 const setEventHeaderTitleButton = () => {
     titleHeaderButton.addEventListener('click', () => {
-        setMainPage();
+        const mainPageIndex = cards[0].length;
+        setMainPage(mainPageIndex);
+
     })
 };
 

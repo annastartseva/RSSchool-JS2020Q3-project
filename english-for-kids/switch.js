@@ -4,7 +4,7 @@ function toggleTrainPlayMode(state, cardsContainer) {
     const resultContainer = document.querySelector('.play__result');
     const panelStartGame = document.querySelector('.panel_start-game');
 
-    console.log('state.currentPage ' + state.currentPage);
+    // console.log('state.currentPage ' + state.currentPage);
 
     modeToggleOnCards.forEach(item => item.classList.toggle('play'));
     resultContainer.classList.toggle('none');
@@ -34,4 +34,17 @@ function startGameButtonToggle(startGameButton, repeatAudioButton) {
     repeatAudioButton.classList.toggle('none');
 };
 
-export { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle };
+function changeActiveMenuItem(state, index) {
+
+    // console.log('!!! state.currentCategoriesId ' + state.currentCategoriesId);
+    // console.log('!!! index ' + index);
+    const currentMenuItem = document.getElementById(`${state.currentCategoriesId}`);
+    currentMenuItem.classList.remove('active');
+    const newMenuItem = document.getElementById(`${index}`);
+    newMenuItem.classList.add('active');
+    state.currentCategoriesId = index;
+
+}
+
+
+export { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle, changeActiveMenuItem };

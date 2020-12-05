@@ -20,7 +20,7 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
         }
         cardTitle.classList.add('cards__category-title');
 
-        card.id = `${index}`;
+        // card.id = `${index}`;
 
         imageInCategories.setAttribute("style", `background-image: url(assets/img/${imageCategoriesName[index]});`);
 
@@ -42,6 +42,7 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
 
         card.addEventListener('click', () => {
             openCardsSingleCategories(index);
+            console.log('index card' + index);
 
         });
     })
@@ -158,23 +159,29 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
     return fragment;
 }
 
-function createMenuList(categories, menu) {
+function createMenuList(categories, state, mainMenuItemId) {
     const occupiedItemUnderMain = 1;
+
+    state.currentCategoriesId = mainMenuItemId;
+
     const fragment = document.createDocumentFragment();
 
     const menuMainItem = document.createElement('li');
     const menuMainIcon = document.createElement('i');
     menuMainItem.classList.add('menu__item', 'active');
     menuMainIcon.classList.add('menu__link', 'main');
-    menuMainItem.setAttribute('number', '0')
+    // menuMainItem.setAttribute('number', '0')
     menuMainIcon.innerHTML = 'Main Page';
+
+    menuMainItem.id = `${mainMenuItemId}`;
 
     menuMainItem.appendChild(menuMainIcon);
     fragment.appendChild(menuMainItem);
 
     menuMainItem.addEventListener('click', () => {
-        setMainPage();
+        setMainPage(mainMenuItemId);
         closeMenu();
+        console.log('mainMenuItemId ' + mainMenuItemId);
     });
 
     categories.forEach(function(element, index) {
@@ -184,8 +191,10 @@ function createMenuList(categories, menu) {
         menuItem.classList.add('menu__item');
         menuIcon.classList.add('menu__link', `${element.replace(/\s+/g, '').toLowerCase()}`);
 
-        menuItem.setAttribute('number', `${index+occupiedItemUnderMain}`)
+        // menuItem.setAttribute('number', `${index+occupiedItemUnderMain}`)
         menuIcon.innerHTML = `${element}`;
+
+        menuItem.id = `${index}`;
 
         menuItem.appendChild(menuIcon);
         fragment.appendChild(menuItem);
@@ -193,6 +202,7 @@ function createMenuList(categories, menu) {
         menuItem.addEventListener('click', () => {
             openCardsSingleCategories(index);
             closeMenu();
+            console.log('index ' + index);
         });
     });
 
