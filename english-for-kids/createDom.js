@@ -1,4 +1,4 @@
-import { openCardsSingleCategories, setMainPage, closeMenu, createAudioOnCard, checkСorrectlyPushCard } from './index.js';
+import { openCardsSingleCategories, setMainPage, closeMenu, createAudioOnCard, checkСorrectlyPushCard, setStatisticPage } from './index.js';
 
 
 function createCategoriesCard(categories, imageCategoriesName, state) {
@@ -159,7 +159,7 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
     return fragment;
 }
 
-function createMenuList(categories, state, mainMenuItemId) {
+function createMenuList(categories, state, mainMenuItemId, statisticItemId) {
     const occupiedItemUnderMain = 1;
 
     state.currentCategoriesId = mainMenuItemId;
@@ -206,6 +206,24 @@ function createMenuList(categories, state, mainMenuItemId) {
         });
     });
 
+    const menuStatisticItem = document.createElement('li');
+    const menuStatisticIcon = document.createElement('i');
+    menuStatisticItem.classList.add('menu__item');
+    menuStatisticIcon.classList.add('menu__link', 'statistics');
+    // menuMainItem.setAttribute('number', '0')
+    menuStatisticIcon.innerHTML = 'Statistics';
+
+    menuStatisticItem.id = `${statisticItemId}`;
+
+    menuStatisticItem.appendChild(menuStatisticIcon);
+    fragment.appendChild(menuStatisticItem);
+
+    menuStatisticItem.addEventListener('click', () => {
+        setStatisticPage(statisticItemId);
+        closeMenu();
+        console.log('statisticItemId ' + statisticItemId);
+    });
+
     return fragment;
 }
 
@@ -216,8 +234,55 @@ function createStarsForResult(item) {
 
 }
 
+function createStatisticTable(cards, startCountingThematicCardsInArrayCards) {
+    console.log('createStatisticTable ');
+    const fragment = document.createDocumentFragment();
+    const categories = cards[0];
+
+    for (let j = 0; j < categories.length; j++) {
+        // categories.forEach(function(element, index) {
+        // console.log('index ' + index);
+        // console.log('element ' + element);
+        const categoriesItem = cards[j + startCountingThematicCardsInArrayCards];
+
+        console.log('categoriesItem.length ' + categoriesItem.length);
+        for (let i = 0; i < categoriesItem.length; i++) {
+
+            const tableTR = document.createElement('tr');
+            tableTR.classList.add('table__row');
+
+            const tableTDCategories = document.createElement('td');
+            const tableTDWord = document.createElement('td');
+            const tableTDTranslation = document.createElement('td');
+            tableTDCategories.classList.add('table__column');
+            tableTDWord.classList.add('table__column');
+            tableTDTranslation.classList.add('table__column');
+            console.log('categories[j] ' + categories[j]);
+            console.log('categoriesItem[i].word ' + categoriesItem[i].word);
+            console.log('categoriesItem[i].translation ' + categoriesItem[i].translation);
+
+            tableTDCategories.innerHTML = `${categories[j]}`;
+            tableTDWord.innerHTML = `${categoriesItem[i].word}`;
+            tableTDTranslation.innerHTML = `${categoriesItem[i].translation}`;
+            // categoriesItem.forEach(function(item, id) {
 
 
 
+            // console.log('categories[id].word ' + categoriesItem[i].word);
 
-export { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult };
+            tableTR.appendChild(tableTDCategories);
+            tableTR.appendChild(tableTDWord);
+            tableTR.appendChild(tableTDTranslation);
+
+            console.log('tableTR ' + tableTR);
+            fragment.appendChild(tableTR);
+            // });
+        }
+
+        // });
+    }
+    return fragment;
+}
+
+
+export { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTable };

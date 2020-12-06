@@ -1,5 +1,5 @@
 import cards from './cards.js';
-import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult } from './createDom.js';
+import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTable } from './createDom.js';
 import { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle, changeActiveMenuItem } from './switch.js';
 
 const body = document.querySelector('.body');
@@ -9,7 +9,9 @@ const mainMenu = document.querySelector('.menu');
 
 const categoriesContainer = document.getElementById('categories_container'); //Main page container
 const cardsContainer = document.getElementById('cards_container'); //Page container
+const statisticContainer = document.querySelector('.statistic__container');
 
+const tableStatistic = document.querySelector('.table');
 const menuBlackout = document.querySelector('.blackout');
 const startGameButton = document.querySelector('.start_game');
 const repeatAudioButton = document.querySelector('.repeat_audio');
@@ -20,6 +22,7 @@ const failureMistakes = document.querySelector('.failure__mistake');
 
 const startCountingThematicCardsInArrayCards = 2;
 const mainMenuItemId = cards[0].length;
+const statisticItemId = cards[0].length + 1;
 
 const soundCorrect = createAudioOnCard('audio/won.mp3');
 const soundFail = createAudioOnCard('audio/fail.mp3');
@@ -42,15 +45,19 @@ function buildPage() {
     createMainPage(cards[0], cards[1])
     createMenu(cards[0]);
     createEventListenerForObject();
+    createStatisticPage();
 }
 
 
-const createMenu = (categories) => { mainMenu.appendChild(createMenuList(categories, state, mainMenuItemId)) };
+const createMenu = (categories) => { mainMenu.appendChild(createMenuList(categories, state, mainMenuItemId, statisticItemId)) };
 
 const createMainPage = (categories, imageCategoriesName) => {
     state.currentPage = 'main';
     categoriesContainer.appendChild(createCategoriesCard(categories, imageCategoriesName, state));
 };
+
+const createStatisticPage = () => { tableStatistic.appendChild(createStatisticTable(cards, startCountingThematicCardsInArrayCards)) };
+
 
 function openCardsSingleCategories(index) {
     if (cardsContainer.firstChild) {
@@ -179,14 +186,27 @@ const setMainPage = (index) => {
         stopGame();
         changeActiveMenuItem(state, index);
 
-        while (cardsContainer.firstChild) {
-            cardsContainer.removeChild(cardsContainer.firstChild);
-        }
+        clearCardsContainer();
     }
+};
+
+const setStatisticPage = (index) => {
+    categoriesContainer.classList.add('none');
+    cardsContainer.classList.add('none');
+    statisticContainer.classList.remove('none');
+    clearCardsContainer();
+    changeActiveMenuItem(state, index);
+
 };
 
 const closeMenu = () => {
     switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout);
+};
+
+const clearCardsContainer = () => {
+    while (cardsContainer.firstChild) {
+        cardsContainer.removeChild(cardsContainer.firstChild);
+    }
 };
 
 const createRandomData = (item) => {
@@ -272,4 +292,4 @@ buildPage();
 // getState();
 // setEventHeaderTitleButton();
 
-export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard, stopGame };
+export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard, stopGame, setStatisticPage };

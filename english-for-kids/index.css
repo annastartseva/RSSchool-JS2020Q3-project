@@ -212,6 +212,10 @@ i {
     background-image: url(./assets/img/colors.png);
 }
 
+.menu__link.statistics:before {
+    background-image: url(./assets/img/statistics.png);
+}
+
 
 /* TITLE */
 
@@ -672,6 +676,47 @@ i {
 .failure__image {
     height: 70%;
     margin: 2rem 0;
+}
+
+
+/* Statistic table */
+
+.statistic__container {
+    display: flex;
+    justify-content: center;
+}
+
+.statistic__container.none {
+    display: none;
+}
+
+.table {
+    width: 80%;
+    /* background: white; */
+    color: rgb(215, 218, 214);
+    border-spacing: 1px;
+}
+
+.table__row.table_title,
+.table__column.table_title {
+    background: rgba(56, 51, 90, 0.4);
+    padding: 0.2rem 1rem;
+    /* Поля вокруг текста */
+    font-family: "Inter", Verdana, sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+}
+
+.table__row,
+.table__column {
+    background: rgba(115, 106, 180, 0.4);
+    padding: 0.5rem 1rem;
+    /* Поля вокруг текста */
+    font-family: "Inter", Verdana, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
 }
 
 
