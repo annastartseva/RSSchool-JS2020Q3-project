@@ -1,13 +1,16 @@
+import { stopGame } from './index.js';
+
 function toggleTrainPlayMode(state, cardsContainer) {
     console.log('function setTrainState');
     const modeToggleOnCards = document.querySelectorAll('.cards__mode');
-    const resultContainer = document.querySelector('.play__result');
+    // const resultContainer = document.querySelector('.play__result');
     const panelStartGame = document.querySelector('.panel_start-game');
 
+    stopGame();
     // console.log('state.currentPage ' + state.currentPage);
 
     modeToggleOnCards.forEach(item => item.classList.toggle('play'));
-    resultContainer.classList.toggle('none');
+    // resultContainer.classList.toggle('none');
     panelStartGame.classList.toggle('open');
 
     if (cardsContainer.firstChild) {

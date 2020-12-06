@@ -88,10 +88,10 @@ function StartGame() {
 
     startGameButtonToggle(startGameButton, repeatAudioButton);
 
-    console.log("start game");
-    console.log('card ' + state.currentCards);
-    console.log('id ' + state.currentCardsId);
-    console.log('Audio ' + state.currentCardsAudio);
+    // console.log("start game");
+    // console.log('card ' + state.currentCards);
+    // console.log('id ' + state.currentCardsId);
+    // console.log('Audio ' + state.currentCardsAudio);
     if (state.currentCardsAudio.length > 0) {
         const arrayOfSound = state.currentCardsAudio;
         const sound = arrayOfSound[arrayOfSound.length - 1];
@@ -110,31 +110,38 @@ function stopGame() {
 }
 
 function checkСorrectlyPushCard(idCard, card) {
-
-    if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
-        console.log('correct ');
-        card.classList.add('correct');
-        playResultContainer.appendChild(createStarsForResult('star-win'));
-        soundCorrect.play();
-        state.currentCards.pop();
-        state.currentCardsId.pop();
-        state.currentCardsAudio.pop();
-        if (state.currentCardsAudio.length > 0) {
-            const currentPlaySoundWord = createAudioOnCard(state.currentCardsAudio[state.currentCardsAudio.length - 1]);
-            currentPlaySoundWord.play();
+    if (state.gameStart === true) {
+        if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
+            console.log('correct ');
+            card.classList.add('correct');
+            playResultContainer.appendChild(createStarsForResult('star-win'));
+            soundCorrect.play();
+            state.currentCards.pop();
+            state.currentCardsId.pop();
+            state.currentCardsAudio.pop();
+            if (state.currentCardsAudio.length > 0) {
+                const currentPlaySoundWord = createAudioOnCard(state.currentCardsAudio[state.currentCardsAudio.length - 1]);
+                currentPlaySoundWord.play();
+            } else {
+                finishGame();
+            }
         } else {
-            finishGame();
+            console.log('wrong ');
+            playResultContainer.appendChild(createStarsForResult('star'));
+            state.NumberWrongAnswer += 1;
+            soundFail.play();
+            // createStarsForResult('star');
         }
     } else {
-        console.log('wrong ');
-        playResultContainer.appendChild(createStarsForResult('star'));
-        state.NumberWrongAnswer += 1;
-        soundFail.play();
-        // createStarsForResult('star');
+        startGameButton.classList.add('light');
+        setTimeout(() => {
+            startGameButton.classList.remove('light');
+        }, 1000);
     }
-    console.log('card ' + state.currentCards);
-    console.log('id ' + state.currentCardsId);
-    console.log('Audio ' + state.currentCardsAudio);
+
+    // console.log('card ' + state.currentCards);
+    // console.log('id ' + state.currentCardsId);
+    // console.log('Audio ' + state.currentCardsAudio);
 }
 
 function finishGame() {
@@ -265,4 +272,4 @@ buildPage();
 // getState();
 // setEventHeaderTitleButton();
 
-export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard };
+export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard, stopGame };
