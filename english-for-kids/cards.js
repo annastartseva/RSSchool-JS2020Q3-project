@@ -32,15 +32,15 @@ const cards = [
             audioSrc: 'audio/read.mp3'
         },
         {
-            word: 'fly',
-            translation: 'летать',
-            image: 'img/fly.jpg',
-            audioSrc: 'audio/fly.mp3'
+            word: 'walk',
+            translation: 'гулять',
+            image: 'img/act_walk.jpg',
+            audioSrc: 'audio/walk.mp3'
         },
         {
             word: 'hug',
             translation: 'обнимать',
-            image: 'img/hug.jpg',
+            image: 'img/act_hug.jpg',
             audioSrc: 'audio/hug.mp3'
         },
         {

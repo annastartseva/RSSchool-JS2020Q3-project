@@ -1,12 +1,11 @@
-import { openCardsSingleCategories, setMainPage, closeMenu } from './index.js';
+import { openCardsSingleCategories, setMainPage, closeMenu, createAudioOnCard, checkСorrectlyPushCard } from './index.js';
 
 
 function createCategoriesCard(categories, imageCategoriesName, state) {
 
     const fragment = document.createDocumentFragment();
 
-    for (let i = 0; i < categories.length; i++) {
-
+    categories.forEach(function(element, index) {
         const card = document.createElement('div');
         const imageInCategories = document.createElement('div');
         const gameMode = document.createElement('div');
@@ -21,20 +20,19 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
         }
         cardTitle.classList.add('cards__category-title');
 
-        card.id = `${i}`;
+        // card.id = `${index}`;
 
-        // imageInCategories.setAttribute("src", "assets/img/animal1.jpg");
-        imageInCategories.setAttribute("style", `background-image: url(assets/img/${imageCategoriesName[i]});`);
+        imageInCategories.setAttribute("style", `background-image: url(assets/img/${imageCategoriesName[index]});`);
 
-        cardTitle.innerHTML = `${categories[i]}`;
+        cardTitle.innerHTML = `${element}`;
 
         card.appendChild(imageInCategories);
         card.appendChild(gameMode);
         card.appendChild(cardTitle);
 
         state.currentCards.push({
-            id: `${i}`,
-            value: `${categories[i]}`,
+            id: `${index}`,
+            value: `${element}`,
             element: card
         });
 
@@ -43,11 +41,12 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
         console.log('card ' + card);
 
         card.addEventListener('click', () => {
-            // createCardsSingleCategories(i);
-            openCardsSingleCategories(i);
+            openCardsSingleCategories(index);
+            console.log('index card' + index);
 
         });
-    }
+    })
+
     return fragment;
 
 }
@@ -56,8 +55,9 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
     const fragment = document.createDocumentFragment();
     console.log('categories ' + categories);
     console.log('categories.length ' + categories.length);
-    for (let i = 0; i < categories.length; i++) {
-        const idCard = arrayRandomNumber[i];
+
+    categories.forEach(function(element, index) {
+        const idCard = arrayRandomNumber[index];
 
         const card = document.createElement('div');
         const cardFront = document.createElement('div');
@@ -120,66 +120,104 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
 
         fragment.appendChild(card);
 
+
         rollButtonCardFront.addEventListener('click', () => {
             cardFront.classList.add('front-rotate');
             cardBack.classList.add('back-rotate');
-        })
+        });
 
         card.addEventListener('mouseleave', () => {
             cardFront.classList.remove('front-rotate');
             cardBack.classList.remove('back-rotate');
+        });
+
+        card.addEventListener('click', () => {
+            if (state.train === false) {
+                console.log("id " + idCard);
+                state.playLastPushCardId = idCard;
+                checkСorrectlyPushCard(idCard, card);
+
+            }
         })
-
-        // card.addEventListener('click', () => {
-        //     if (state.train === false) {
-
-        //     }
-        // })
 
         soundCardFront.addEventListener('click', () => {
-            const myAudio = new Audio(`assets/${categories[idCard].audioSrc}`);
-            myAudio.play();
-        })
+            const cardSound = createAudioOnCard(categories[idCard].audioSrc);
+            cardSound.play();
+        });
 
-    }
+        imageCardFront.addEventListener('click', () => {
+            const cardSound = createAudioOnCard(categories[idCard].audioSrc);
+            if (state.train === true) { cardSound.play() };
+        });
+
+        titleCardFront.addEventListener('click', () => {
+            const cardSound = createAudioOnCard(categories[idCard].audioSrc);
+            cardSound.play();
+        });
+    });
+
     return fragment;
 }
 
-function createMenuList(categories, menu) {
+function createMenuList(categories, state, mainMenuItemId) {
     const occupiedItemUnderMain = 1;
+
+    state.currentCategoriesId = mainMenuItemId;
+
     const fragment = document.createDocumentFragment();
 
     const menuMainItem = document.createElement('li');
+    const menuMainIcon = document.createElement('i');
     menuMainItem.classList.add('menu__item', 'active');
-    menuMainItem.setAttribute('number', '0')
-    menuMainItem.innerHTML = 'Main';
+    menuMainIcon.classList.add('menu__link', 'main');
+    // menuMainItem.setAttribute('number', '0')
+    menuMainIcon.innerHTML = 'Main Page';
+
+    menuMainItem.id = `${mainMenuItemId}`;
+
+    menuMainItem.appendChild(menuMainIcon);
     fragment.appendChild(menuMainItem);
 
     menuMainItem.addEventListener('click', () => {
-        setMainPage();
+        setMainPage(mainMenuItemId);
         closeMenu();
+        console.log('mainMenuItemId ' + mainMenuItemId);
     });
 
-    for (let i = 0; i < categories.length; i++) {
-
+    categories.forEach(function(element, index) {
         const menuItem = document.createElement('li');
+        const menuIcon = document.createElement('i');
 
         menuItem.classList.add('menu__item');
+        menuIcon.classList.add('menu__link', `${element.replace(/\s+/g, '').toLowerCase()}`);
 
-        menuItem.setAttribute('number', `${i+occupiedItemUnderMain}`)
-        menuItem.innerHTML = `${categories[i]}`;
+        // menuItem.setAttribute('number', `${index+occupiedItemUnderMain}`)
+        menuIcon.innerHTML = `${element}`;
 
+        menuItem.id = `${index}`;
+
+        menuItem.appendChild(menuIcon);
         fragment.appendChild(menuItem);
 
         menuItem.addEventListener('click', () => {
-            openCardsSingleCategories(i);
+            openCardsSingleCategories(index);
             closeMenu();
+            console.log('index ' + index);
         });
-    }
+    });
+
     return fragment;
+}
 
-
+function createStarsForResult(item) {
+    const star = document.createElement('div');
+    star.classList.add(item);
+    return star;
 
 }
 
-export { createCategoriesCard, createCardsSingleCategories, createMenuList };
+
+
+
+
+export { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult };
