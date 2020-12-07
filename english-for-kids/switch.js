@@ -1,16 +1,12 @@
 import { stopGame } from './index.js';
 
 function toggleTrainPlayMode(state, cardsContainer) {
-    console.log('function setTrainState');
     const modeToggleOnCards = document.querySelectorAll('.cards__mode');
-    // const resultContainer = document.querySelector('.play__result');
     const panelStartGame = document.querySelector('.panel_start-game');
 
     stopGame();
-    // console.log('state.currentPage ' + state.currentPage);
 
     modeToggleOnCards.forEach(item => item.classList.toggle('play'));
-    // resultContainer.classList.toggle('none');
     panelStartGame.classList.toggle('open');
 
     if (cardsContainer.firstChild) {
@@ -29,7 +25,6 @@ function switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout) {
     mainMenu.classList.toggle('show');
     burgerMenuButton.classList.toggle('open');
     menuBlackout.classList.toggle('active');
-
 }
 
 function startGameButtonToggle(startGameButton, repeatAudioButton) {
@@ -38,15 +33,11 @@ function startGameButtonToggle(startGameButton, repeatAudioButton) {
 };
 
 function changeActiveMenuItem(state, index) {
-
-    // console.log('!!! state.currentCategoriesId ' + state.currentCategoriesId);
-    // console.log('!!! index ' + index);
     const currentMenuItem = document.getElementById(`${state.currentCategoriesId}`);
     currentMenuItem.classList.remove('active');
     const newMenuItem = document.getElementById(`${index}`);
     newMenuItem.classList.add('active');
     state.currentCategoriesId = index;
-
 }
 
 

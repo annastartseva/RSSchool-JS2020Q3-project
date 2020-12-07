@@ -36,12 +36,8 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
 
         fragment.appendChild(card);
 
-        // console.log('card ' + card);
-
         card.addEventListener('click', () => {
             openCardsSingleCategories(index);
-            // console.log('index card' + index);
-
         });
     })
 
@@ -50,8 +46,6 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
 
 function createCardsSingleCategories(categories, state, arrayRandomNumber) {
     const fragment = document.createDocumentFragment();
-    // console.log('categories ' + categories);
-    // console.log('categories.length ' + categories.length);
 
     categories.forEach(function(element, index) {
         const idCard = arrayRandomNumber[index];
@@ -132,7 +126,6 @@ function createCardsSingleCategories(categories, state, arrayRandomNumber) {
 
         card.addEventListener('click', () => {
             if (state.train === false) {
-                // console.log("id " + idCard);
                 state.playLastPushCardId = idCard;
                 checkСorrectlyPushCard(idCard, card, cardWord);
 
@@ -186,7 +179,6 @@ function createMenuList(categories, state, mainMenuItemId, statisticItemId) {
     menuMainItem.addEventListener('click', () => {
         setMainPage(mainMenuItemId);
         closeMenu();
-        // console.log('mainMenuItemId ' + mainMenuItemId);
     });
 
     categories.forEach(function(element, index) {
@@ -206,7 +198,6 @@ function createMenuList(categories, state, mainMenuItemId, statisticItemId) {
         menuItem.addEventListener('click', () => {
             openCardsSingleCategories(index);
             closeMenu();
-            // console.log('index ' + index);
         });
     });
 
@@ -225,7 +216,6 @@ function createMenuList(categories, state, mainMenuItemId, statisticItemId) {
     menuStatisticItem.addEventListener('click', () => {
         setStatisticPage(statisticItemId);
         closeMenu();
-        console.log('statisticItemId ' + statisticItemId);
     });
 
     return fragment;
@@ -265,7 +255,7 @@ function createStatisticTitle() {
     tableTDTrainClick.innerHTML = 'Trained';
     tableTDPlayCorrect.innerHTML = 'Correct';
     tableTDPlayWrong.innerHTML = 'Wrong';
-    tableTDPlayError.innerHTML = 'Error %';
+    tableTDPlayError.innerHTML = 'Error(%)';
 
     tableTR.appendChild(tableTDCategories);
     tableTR.appendChild(tableTDWord);
@@ -275,13 +265,11 @@ function createStatisticTitle() {
     tableTR.appendChild(tableTDPlayWrong);
     tableTR.appendChild(tableTDPlayError);
 
-    console.log('tableTR ' + tableTR);
     fragment.appendChild(tableTR);
     return fragment;
 }
 
 function createStatisticTable(statisticFile) {
-    console.log('createStatisticTable ');
     const fragment = document.createDocumentFragment();
 
     statisticFile.forEach(function(element, index) {
@@ -304,10 +292,6 @@ function createStatisticTable(statisticFile) {
         tableTDPlayWrong.classList.add('table__column');
         tableTDPlayError.classList.add('table__column');
 
-        console.log('statisticFile[i].categories ' + element.categories);
-        console.log('statisticFile[i].word ' + element.word);
-        console.log('statisticFile[i].translation ' + element.translation);
-
         tableTDCategories.innerHTML = `${element.categories}`;
         tableTDWord.innerHTML = `${element.word}`;
         tableTDTranslation.innerHTML = `${element.translation}`;
@@ -324,7 +308,6 @@ function createStatisticTable(statisticFile) {
         tableTR.appendChild(tableTDPlayWrong);
         tableTR.appendChild(tableTDPlayError);
 
-        console.log('tableTR ' + tableTR);
         fragment.appendChild(tableTR);
     });
     return fragment;
