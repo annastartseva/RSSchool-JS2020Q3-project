@@ -1,5 +1,5 @@
 import cards from './cards.js';
-import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTable, createStatisticTitle } from './createDom.js';
+import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTable, createStatisticPage } from './createDom.js';
 import { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle, changeActiveMenuItem } from './switch.js';
 
 const body = document.querySelector('.body');
@@ -11,7 +11,6 @@ const categoriesContainer = document.getElementById('categories_container'); //M
 const cardsContainer = document.getElementById('cards_container'); //Page container
 const statisticPage = document.querySelector('.statistic__wrapper');
 const statisticContainer = document.querySelector('.statistic__container');
-
 
 const menuBlackout = document.querySelector('.blackout');
 const startGameButton = document.querySelector('.start_game');
@@ -51,10 +50,8 @@ function buildPage() {
     createMainPage(cards[0], cards[1])
     createMenu(cards[0]);
     createEventListenerForObject();
-
     createStatisticFile();
 }
-
 
 const createMenu = (categories) => { mainMenu.appendChild(createMenuList(categories, state, mainMenuItemId, statisticItemId)) };
 
@@ -62,17 +59,6 @@ const createMainPage = (categories, imageCategoriesName) => {
     state.currentPage = 'main';
     categoriesContainer.appendChild(createCategoriesCard(categories, imageCategoriesName, state));
 };
-
-const createStatisticPage = () => {
-    const tableStatistic = document.createElement('table');
-    tableStatistic.classList.add('table');
-
-    tableStatistic.appendChild(createStatisticTitle());
-    tableStatistic.appendChild(createStatisticTable(statisticFile));
-
-    statisticContainer.appendChild(tableStatistic);
-};
-
 
 function openCardsSingleCategories(index) {
     if (cardsContainer.firstChild) { clearCardsContainer() };
@@ -125,7 +111,6 @@ function stopGame() {
 function checkСorrectlyPushCard(idCard, card, cardWord) {
     if (state.gameStart === true) {
         if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
-            console.log('correct ');
             card.classList.add('correct');
             playResultContainer.appendChild(createStarsForResult('star-win'));
             soundCorrect.play();
@@ -140,13 +125,11 @@ function checkСorrectlyPushCard(idCard, card, cardWord) {
                 finishGame();
             }
         } else {
-            console.log('wrong ');
             playResultContainer.appendChild(createStarsForResult('star'));
             const currentWord = state.currentCards[state.currentCards.length - 1];
             addDataToStatistic(currentWord, "wrong");
             state.NumberWrongAnswer += 1;
             soundFail.play();
-            // createStarsForResult('star');
         }
     } else {
         startGameButton.classList.add('light');
@@ -154,14 +137,9 @@ function checkСorrectlyPushCard(idCard, card, cardWord) {
             startGameButton.classList.remove('light');
         }, 1000);
     }
-
-    // console.log('card ' + state.currentCards);
-    // console.log('id ' + state.currentCardsId);
-    // console.log('Audio ' + state.currentCardsAudio);
 }
 
 function finishGame() {
-    console.log('finish ');
     state.gameStart = false;
     startGameButtonToggle(startGameButton, repeatAudioButton);
     clearStarsContainer();
@@ -189,7 +167,6 @@ function finishGame() {
 const setMainPage = (index) => {
     if (state.currentPage !== 'main') {
         categoriesContainer.classList.remove('none');
-
         cardsContainer.classList.add('none');
         state.currentPage = 'main';
         stopGame();
@@ -200,7 +177,7 @@ const setMainPage = (index) => {
 };
 
 const setStatisticPage = (index) => {
-    createStatisticPage();
+    createStatisticPage(statisticFile, statisticContainer);
     state.currentPage = 'statistic';
     categoriesContainer.classList.add('none');
     cardsContainer.classList.add('none');
@@ -214,7 +191,7 @@ const closeStatisticPage = () => {
     statisticPage.classList.add('none');
     clearStatisticContainer();
 
-}
+};
 
 const clearStatisticContainer = () => {
     if (statisticContainer.firstChild) {
@@ -222,16 +199,24 @@ const clearStatisticContainer = () => {
             statisticContainer.removeChild(statisticContainer.firstChild);
         }
     }
-}
+};
+
+const clearTbodyContainer = () => {
+    const statisticTableTbody = document.querySelector('tbody');
+    if (statisticTableTbody.firstChild) {
+        while (statisticTableTbody.firstChild) {
+            statisticTableTbody.removeChild(statisticTableTbody.firstChild);
+        }
+    }
+};
 
 const createStatisticFile = () => {
-    // if (localStorage.statistic !== null && localStorage.statistic !== '' && localStorage.statistic !== undefined) {
     if (localStorage.statistic) {
         statisticFile = JSON.parse(localStorage.statistic);
     } else {
         createEmptyStatisticFile();
     }
-}
+};
 
 const createEmptyStatisticFile = () => {
     const categories = cards[0];
@@ -243,7 +228,7 @@ const createEmptyStatisticFile = () => {
             rowData.categories = categories[j];
             rowData.word = categoriesItem[i].word;
             rowData.translation = categoriesItem[i].translation;
-            rowData.train = 0;
+            rowData.trained = 0;
             rowData.correct = 0;
             rowData.wrong = 0;
             rowData.error = 0;
@@ -255,10 +240,9 @@ const createEmptyStatisticFile = () => {
 
 const addDataToStatistic = (cardWord, status) => {
     const rowIndex = statisticFile.findIndex(item => item.word === cardWord);
-    // console.log('rowIndex ' + rowIndex);
 
     if (status === "train") {
-        statisticFile[rowIndex].train += 1;
+        statisticFile[rowIndex].trained += 1;
     } else if (status === "correct") {
         statisticFile[rowIndex].correct += 1;
 
@@ -269,7 +253,6 @@ const addDataToStatistic = (cardWord, status) => {
         const error = (statisticFile[rowIndex].correct * 100) / (statisticFile[rowIndex].correct + statisticFile[rowIndex].wrong);
         statisticFile[rowIndex].error = Math.round(error);
     }
-
     localStorage.statistic = JSON.stringify(statisticFile);
 }
 
@@ -331,15 +314,11 @@ const createDifficultWordArray = () => {
     });
 
     statisticFileCopy.forEach(function(element) {
-        if (element.error < 100 && element.wrong > 0 && difficultWordArray.length <= 8) {
+        if (element.error < 100 && element.wrong > 0 && difficultWordArray.length < 8) {
             const wordData = {};
             const categoriesId = cards[0].indexOf(element.categories);
-            // console.log('categoriesId ' + categoriesId);
-            // console.log('element.categories ' + element.categories);
-            // console.log('element.word ' + element.word);
-
             const wordId = cards[categoriesId + startCountingThematicCardsInArrayCards].findIndex(item => item.word === element.word);
-            // console.log('wordId ' + wordId);
+
             wordData.word = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].word;
             wordData.translation = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].translation;
             wordData.image = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].image;
@@ -347,10 +326,37 @@ const createDifficultWordArray = () => {
             difficultWordArray.push(wordData);
         }
     });
-    // localStorage.difficultWordArray = JSON.stringify(difficultWordArray);
     openTrainDifficultWord(difficultWordArray);
-
 };
+
+const sortStatistic = (element, typeSort) => {
+    const statisticFileCopy = [...statisticFile];
+    let itemSort = '';
+
+    if (element === 'Error(%)') {
+        itemSort = 'error';
+    } else {
+        itemSort = element.toLowerCase();
+    }
+
+    if (typeSort === 'down') {
+        statisticFileCopy.sort(function(a, b) {
+            if (a[itemSort] < b[itemSort]) { return -1; }
+            if (a[itemSort] > b[itemSort]) { return 1; }
+            return 0;
+        });
+    } else {
+        statisticFileCopy.sort(function(a, b) {
+            if (a[itemSort] < b[itemSort]) { return 1; }
+            if (a[itemSort] > b[itemSort]) { return -1; }
+            return 0;
+        });
+    }
+
+    clearTbodyContainer();
+    const statisticTableTbody = document.querySelector('tbody');
+    statisticTableTbody.appendChild(createStatisticTable(statisticFileCopy));
+}
 
 //Event Listeners
 const createEventListenerForObject = () => {
@@ -368,17 +374,12 @@ const getState = () => {
     const toggleSwitch = document.getElementById('switch__id');
 
     toggleSwitch.addEventListener('change', function() {
-
         if (this.checked) {
-            console.log('checked');
             state.train = false;
         } else {
-            console.log('unchecked');
             state.train = true;
         }
         toggleTrainPlayMode(state, cardsContainer);
-        console.log('state.train ' + state.train);
-        console.log('state.currentCards ' + state.currentCards);
     })
 };
 
@@ -432,10 +433,6 @@ const initializationResetStatisticButton = () => {
     })
 };
 
-
 buildPage();
-// createMainPage();
-// getState();
-// setEventHeaderTitleButton();
 
-export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard, stopGame, setStatisticPage, addDataToStatistic };
+export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard, stopGame, setStatisticPage, addDataToStatistic, sortStatistic };
