@@ -1,5 +1,5 @@
 import cards from './cards.js';
-import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult } from './createDom.js';
+import { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTable, createStatisticTitle } from './createDom.js';
 import { toggleTrainPlayMode, switchStateMenu, startGameButtonToggle, changeActiveMenuItem } from './switch.js';
 
 const body = document.querySelector('.body');
@@ -9,7 +9,9 @@ const mainMenu = document.querySelector('.menu');
 
 const categoriesContainer = document.getElementById('categories_container'); //Main page container
 const cardsContainer = document.getElementById('cards_container'); //Page container
+const statisticContainer = document.querySelector('.statistic__container');
 
+// const tableStatistic = document.querySelector('.table');
 const menuBlackout = document.querySelector('.blackout');
 const startGameButton = document.querySelector('.start_game');
 const repeatAudioButton = document.querySelector('.repeat_audio');
@@ -20,6 +22,7 @@ const failureMistakes = document.querySelector('.failure__mistake');
 
 const startCountingThematicCardsInArrayCards = 2;
 const mainMenuItemId = cards[0].length;
+const statisticItemId = cards[0].length + 1;
 
 const soundCorrect = createAudioOnCard('audio/won.mp3');
 const soundFail = createAudioOnCard('audio/fail.mp3');
@@ -38,27 +41,39 @@ const state = {
     gameStart: false
 };
 
+const statisticFile = [];
+
 function buildPage() {
     createMainPage(cards[0], cards[1])
     createMenu(cards[0]);
     createEventListenerForObject();
+
+    createStatisticFile();
 }
 
 
-const createMenu = (categories) => { mainMenu.appendChild(createMenuList(categories, state, mainMenuItemId)) };
+const createMenu = (categories) => { mainMenu.appendChild(createMenuList(categories, state, mainMenuItemId, statisticItemId)) };
 
 const createMainPage = (categories, imageCategoriesName) => {
     state.currentPage = 'main';
     categoriesContainer.appendChild(createCategoriesCard(categories, imageCategoriesName, state));
 };
 
+const createStatisticPage = () => {
+    const tableStatistic = document.createElement('table');
+    tableStatistic.classList.add('table');
+
+    tableStatistic.appendChild(createStatisticTitle());
+    tableStatistic.appendChild(createStatisticTable(statisticFile));
+
+    statisticContainer.appendChild(tableStatistic);
+};
+
+
 function openCardsSingleCategories(index) {
-    if (cardsContainer.firstChild) {
-        while (cardsContainer.firstChild) {
-            cardsContainer.removeChild(cardsContainer.firstChild);
-        }
-    };
+    if (cardsContainer.firstChild) { clearCardsContainer() };
     stopGame();
+    closeStatisticPage();
     changeActiveMenuItem(state, index);
     categoriesContainer.classList.add('none');
     cardsContainer.classList.remove('none');
@@ -73,8 +88,10 @@ function openCardsSingleCategories(index) {
 };
 
 function StartGame() {
-    if (state.currentPage === 'main') return;
+    if (state.currentPage === 'main' || state.currentPage === 'statistic') return;
     state.gameStart = true;
+    state.NumberWrongAnswer = 0;
+
     const categories = state.currentCategories;
     const arrayRandomNumber = createRandomData(categories.length);
 
@@ -88,10 +105,10 @@ function StartGame() {
 
     startGameButtonToggle(startGameButton, repeatAudioButton);
 
-    console.log("start game");
-    console.log('card ' + state.currentCards);
-    console.log('id ' + state.currentCardsId);
-    console.log('Audio ' + state.currentCardsAudio);
+    // console.log("start game");
+    // console.log('card ' + state.currentCards);
+    // console.log('id ' + state.currentCardsId);
+    // console.log('Audio ' + state.currentCardsAudio);
     if (state.currentCardsAudio.length > 0) {
         const arrayOfSound = state.currentCardsAudio;
         const sound = arrayOfSound[arrayOfSound.length - 1];
@@ -109,32 +126,42 @@ function stopGame() {
     };
 }
 
-function checkСorrectlyPushCard(idCard, card) {
-
-    if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
-        console.log('correct ');
-        card.classList.add('correct');
-        playResultContainer.appendChild(createStarsForResult('star-win'));
-        soundCorrect.play();
-        state.currentCards.pop();
-        state.currentCardsId.pop();
-        state.currentCardsAudio.pop();
-        if (state.currentCardsAudio.length > 0) {
-            const currentPlaySoundWord = createAudioOnCard(state.currentCardsAudio[state.currentCardsAudio.length - 1]);
-            currentPlaySoundWord.play();
+function checkСorrectlyPushCard(idCard, card, cardWord) {
+    if (state.gameStart === true) {
+        if (idCard === state.currentCardsId[state.currentCardsId.length - 1]) {
+            console.log('correct ');
+            card.classList.add('correct');
+            playResultContainer.appendChild(createStarsForResult('star-win'));
+            soundCorrect.play();
+            addDataToStatistic(cardWord, "correct");
+            state.currentCards.pop();
+            state.currentCardsId.pop();
+            state.currentCardsAudio.pop();
+            if (state.currentCardsAudio.length > 0) {
+                const currentPlaySoundWord = createAudioOnCard(state.currentCardsAudio[state.currentCardsAudio.length - 1]);
+                currentPlaySoundWord.play();
+            } else {
+                finishGame();
+            }
         } else {
-            finishGame();
+            console.log('wrong ');
+            playResultContainer.appendChild(createStarsForResult('star'));
+            const currentWord = state.currentCards[state.currentCards.length - 1];
+            addDataToStatistic(currentWord, "wrong");
+            state.NumberWrongAnswer += 1;
+            soundFail.play();
+            // createStarsForResult('star');
         }
     } else {
-        console.log('wrong ');
-        playResultContainer.appendChild(createStarsForResult('star'));
-        state.NumberWrongAnswer += 1;
-        soundFail.play();
-        // createStarsForResult('star');
+        startGameButton.classList.add('light');
+        setTimeout(() => {
+            startGameButton.classList.remove('light');
+        }, 1000);
     }
-    console.log('card ' + state.currentCards);
-    console.log('id ' + state.currentCardsId);
-    console.log('Audio ' + state.currentCardsAudio);
+
+    // console.log('card ' + state.currentCards);
+    // console.log('id ' + state.currentCardsId);
+    // console.log('Audio ' + state.currentCardsAudio);
 }
 
 function finishGame() {
@@ -171,15 +198,77 @@ const setMainPage = (index) => {
         state.currentPage = 'main';
         stopGame();
         changeActiveMenuItem(state, index);
-
-        while (cardsContainer.firstChild) {
-            cardsContainer.removeChild(cardsContainer.firstChild);
-        }
+        closeStatisticPage();
+        clearCardsContainer();
     }
 };
 
+const setStatisticPage = (index) => {
+    createStatisticPage();
+    state.currentPage = 'statistic';
+    categoriesContainer.classList.add('none');
+    cardsContainer.classList.add('none');
+    statisticContainer.classList.remove('none');
+    stopGame();
+    clearCardsContainer();
+    changeActiveMenuItem(state, index);
+};
+
+const closeStatisticPage = () => {
+    statisticContainer.classList.add('none');
+    if (statisticContainer.firstChild) {
+        while (statisticContainer.firstChild) {
+            statisticContainer.removeChild(statisticContainer.firstChild);
+        }
+    }
+
+}
+
+const createStatisticFile = () => {
+    const categories = cards[0];
+    for (let j = 0; j < categories.length; j++) {
+        const categoriesItem = cards[j + startCountingThematicCardsInArrayCards];
+
+        for (let i = 0; i < categoriesItem.length; i++) {
+            const rowData = {};
+            rowData.categories = categories[j];
+            rowData.word = categoriesItem[i].word;
+            rowData.translation = categoriesItem[i].translation;
+            rowData.train = 0;
+            rowData.correct = 0;
+            rowData.wrong = 0;
+            rowData.error = 0;
+
+            statisticFile.push(rowData);
+        }
+    }
+}
+
+const addDataToStatistic = (cardWord, status) => {
+    const rowIndex = statisticFile.findIndex(item => item.word === cardWord);
+    console.log('rowIndex ' + rowIndex);
+
+    if (status === "train") {
+        statisticFile[rowIndex].train += 1;
+    } else if (status === "correct") {
+        statisticFile[rowIndex].correct += 1;
+
+    } else if (status === "wrong") {
+        statisticFile[rowIndex].wrong += 1;
+    }
+
+    const error = (statisticFile[rowIndex].correct * 100) / (statisticFile[rowIndex].correct + statisticFile[rowIndex].wrong);
+    statisticFile[rowIndex].error = Math.round(error);
+}
+
 const closeMenu = () => {
     switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout);
+};
+
+const clearCardsContainer = () => {
+    while (cardsContainer.firstChild) {
+        cardsContainer.removeChild(cardsContainer.firstChild);
+    }
 };
 
 const createRandomData = (item) => {
@@ -265,4 +354,4 @@ buildPage();
 // getState();
 // setEventHeaderTitleButton();
 
-export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard };
+export { openCardsSingleCategories, setMainPage, closeMenu, checkСorrectlyPushCard, createAudioOnCard, stopGame, setStatisticPage, addDataToStatistic };
