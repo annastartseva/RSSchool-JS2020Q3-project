@@ -9,9 +9,10 @@ const mainMenu = document.querySelector('.menu');
 
 const categoriesContainer = document.getElementById('categories_container'); //Main page container
 const cardsContainer = document.getElementById('cards_container'); //Page container
+const statisticPage = document.querySelector('.statistic__wrapper');
 const statisticContainer = document.querySelector('.statistic__container');
 
-// const tableStatistic = document.querySelector('.table');
+
 const menuBlackout = document.querySelector('.blackout');
 const startGameButton = document.querySelector('.start_game');
 const repeatAudioButton = document.querySelector('.repeat_audio');
@@ -19,6 +20,9 @@ const playResultContainer = document.querySelector('.play__result');
 const winContainer = document.querySelector('.win');
 const failureContainer = document.querySelector('.failure');
 const failureMistakes = document.querySelector('.failure__mistake');
+const repeatDifficultWordButton = document.querySelector('.statistic__button-repeat');
+const resetStatisticButton = document.querySelector('.statistic__button-reset');
+const messageStatistic = document.querySelector('.statistic__message');
 
 const startCountingThematicCardsInArrayCards = 2;
 const mainMenuItemId = cards[0].length;
@@ -82,8 +86,6 @@ function openCardsSingleCategories(index) {
     state.currentCategories = categories;
     state.currentCategoriesId = index;
     const arrayRandomNumber = createRandomData(categories.length);
-    // console.log('arrayRandomNumber ' + arrayRandomNumber);
-
     cardsContainer.appendChild(createCardsSingleCategories(categories, state, arrayRandomNumber));
 };
 
@@ -96,7 +98,6 @@ function StartGame() {
     const arrayRandomNumber = createRandomData(categories.length);
 
     categories.forEach(function(element, index) {
-        // for (let i = 0; i < categories.length; i++) {
         const idCard = arrayRandomNumber[index];
         state.currentCards[index] = categories[idCard].word;
         state.currentCardsId[index] = idCard;
@@ -105,14 +106,9 @@ function StartGame() {
 
     startGameButtonToggle(startGameButton, repeatAudioButton);
 
-    // console.log("start game");
-    // console.log('card ' + state.currentCards);
-    // console.log('id ' + state.currentCardsId);
-    // console.log('Audio ' + state.currentCardsAudio);
     if (state.currentCardsAudio.length > 0) {
         const arrayOfSound = state.currentCardsAudio;
         const sound = arrayOfSound[arrayOfSound.length - 1];
-        console.log('sound ' + sound);
         state.currentPlaySoundWord = createAudioOnCard(sound);
         state.currentPlaySoundWord.play();
     }
@@ -208,20 +204,24 @@ const setStatisticPage = (index) => {
     state.currentPage = 'statistic';
     categoriesContainer.classList.add('none');
     cardsContainer.classList.add('none');
-    statisticContainer.classList.remove('none');
+    statisticPage.classList.remove('none');
     stopGame();
     clearCardsContainer();
     changeActiveMenuItem(state, index);
 };
 
 const closeStatisticPage = () => {
-    statisticContainer.classList.add('none');
+    statisticPage.classList.add('none');
+    clearStatisticContainer();
+
+}
+
+const clearStatisticContainer = () => {
     if (statisticContainer.firstChild) {
         while (statisticContainer.firstChild) {
             statisticContainer.removeChild(statisticContainer.firstChild);
         }
     }
-
 }
 
 const createStatisticFile = () => {
@@ -229,31 +229,33 @@ const createStatisticFile = () => {
     if (localStorage.statistic) {
         statisticFile = JSON.parse(localStorage.statistic);
     } else {
-        const categories = cards[0];
-        for (let j = 0; j < categories.length; j++) {
-            const categoriesItem = cards[j + startCountingThematicCardsInArrayCards];
+        createEmptyStatisticFile();
+    }
+}
 
-            for (let i = 0; i < categoriesItem.length; i++) {
-                const rowData = {};
-                rowData.categories = categories[j];
-                rowData.word = categoriesItem[i].word;
-                rowData.translation = categoriesItem[i].translation;
-                rowData.train = 0;
-                rowData.correct = 0;
-                rowData.wrong = 0;
-                rowData.error = 0;
+const createEmptyStatisticFile = () => {
+    const categories = cards[0];
+    for (let j = 0; j < categories.length; j++) {
+        const categoriesItem = cards[j + startCountingThematicCardsInArrayCards];
 
-                statisticFile.push(rowData);
-            }
+        for (let i = 0; i < categoriesItem.length; i++) {
+            const rowData = {};
+            rowData.categories = categories[j];
+            rowData.word = categoriesItem[i].word;
+            rowData.translation = categoriesItem[i].translation;
+            rowData.train = 0;
+            rowData.correct = 0;
+            rowData.wrong = 0;
+            rowData.error = 0;
+
+            statisticFile.push(rowData);
         }
     }
-
-
 }
 
 const addDataToStatistic = (cardWord, status) => {
     const rowIndex = statisticFile.findIndex(item => item.word === cardWord);
-    console.log('rowIndex ' + rowIndex);
+    // console.log('rowIndex ' + rowIndex);
 
     if (status === "train") {
         statisticFile[rowIndex].train += 1;
@@ -270,6 +272,29 @@ const addDataToStatistic = (cardWord, status) => {
 
     localStorage.statistic = JSON.stringify(statisticFile);
 }
+
+const openTrainDifficultWord = (difficultWordArray) => {
+    if (difficultWordArray.length === 0) {
+        clearStatisticContainer();
+        messageStatistic.classList.remove('none');
+
+        setTimeout(() => {
+            messageStatistic.classList.add('none');
+            createStatisticPage();
+        }, 1000);
+
+    } else {
+        if (cardsContainer.firstChild) { clearCardsContainer() };
+        closeStatisticPage();
+        cardsContainer.classList.remove('none');
+        state.currentPage = 'theme';
+        state.currentCategories = difficultWordArray;
+        const arrayRandomNumber = createRandomData(difficultWordArray.length);
+        const categories = [];
+
+        cardsContainer.appendChild(createCardsSingleCategories(difficultWordArray, state, arrayRandomNumber));
+    }
+};
 
 const closeMenu = () => {
     switchStateMenu(body, mainMenu, burgerMenuButton, menuBlackout);
@@ -298,6 +323,35 @@ const clearStarsContainer = () => {
     }
 }
 
+const createDifficultWordArray = () => {
+    const statisticFileCopy = [...statisticFile];
+    const difficultWordArray = [];
+    statisticFileCopy.sort(function(a, b) {
+        return a.error - b.error;
+    });
+
+    statisticFileCopy.forEach(function(element) {
+        if (element.error < 100 && element.wrong > 0 && difficultWordArray.length <= 8) {
+            const wordData = {};
+            const categoriesId = cards[0].indexOf(element.categories);
+            // console.log('categoriesId ' + categoriesId);
+            // console.log('element.categories ' + element.categories);
+            // console.log('element.word ' + element.word);
+
+            const wordId = cards[categoriesId + startCountingThematicCardsInArrayCards].findIndex(item => item.word === element.word);
+            // console.log('wordId ' + wordId);
+            wordData.word = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].word;
+            wordData.translation = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].translation;
+            wordData.image = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].image;
+            wordData.audioSrc = cards[categoriesId + startCountingThematicCardsInArrayCards][wordId].audioSrc;
+            difficultWordArray.push(wordData);
+        }
+    });
+    // localStorage.difficultWordArray = JSON.stringify(difficultWordArray);
+    openTrainDifficultWord(difficultWordArray);
+
+};
+
 //Event Listeners
 const createEventListenerForObject = () => {
     getState();
@@ -306,6 +360,8 @@ const createEventListenerForObject = () => {
     setMenuBlackoutProperty();
     initializationStartGameButton();
     initializationReloudAudioButton();
+    initializationRepeatDifficultWordButton();
+    initializationResetStatisticButton();
 };
 
 const getState = () => {
@@ -358,6 +414,24 @@ const initializationReloudAudioButton = () => {
         currentPlaySoundWord.play();
     })
 };
+
+const initializationRepeatDifficultWordButton = () => {
+    repeatDifficultWordButton.addEventListener('click', () => {
+        createDifficultWordArray();
+    })
+};
+
+const initializationResetStatisticButton = () => {
+    resetStatisticButton.addEventListener('click', () => {
+        statisticFile.length = 0;
+        createEmptyStatisticFile();
+        clearStatisticContainer();
+        createStatisticPage();
+        localStorage.statistic = JSON.stringify(statisticFile);
+
+    })
+};
+
 
 buildPage();
 // createMainPage();
