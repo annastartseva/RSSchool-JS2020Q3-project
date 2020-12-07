@@ -756,6 +756,12 @@ i {
     letter-spacing: 0.15em;
 }
 
+.table__column.table_title:hover {
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
 .table__row,
 .table__column {
     background: rgba(103, 94, 163, 0.4);

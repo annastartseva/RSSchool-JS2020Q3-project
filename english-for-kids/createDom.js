@@ -1,4 +1,4 @@
-import { openCardsSingleCategories, setMainPage, closeMenu, createAudioOnCard, checkСorrectlyPushCard, setStatisticPage, addDataToStatistic } from './index.js';
+import { openCardsSingleCategories, setMainPage, closeMenu, createAudioOnCard, checkСorrectlyPushCard, setStatisticPage, addDataToStatistic, sortStatistic } from './index.js';
 
 function createCategoriesCard(categories, imageCategoriesName, state) {
     const fragment = document.createDocumentFragment();
@@ -17,8 +17,6 @@ function createCategoriesCard(categories, imageCategoriesName, state) {
             gameMode.classList.add('play');
         }
         cardTitle.classList.add('cards__category-title');
-
-        // card.id = `${index}`;
 
         imageInCategories.setAttribute("style", `background-image: url(assets/img/${imageCategoriesName[index]});`);
 
@@ -205,7 +203,6 @@ function createMenuList(categories, state, mainMenuItemId, statisticItemId) {
     const menuStatisticIcon = document.createElement('i');
     menuStatisticItem.classList.add('menu__item');
     menuStatisticIcon.classList.add('menu__link', 'statistics');
-    // menuMainItem.setAttribute('number', '0')
     menuStatisticIcon.innerHTML = 'Statistics';
 
     menuStatisticItem.id = `${statisticItemId}`;
@@ -225,52 +222,58 @@ function createStarsForResult(item) {
     const star = document.createElement('div');
     star.classList.add(item);
     return star;
-
 }
+
+function createStatisticPage(statisticFile, statisticContainer) {
+    const tableStatistic = document.createElement('table');
+    tableStatistic.classList.add('table');
+
+    tableStatistic.appendChild(createStatisticTitle());
+
+    const tableTbody = document.createElement('tbody');
+
+    tableTbody.appendChild(createStatisticTable(statisticFile));
+    tableStatistic.appendChild(tableTbody);
+    statisticContainer.appendChild(tableStatistic);
+};
 
 function createStatisticTitle() {
     const fragment = document.createDocumentFragment();
+    const nameTitleItem = ['Categories', 'Word', 'Translation', 'Trained', 'Correct', 'Wrong', 'Error(%)']
+
+    const tableThead = document.createElement('thead');
     const tableTR = document.createElement('tr');
+
     tableTR.classList.add('table__row', 'table_title');
 
-    const tableTDCategories = document.createElement('td');
-    const tableTDWord = document.createElement('td');
-    const tableTDTranslation = document.createElement('td');
-    const tableTDTrainClick = document.createElement('td');
-    const tableTDPlayCorrect = document.createElement('td');
-    const tableTDPlayWrong = document.createElement('td');
-    const tableTDPlayError = document.createElement('td');
+    nameTitleItem.forEach(function(element, index) {
+        const tableTD = document.createElement('td');
+        tableTD.classList.add('table__column', 'table_title');
+        tableTD.innerHTML = `${element}<span>⏶</span>`;
 
-    tableTDCategories.classList.add('table__column', 'table_title');
-    tableTDWord.classList.add('table__column', 'table_title');
-    tableTDTranslation.classList.add('table__column', 'table_title');
-    tableTDTrainClick.classList.add('table__column', 'table_title');
-    tableTDPlayCorrect.classList.add('table__column', 'table_title');
-    tableTDPlayWrong.classList.add('table__column', 'table_title');
-    tableTDPlayError.classList.add('table__column', 'table_title');
+        tableTR.appendChild(tableTD);
 
-    tableTDCategories.innerHTML = 'Categories';
-    tableTDWord.innerHTML = 'Word';
-    tableTDTranslation.innerHTML = 'Translation';
-    tableTDTrainClick.innerHTML = 'Trained';
-    tableTDPlayCorrect.innerHTML = 'Correct';
-    tableTDPlayWrong.innerHTML = 'Wrong';
-    tableTDPlayError.innerHTML = 'Error(%)';
+        tableTD.addEventListener('click', () => {
 
-    tableTR.appendChild(tableTDCategories);
-    tableTR.appendChild(tableTDWord);
-    tableTR.appendChild(tableTDTranslation);
-    tableTR.appendChild(tableTDTrainClick);
-    tableTR.appendChild(tableTDPlayCorrect);
-    tableTR.appendChild(tableTDPlayWrong);
-    tableTR.appendChild(tableTDPlayError);
+            if (tableTD.innerHTML === `${element}<span>⏶</span>`) {
+                tableTD.innerHTML = `${element}<span>⏷</span>`;
+                sortStatistic(element, 'up');
+            } else {
+                tableTD.innerHTML === `${element}<span>⏷</span>`;
+                tableTD.innerHTML = `${element}<span>⏶</span>`;
+                sortStatistic(element, 'down');
+            }
+        });
+    });
+    tableThead.appendChild(tableTR);
+    fragment.appendChild(tableThead);
 
-    fragment.appendChild(tableTR);
     return fragment;
 }
 
 function createStatisticTable(statisticFile) {
     const fragment = document.createDocumentFragment();
+
 
     statisticFile.forEach(function(element, index) {
         const tableTR = document.createElement('tr');
@@ -295,7 +298,7 @@ function createStatisticTable(statisticFile) {
         tableTDCategories.innerHTML = `${element.categories}`;
         tableTDWord.innerHTML = `${element.word}`;
         tableTDTranslation.innerHTML = `${element.translation}`;
-        tableTDTrainClick.innerHTML = `${element.train}`;
+        tableTDTrainClick.innerHTML = `${element.trained}`;
         tableTDPlayCorrect.innerHTML = `${element.correct}`;
         tableTDPlayWrong.innerHTML = `${element.wrong}`;
         tableTDPlayError.innerHTML = `${element.error}`;
@@ -310,8 +313,10 @@ function createStatisticTable(statisticFile) {
 
         fragment.appendChild(tableTR);
     });
+
+
     return fragment;
 }
 
 
-export { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTitle, createStatisticTable };
+export { createCategoriesCard, createCardsSingleCategories, createMenuList, createStarsForResult, createStatisticTable, createStatisticPage };
