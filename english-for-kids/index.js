@@ -41,7 +41,7 @@ const state = {
     gameStart: false
 };
 
-const statisticFile = [];
+let statisticFile = [];
 
 function buildPage() {
     createMainPage(cards[0], cards[1])
@@ -225,23 +225,30 @@ const closeStatisticPage = () => {
 }
 
 const createStatisticFile = () => {
-    const categories = cards[0];
-    for (let j = 0; j < categories.length; j++) {
-        const categoriesItem = cards[j + startCountingThematicCardsInArrayCards];
+    // if (localStorage.statistic !== null && localStorage.statistic !== '' && localStorage.statistic !== undefined) {
+    if (localStorage.statistic) {
+        statisticFile = JSON.parse(localStorage.statistic);
+    } else {
+        const categories = cards[0];
+        for (let j = 0; j < categories.length; j++) {
+            const categoriesItem = cards[j + startCountingThematicCardsInArrayCards];
 
-        for (let i = 0; i < categoriesItem.length; i++) {
-            const rowData = {};
-            rowData.categories = categories[j];
-            rowData.word = categoriesItem[i].word;
-            rowData.translation = categoriesItem[i].translation;
-            rowData.train = 0;
-            rowData.correct = 0;
-            rowData.wrong = 0;
-            rowData.error = 0;
+            for (let i = 0; i < categoriesItem.length; i++) {
+                const rowData = {};
+                rowData.categories = categories[j];
+                rowData.word = categoriesItem[i].word;
+                rowData.translation = categoriesItem[i].translation;
+                rowData.train = 0;
+                rowData.correct = 0;
+                rowData.wrong = 0;
+                rowData.error = 0;
 
-            statisticFile.push(rowData);
+                statisticFile.push(rowData);
+            }
         }
     }
+
+
 }
 
 const addDataToStatistic = (cardWord, status) => {
@@ -256,9 +263,12 @@ const addDataToStatistic = (cardWord, status) => {
     } else if (status === "wrong") {
         statisticFile[rowIndex].wrong += 1;
     }
+    if (status !== "train") {
+        const error = (statisticFile[rowIndex].correct * 100) / (statisticFile[rowIndex].correct + statisticFile[rowIndex].wrong);
+        statisticFile[rowIndex].error = Math.round(error);
+    }
 
-    const error = (statisticFile[rowIndex].correct * 100) / (statisticFile[rowIndex].correct + statisticFile[rowIndex].wrong);
-    statisticFile[rowIndex].error = Math.round(error);
+    localStorage.statistic = JSON.stringify(statisticFile);
 }
 
 const closeMenu = () => {

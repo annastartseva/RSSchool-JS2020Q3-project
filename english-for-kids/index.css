@@ -700,7 +700,7 @@ i {
 .table__row.table_title,
 .table__column.table_title {
     background: rgba(56, 51, 90, 0.4);
-    padding: 0.2rem 1rem;
+    padding: 0.7rem 1rem;
     /* Поля вокруг текста */
     font-family: "Inter", Verdana, sans-serif;
     font-size: 2rem;
