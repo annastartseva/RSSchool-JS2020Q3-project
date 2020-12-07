@@ -263,7 +263,7 @@ const openTrainDifficultWord = (difficultWordArray) => {
 
         setTimeout(() => {
             messageStatistic.classList.add('none');
-            createStatisticPage();
+            createStatisticPage(statisticFile, statisticContainer);
         }, 1000);
 
     } else {
@@ -427,7 +427,7 @@ const initializationResetStatisticButton = () => {
         statisticFile.length = 0;
         createEmptyStatisticFile();
         clearStatisticContainer();
-        createStatisticPage();
+        createStatisticPage(statisticFile, statisticContainer);
         localStorage.statistic = JSON.stringify(statisticFile);
 
     })
