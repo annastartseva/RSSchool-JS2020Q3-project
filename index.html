@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Covid Dashboard</title>
+	<link rel="shortcut icon" href="./assets/images/favicon.ico">
+<link href="vendors-node_modules_babel_polyfill_lib_index_js-node_modules_chart_js_dist_Chart_js-node_mod-f5c903.css" rel="stylesheet"><link href="main.css" rel="stylesheet"></head>
+
+<body>
+	<header>
+		<div class="header__wrapper">
+			<div class="header__logo">
+				<img src="./assets/images/virus.png" alt="covid logo" class="header__logo-img">
+			</div>
+			<h1 class="header__title">Covid Dashboard</h1>
+		</div>
+
+	</header>
+	<main>
+		<div class="data__wrap">
+			<div class="first__column-wrap">
+				<div class="wrap table__summery-wrap">
+					<!--full-active-->
+					<button class="full__screen full-summery none" id="full__screen-summery">
+						<img src="./assets/images/expand.png" alt="expand button" class="full__screen-img">
+					</button>
+					<button class="full__screen-exit full-summery none" id="full__screen-summery-exit">
+						<img src="./assets/images/exit.png" alt="expand button" class="full__screen-img-exit">
+					</button>
+					<div class="button__wrap">
+
+						<button class="button__all-period button select">ALL PERIOD</button>
+						<button class="button__last-day button">TODAY</button>
+						<button class="button__abs button button_margin select">ABS</button>
+						<button class="button__per-population button">PER 100K</button>
+					</div>
+					<div class="table__summery-data-wrap">
+						<div class="table__summery-data">
+							<div class="table__summery-data-title">Total Confirmed</div>
+							<div class="table__summery-data-number" id="total_confirm"></div>
+						</div>
+						<div class="table__summery-data">
+							<div class="table__summery-data-title">Total Recovered</div>
+							<div class="table__summery-data-number" id="total_recover"></div>
+						</div>
+						<div class="table__summery-data">
+							<div class="table__summery-data-title">Total Deaths</div>
+							<div class="table__summery-data-number" id="total_deaths"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="table__summery-title">
+					<button class="button__summery-global">GLOBAL CASES</button>
+				</div>
+				<div class="actual__data wrap">
+
+				</div>
+				<div class="wrap chart-wrap">
+					<button class="full__screen full-chart none" id="full__screen-chart">
+						<img src="./assets/images/expand.png" alt="expand button" class="full__screen-img">
+					</button>
+					<button class="full__screen-exit full-chart none" id="full__screen-chart-exit">
+						<img src="./assets/images/exit.png" alt="expand button" class="full__screen-img-exit">
+					</button>
+					<div class="button__wrap">
+						<button class="button__all-period-chart button select">ALL PERIOD</button>
+						<button class="button__last-day-chart button">TODAY</button>
+						<button class="button__abs-chart button button_margin select">ABS</button>
+						<button class="button__per-population-chart button">PER 100K</button>
+
+					</div>
+					<div class="chart">
+						<canvas id="myChart" width="400" height="240"></canvas>
+					</div>
+					<div class="button__wrap-down">
+						<button class="button__confirmed-chart button-down button_margin select">CONFIRMED</button>
+						<button class="button__recovered-chart button-down">RECOVERED</button>
+						<button class="button__deaths-chart button-down">DEATHS</button>
+					</div>
+				</div>
+			</div>
+			<div class="second__column-wrap">
+				<div class="map__country">ALL WORLD</div>
+				<div class="wrap map__data-wrap">
+					<button class="full__screen full-map none" id="full__screen-map">
+						<img src="./assets/images/expand.png" alt="expand button" class="full__screen-img">
+					</button>
+					<button class="full__screen-exit full-map none" id="full__screen-map-exit">
+						<img src="./assets/images/exit.png" alt="expand button" class="full__screen-img-exit">
+					</button>
+					<div class="button__wrap">
+						<button class="button__all-period-map button select">ALL PERIOD</button>
+						<button class="button__last-day-map button">TODAY</button>
+						<button class="button__abs-map button button_margin select">ABS</button>
+						<button class="button__per-population-map button">PER 100K</button>
+						<button class="button__confirmed-map button button_margin select">CONFIRMED</button>
+						<button class="button__recovered-map button">RECOVERED</button>
+						<button class="button__deaths-map button">DEATHS</button>
+					</div>
+					<div class="map__data" id="map"></div>
+				</div>
+			</div>
+
+			<div class="wrap table__city-list-wrap">
+				<button class="full__screen full-countries none" id="full__screen-countries">
+					<img src="./assets/images/expand.png" alt="expand button" class="full__screen-img">
+				</button>
+				<button class="full__screen-exit full-countries none" id="full__screen-countries-exit">
+					<img src="./assets/images/exit.png" alt="expand button" class="full__screen-img-exit">
+				</button>
+				<div class="button__wrap">
+					<button class="button__all-period-countries button select">ALL PERIOD</button>
+					<button class="button__last-day-countries button">TODAY</button>
+					<button class="button__abs-countries button button_margin select">ABS</button>
+					<button class="button__per-population-countries button">PER 100K</button>
+				</div>
+				<input list="menu" id="search__field" contenteditable="true" autocomplete="off">
+				<div class="countries__table-wrap"></div>
+				<div class="button__wrap-down">
+					<button class="button__confirmed-countries button button_margin select">CONFIRMED</button>
+					<button class="button__recovered-countries button">RECOVERED</button>
+					<button class="button__deaths-countries button">DEATHS</button>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="footer">
+		<div class="footer__wrapper">
+
+			<div class="footer__link footer__link__autor">
+				<div class="footer__link footer__link-year"> 2020, </div>
+				<a href="https://github.com/annastartseva" class="footer__link-href-autor">annastartseva/</a>
+				<a href="https://github.com/TimurSyrlybayev" class="footer__link-href-autor">TimurSyrlybayev</a>
+			</div>
+
+			<div class="footer__link footer__link-rs">
+
+				<a href="https://rs.school/js/" class="footer__link-href">
+					<img class="footer__icon-js" src="./assets/images/logo_rs.png" alt="RS School logotip ">
+				</a>
+
+			</div>
+		</div>
+	</footer>
+
+<script src="vendors-node_modules_babel_polyfill_lib_index_js-node_modules_chart_js_dist_Chart_js-node_mod-f5c903.js"></script><script src="main.js"></script></body>
+
+</html>

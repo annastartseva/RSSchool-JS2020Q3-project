@@ -1,0 +1,1290 @@
+:root {
+    font-size: 10px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+	background-color: rgb(0, 0, 0);			
+}
+
+html, body {
+    scrollbar-color: #1a1a1a #0c0b0b;    
+		scrollbar-width: auto; 	
+}
+
+.stop-scroll {
+	overflow: hidden;
+}
+
+::-webkit-scrollbar {
+	width: 12px; 
+	height: 12px; 
+	background-color:#080808;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color:  #141414;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #5f0000;
+}
+
+/* Стрелки */
+::-webkit-scrollbar-button:vertical:start:decrement {
+	background: linear-gradient(120deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+	linear-gradient(240deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+	linear-gradient(0deg, #0c0b0b 30%, rgba(0, 0, 0, 0) 31%);
+	background-color: #9c0202;
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+	background:
+			linear-gradient(300deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+			linear-gradient(60deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+			linear-gradient(180deg, #0c0b0b 30%, rgba(0, 0, 0, 0) 31%);
+	background-color:  #9c0202;
+}
+
+::-webkit-scrollbar-button:horizontal:start:decrement {
+	background:
+			linear-gradient(30deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+			linear-gradient(150deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+			linear-gradient(270deg, #0c0b0b 30%, rgba(0, 0, 0, 0) 31%);
+	background-color: #9c0202;
+}
+
+::-webkit-scrollbar-button:horizontal:end:increment {
+	background:
+			linear-gradient(210deg,#0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+			linear-gradient(330deg, #0c0b0b 40%, rgba(0, 0, 0, 0) 41%),
+			linear-gradient(90deg, #0c0b0b 30%, rgba(0, 0, 0, 0) 31%);
+	background-color: #9c0202;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;   
+	width: 53%;
+  height: 5rem;
+  max-width: 155rem;
+  margin: 2rem auto 2rem;
+}
+
+.header__title {
+  font-family: 'Langar', cursive;
+  color: rgb(215, 218, 214);
+  font-size: 5rem;
+  font-weight: 400;
+  letter-spacing: 0.7rem;
+  text-shadow: 1px 1px 1px black;
+  text-align: center;
+  margin: 1rem auto 1rem;    
+}
+
+.header__logo {	
+	height: 12rem;
+  z-index: 5;
+  margin-top: 6rem;
+}
+
+.header__logo-img {
+  height: 100%;
+	animation-name: rotation;
+  animation-duration: 7s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotation {
+	0% {
+			transform:rotate(0deg);
+	}
+	100% {
+			transform:rotate(360deg);
+	}
+}
+
+/* MAIN */
+main {
+    min-height: calc(100vh - 17rem);
+}
+
+.data__wrap {
+    display: flex;
+}
+
+.first__column-wrap {
+  width: 25%;
+	height: 600px;
+	margin: 0.5rem;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid red;
+  border-radius: 1rem;
+  font-family: 'Acme', sans-serif;
+  color: rgb(215, 218, 214);
+  font-size: 1.5rem;
+	font-weight: 400;		
+}
+
+.table__summery-wrap {
+  width: 100%;
+  height: 38%;
+  display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1rem;
+	transition: all 0.5s ease;
+}
+
+.table__summery-wrap.full-active{
+	position: fixed;
+	top: 0.8rem;
+	left: 0;
+	width: 99.5%;
+	min-height: 97%;
+	background-color: black;
+	z-index: 200;
+	margin: 0.5rem;
+	justify-content: flex-start;
+}
+
+.button__wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;	
+	margin: -1rem 0.2rem 0rem;
+	z-index: 100;
+}
+
+.button__wrap-down {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 1rem 0.2rem -1rem;
+}
+
+.full__screen.none,
+.full__screen-exit.none {
+	visibility: hidden;
+}
+
+.full__screen {
+	position: absolute;
+	background: none;	
+	border-radius: 50%;
+	border:none;
+	box-shadow: none;
+}
+
+.full__screen.full-summery{
+	left: 1.5rem;
+	top: 29rem;
+}
+
+.full__screen.full-chart{
+	left: 1.5rem;
+	top: 66.5rem;
+}
+
+.full__screen.full-map{
+	left: 42rem;
+	top: 66.5rem;
+	z-index: 600;
+}
+
+.full__screen.full-countries{
+	left: 121rem;
+	top: 67.8rem;
+}
+
+.full__screen-exit {
+	position: absolute;
+	left: 1rem;
+	top: -1rem;
+	background: none;	
+	border-radius: 50%;
+	border:none;
+	box-shadow: none;
+}
+
+.full__screen-img-exit {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	z-index: 101;
+}
+
+.full__screen-img-exit:hover{
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+box-shadow: 1px 1px 7px rgb(248, 143, 143);
+}
+
+.full__screen-img {
+	width: 20px;
+	height: 20px;
+	z-index: 101;
+	border-radius: 50%;
+	transition: all 0.1s ease-in-out;
+}
+
+.full__screen-img:hover{
+	width: 22px;
+	height: 22px;
+	cursor: pointer;
+box-shadow: 1px 1px 7px rgb(248, 143, 143);
+}
+
+.button,
+.button-down {
+  border: 1px solid rgb(90, 1, 1);   
+  font-family: 'Roboto', sans-serif;
+  color: rgb(215, 218, 214);
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.2rem 1rem;
+	background-color: black;
+}
+
+.button-down.select {
+  border-width: 1px;
+  border-color: red;	
+	background-color: rgb(156, 0, 0);
+}
+
+.button.select {
+	border-width: 1px;
+	border-color: red;
+	background-color: rgb(156, 0, 0);
+}
+
+.button:hover,
+.button-down:hover {
+  cursor: pointer;
+  border-color: rgb(175, 1, 1);	
+	background-color: rgb(70, 0, 0);
+}
+
+button:active,
+button:focus {
+  outline: none;
+}
+
+.button_margin {
+    margin-left: 2rem;
+}
+
+.table__summery-data-wrap {
+	width:98%;
+	margin-bottom: 1rem;
+}
+
+.table__summery-data-wrap.full-active {
+	margin-top: 10rem;
+}
+
+.table__summery-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.table__summery-data-title {
+    font-family: 'Roboto', sans-serif;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.table__summery-data-number {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: red;
+    font-size: 3rem;
+}
+
+.actual__data {
+	width: 100%;
+	height: 8%;
+	text-align: center;
+	font-family: 'Acme', sans-serif;
+	color: rgb(215, 218, 214);
+	font-size: 1.1rem;
+	padding-top: 0.8rem;
+}
+
+.table__summery-title {
+	height: 4rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+  font-family: 'Langar', cursive;
+  color: rgb(215, 218, 214);
+  font-size: 1.7rem;
+  font-weight: 400;
+  margin-top: -1rem;
+}
+
+.button__summery-global {
+	background-color: rgb(22, 0, 0);
+	border: 1px solid rgb(90, 1, 1);
+	border-radius: 1rem;
+	padding: 0.5rem 1rem;
+	font-family: 'Langar', cursive;
+  color: rgb(215, 218, 214);
+  font-size: 1.7rem;
+	letter-spacing: 0.4rem;
+	box-shadow:  0 0 0 1px #2e0000,
+	0 0 0 2px #570101,
+	0 0 0 3px #910101;
+}
+
+.button__summery-global:hover {
+	cursor: pointer;
+background-color: rgb(39, 0, 0);
+	box-shadow:  
+	0 0 0 1px #2e0000,
+	0 0 0 2px #570101,
+	0 0 0 3px #910101;
+}
+
+.button__summery-global.active {	
+	font-weight: bold;
+	color: red;		
+}
+
+.button__summery-global:active {		
+	font-size: 1.65rem;
+	padding: 0.35rem 0.95rem;
+}
+
+.chart-wrap {
+    width: 100%;
+		height: 47%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+}
+
+.chart-wrap.full-active{
+	position: fixed;
+	top: 0.8rem;
+	left: 0;
+	width: 99.5%;
+	min-height: 96%;
+	background-color: black;
+	z-index: 200;
+	margin: 0.5rem;
+}
+
+.chart {
+	width:98%;
+	height: 240px;
+}
+
+.chartjs-render-monitor {
+	animation: chartjs-render-animation 0.001s;
+	width: 380px;
+	height: 240px;
+}
+
+.second__column-wrap {
+	width: 50%;
+	height: 600px;
+	margin: 0.5rem;
+}
+
+.map__country {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 7%;
+	padding: 0.4rem 1rem;
+	border: 1px solid red;	
+	border-radius: 1rem;
+	font-family: 'Langar', cursive;
+	font-size: 1.7rem;
+	font-weight: 400;
+	text-align: center;
+	letter-spacing: 0.2rem;		
+  color: rgb(215, 218, 214); 
+}
+
+.map__data-wrap {
+    width: 100%;
+		height: 91%;
+		margin-top: 1rem;
+}
+
+.map__data-wrap.full-active {
+	position: fixed;
+	top: 0.8rem;
+	left: 0;
+	width: 99.5%;
+	min-height: 97%;
+	background-color: black;
+	z-index: 200;
+	margin: 0.5rem;
+}
+
+.map__country.active {	
+	color: red;
+	font-size: 1.7rem;
+}
+
+.map__data {
+	width:100%;
+	height: 100%;
+	border-radius: 1rem;
+	z-index: 50;
+	margin-top: -1rem;
+}
+
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	background: grey;
+}
+
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	background: grey;
+}
+
+.leaflet-top .leaflet-control {
+	margin-top: 20px;
+}
+
+.leaflet-top, .leaflet-bottom {
+	z-index: 500;
+}
+
+.info {
+	width: 30rem;
+	padding: 6px 8px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+	color: rgb(255, 255, 255);
+	font-size: 1.5rem;
+	background: rgba(14, 13, 13);
+	box-shadow: 1px 1px 5px rgba(209, 209, 209, 0.2);
+	border-radius: 5px;
+	opacity: 0.9;
+}
+
+.info h4 {
+	margin: 0 0 3px;
+	color: rgb(160, 4, 4);
+}
+
+.legend {
+	width: 98%;
+	line-height: 18px;	
+	display: flex;	
+	flex-wrap: wrap;
+	justify-content: center;	
+}
+
+.legend_string {
+	display: flex;
+	margin: 0.2rem 0 0.2rem 1.5rem;
+}
+
+.legend_img {
+	width: 4rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.legend_text {
+	margin-left: 0.3rem;
+	display: flex;	
+	align-items: center;
+	font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color: rgb(255, 254, 254);
+  font-size: 1.5rem;	
+}
+
+.table__city-list-wrap {
+    width: 25%;
+    height: 606px;
+    margin: 0.5rem;
+}
+
+.table__city-list-wrap.full-active{
+	position: fixed;
+	top: 0.8rem;
+	left: 0;
+	width: 99.5%;
+	min-height: 96%;
+	background-color: black;
+	z-index: 200;
+	margin: 0.5rem;
+}
+
+.countries__table-wrap {
+	width: 100%;
+	height: 88%;
+	display: flex;
+	flex-direction: column;
+}
+
+#table__wrapper {
+	overflow: auto;
+	margin: 0.5rem;
+}
+
+#countries__table {
+	width: 98%;
+}
+
+#search__field {
+	width: 99%;
+	height: 5%;
+	margin: 1rem auto;
+	background: #181818;
+	color: white;
+}
+
+.menu {
+    display: none;
+    max-height: 535px;
+    position: absolute;
+    background-color: white;
+    top: 25%;
+    color: black;
+    width: inherit;
+    overflow: auto;
+    border-radius: 0 0 10px 10px;
+    text-align: center;
+}
+
+.menu-option {
+    cursor: pointer;
+    padding: 10px 0;
+    color: white;
+}
+
+.menu-option:hover {
+    background-color: rgb(160, 4, 4);
+}
+
+.show {
+    display: block;
+}
+
+.dark {
+	background-color: rgba(14, 13, 13);
+	z-index: 999;
+}
+
+.black {
+	background-color: rgb(77, 77, 77);
+	z-index: 999;
+}
+
+.flag-image {
+  width: 20px;
+}
+
+.keyboard {
+    display: none;
+    color: darkgrey;
+    position: relative;
+    overflow: hidden;
+    transition: 1s linear;
+    font-size: 18px;
+    left: 0;
+    bottom: 91vh;
+    z-index: 999;
+    background-color: #080808;
+    width: 70vw;
+    height: 35vh;
+	box-shadow: 0 0 10px 2px;
+	text-align: center;
+}
+
+.keyboard__row {
+    grid-template-columns: repeat(13, 1fr);
+	display: grid;
+	height: 7vh;
+}
+
+.keyboard__key {
+	border: 1px solid white;
+}
+.keyboard__key:hover {
+	background-color:  white;
+	cursor: pointer;
+}
+
+.keyboard__key:active {
+	box-shadow: inset 0 0 5px 5px grey;
+	cursor: pointer;
+}
+
+.off {
+	display: none;
+}
+
+.on {
+	display: grid;
+}
+
+.active {
+	background-color: rgb(160, 4, 4);
+}
+
+.sub {
+	color: red;
+}
+
+.letter {
+	color: white;
+}
+
+/* footer */
+.footer {
+    width: 85%;
+    height: 3rem;
+    max-width: 155rem;
+    margin: 1.5rem auto 0.8rem;
+}
+
+.footer__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer__link {
+    font-size: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;    
+    color: rgb(255, 255, 255);   
+    display: flex;
+    align-items: flex-end;
+}
+
+.footer__link-href-autor {
+    display: flex;
+    flex-direction: row;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+.footer__link-year {
+    margin-right: 3rem;
+}
+
+.footer__link-rs {
+    display: flex;
+    justify-content: flex-end;
+    height: 2rem;
+    margin-left: 20rem;
+}
+
+.footer__link-href {
+	height: 2.8rem;
+    width: 8rem;
+}
+
+.footer__icon-js {
+    height: 3.5rem;
+}
+
+@font-face {
+    font-family: 'Langar';
+    src: url(764e166fd838fe050b60ae2edd88853b.ttf);
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(03523cf578d69fa923226ff457b92d90.ttf);
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url(4f39c5796e60c9d8e7327a00e9a4442e.ttf);
+    font-style: normal;
+    font-weight: bold;
+}
+
+
+@media (min-width:1020px) and (max-width:1400px) {
+	.header__wrapper {    
+		width: 50%;
+    height: 4.5rem;
+    max-width: 130rem;  
+}
+
+.header__title {   
+	font-size: 4.1rem;
+	font-weight: 400;
+	letter-spacing: 0.6rem;    
+}
+
+.header__logo {
+	height: 11rem;
+	z-index: 700;
+	margin-top: 3rem;
+}
+
+	.first__column-wrap {
+		width: 30%;
+		height: 515px;
+		margin: 0.5rem;
+	}
+
+	.table__summery-wrap {   
+    height: 36%;   
+}
+
+.wrap {   
+	font-size: 1.3rem;
+	font-weight: 400;		
+}
+
+.table__summery-wrap {
+	width: 100%;
+	height: 36%;  
+}
+
+.table__summery-wrap.full-active{
+z-index: 800;
+}
+
+.full__screen.full-summery{	
+top: 25rem;
+}
+
+.full__screen.full-chart{
+	top: 58rem;
+}
+
+.full__screen.full-map{
+	left: 42rem;
+	top: 58rem;
+}
+
+.full__screen.full-countries{
+	left: 103rem;
+	top: 58rem;
+}
+
+.full__screen-exit {
+z-index: 800;
+}
+
+.button,
+.button-down { 
+font-size: 1rem;
+padding: 0.2rem 0.7rem;
+}
+
+.button-down.select {
+border-width: 1px;
+border-color: red;	
+background-color: rgb(156, 0, 0);
+}
+.button_margin {
+margin-left: 1rem;
+}
+
+.table__summery-data-wrap {
+margin-bottom: 0.7rem;
+}
+
+.table__summery-data-title {
+	margin: 0.8rem 0 0.5rem 0;
+}
+
+.table__summery-data-number {
+font-size: 2.3rem;
+}
+
+.actual__data {
+	height: 7%;
+	font-size: 0.9rem;
+	padding-top: 0.4rem;
+}
+
+.table__summery-title {
+	height: 3.6rem;
+	font-size: 1.5rem;
+}
+
+.chart-wrap {   
+	height: 51%;
+}
+
+.chart-wrap.full-active{
+z-index: 800;
+}
+
+.second__column-wrap {
+width: 45%;
+height: 511px;
+margin: 0.5rem;
+}
+
+.map__data-wrap {
+	width: 100%;
+	height: 93%;
+}
+
+.map__data-wrap.full-active {
+z-index: 800;
+}
+
+.map__data {
+margin-top: -0.9rem;
+}
+
+.leaflet-top .leaflet-control {
+margin-top: 20px;
+}
+
+.leaflet-top, .leaflet-bottom {
+z-index: 500;
+}
+
+.leaflet-touch .leaflet-bar a {
+width: 20px;
+height: 20px;
+line-height: 20px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+font-size: 20px;
+}
+
+.info {
+width: 27rem;
+padding: 4px 8px;
+font-size: 1.2rem;
+}
+
+.info h4 {
+margin: 0 0 3px;
+color: rgb(160, 4, 4);
+}
+
+.legend {
+width: 95%;
+line-height: 14px;		
+}
+
+.legend_string {	
+margin: 0 0 0 1rem;
+}
+
+.legend_text {
+margin-left: 0.3rem;
+font-weight: bold;  
+font-size: 1.2rem;	
+}
+
+.table__city-list-wrap {
+	width: 25%;
+	height: 517px;
+	margin: 0.5rem;
+}
+
+.table__city-list-wrap.full-active{
+z-index: 800;
+}
+
+.countries__table-wrap {	
+height: 87%;	
+}
+
+.countries__table-row {
+font-size: 1.2rem;
+}
+
+.menu {
+	max-height: 480px;
+	top: 20%;
+}
+
+.menu-option {
+padding: 7px 0;   
+}
+
+.flag-image {
+width: 18px;
+}
+}
+
+@media (min-width:900px) and (max-width:1019px) {
+	.header__wrapper {    
+		width: 49%;
+    height: 3.5rem;
+    max-width: 950rem;
+    margin: 2rem auto 1.5rem;
+}
+
+.header__title {   
+    font-size: 3.2rem;   
+}
+
+.header__logo {
+	height: 8.6rem;    
+  margin-top: 2.5rem;
+}
+
+.first__column-wrap {
+  width: 30%;
+	height: 506px;
+	margin: 0.5rem;
+}
+
+.wrap {   
+    font-size: 1.2rem;	
+}
+
+.full__screen.full-summery{	
+	top: 24rem;
+}
+
+.full__screen.full-chart{
+	top: 56rem;
+}
+
+.full__screen.full-map{
+	left: 32rem;
+	top: 56rem;
+}
+
+.full__screen.full-countries{
+	left: 77rem;
+	top: 56rem;
+}
+
+.button,
+.button-down { 
+  font-size: 0.95rem;  
+  padding: 0.2rem 0.3rem;
+}
+
+.button_margin {
+  margin-left: 0.8rem;
+}
+
+.table__summery-data-title {
+  font-family: 'Roboto', sans-serif;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.table__summery-data-number {  
+  font-size: 2.3rem;
+}
+
+.actual__data {
+	height: 10%;
+	font-size: 1rem;
+	padding-top: 0.7rem;
+}
+
+.chart-wrap {   
+	height: 45%;
+}
+
+.second__column-wrap {
+	width: 45%;
+	height: 504px;
+	margin: 0.5rem;
+}
+
+.map__data-wrap {
+    width: 100%;
+		height: 93%;
+		margin-top: 0.5rem;
+}
+
+.leaflet-top, .leaflet-bottom {
+	z-index: 500;
+}
+
+.leaflet-touch .leaflet-bar a {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+	font-size: 20px;
+}
+
+.info {
+	width: 27rem;
+	padding: 4px 8px; 
+	font-size: 1.2rem;
+}
+
+.info h4 {
+	margin: 0 0 3px;
+	color: rgb(160, 4, 4);
+}
+
+.legend {
+	width: 95%;
+	line-height: 14px;		
+}
+
+.legend_string {	
+	margin: 0 0 0 1rem;
+}
+
+.legend_text {
+	margin-left: 0.3rem;
+  font-weight: bold;  
+  font-size: 1.2rem;	
+}
+
+.table__city-list-wrap {
+  width: 25%;
+  height: 507px;
+  margin: 0.5rem;
+}
+
+.table__city-list-wrap.full-active{
+	z-index: 800;
+}
+
+.countries__table-wrap {	
+	height: 87%;	
+}
+
+.countries__table-row {
+	font-size: 1.2rem;
+}
+
+.menu {    
+  max-height: 480px;   
+  top: 20%;   
+}
+
+.menu-option {
+  padding: 7px 0;   
+}
+
+.flag-image {
+  width: 18px;
+}
+}
+
+@media (min-width:500px) and (max-width:899px) {
+
+	.first__column-wrap {
+		width: 47%;
+		height: 506px;
+		margin: 0.5rem;
+		order: 1;
+	}
+	.second__column-wrap {
+		width: 99%;
+		height: 504px;
+		margin: 0.5rem;
+		order: 2;
+	}
+
+	.table__city-list-wrap {
+    width: 47%;
+    height: 507px;
+		margin: 0.5rem;
+		order: 1;
+}
+
+.header__wrapper {    
+	width: 70%;
+	height: 3.5rem;
+	max-width: 950rem;
+	margin: 2rem auto 1.5rem;
+}
+
+.header__title {   
+	font-size: 3rem;	
+	letter-spacing: 0.3rem;
+}
+
+.header__logo {
+	height: 5.5rem;
+	margin-top: -0.5rem;
+}
+
+.wrap {   
+	font-size: 1.2rem;
+}
+
+.data__wrap{
+	flex-wrap: wrap;
+	row-gap: 1rem;
+	column-gap: 0.5rem;
+	justify-content: space-around;
+}
+
+.full__screen.full-summery{	
+top: 24rem;
+}
+
+.full__screen.full-chart{
+top: 56rem;
+}
+
+.full__screen.full-map{
+	left: 1.5rem;
+	top: 107rem;
+}
+
+.full__screen.full-countries{
+	left: 44rem;
+top: 56rem;
+}
+
+.table__city-list-wrap.full-active{
+	width: 98.5%;	
+	z-index: 800;
+}
+
+.table__summery-wrap.full-active {
+	width: 98.5%;
+}
+
+.chart-wrap.full-active {	
+	width: 98.5%;
+}
+
+.map__data-wrap.full-active {
+	width: 99%;
+}
+
+.button,
+.button-down { 
+font-size: 0.95rem;
+padding: 0.2rem 0.3rem;
+}
+
+.button_margin {
+margin-left: 0.8rem;
+}
+
+.table__summery-data-title {
+margin: 1rem 0 0.5rem 0;
+}
+
+.table__summery-data-number {  
+
+font-size: 2.3rem;
+}
+
+.actual__data {
+height: 10%;
+font-size: 1rem;
+padding-top: 0.7rem;
+}
+
+.chart-wrap {   
+height: 45%;
+}
+
+
+.map__data-wrap {
+	width: 100%;
+	height: 93%;
+	margin-top: 0.5rem;
+}
+
+.leaflet-top, .leaflet-bottom {
+z-index: 500;
+}
+
+.leaflet-touch .leaflet-bar a {
+width: 20px;
+height: 20px;
+line-height: 20px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+font-size: 20px;
+}
+
+.info {
+width: 27rem;
+padding: 4px 8px;
+font-size: 1.2rem;
+}
+
+.info h4 {
+margin: 0 0 3px;
+color: rgb(160, 4, 4);
+}
+
+.legend {
+width: 95%;
+line-height: 14px;		
+}
+
+.legend_string {	
+margin: 0 0 0 1rem;
+}
+
+.legend_text {
+margin-left: 0.3rem;
+font-weight: bold;  
+font-size: 1.2rem;	
+}
+
+.table__city-list-wrap.full-active{
+z-index: 800;
+}
+
+.countries__table-wrap {	
+height: 87%;	
+}
+
+.countries__table-row {
+font-size: 1.2rem;
+}
+
+.menu {    
+	max-height: 480px;   
+	top: 20%;  
+}
+
+.menu-option {
+padding: 7px 0;   
+}
+
+.flag-image {
+width: 18px;
+}	
+}
+
